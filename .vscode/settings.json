@@ -4,5 +4,13 @@
       "mode": "auto"
     }
   ],
-  "cSpell.words": ["lumpik", "Turborepo"]
+  "cSpell.words": [
+    "ianvs",
+    "lumpik",
+    "nextjs",
+    "topo",
+    "tsbuildinfo",
+    "Turborepo",
+    "typecheck"
+  ]
 }

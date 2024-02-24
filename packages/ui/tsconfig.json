@@ -1,5 +1,5 @@
 {
-  "extends": "@lumpik/tsconfig/react-native.json",
+  "extends": "@lumpik/ts-config/react-native.json",
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"],
   "compilerOptions": {
