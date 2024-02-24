@@ -1,5 +1,5 @@
 {
-  "extends": "@repo/typescript-config/react-native-library",
+  "extends": "@lumpik/tsconfig/react-native.json",
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"],
   "compilerOptions": {
