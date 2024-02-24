@@ -16,7 +16,7 @@
     "prettier": "^3.2.5"
   },
   "devDependencies": {
-    "@lumpik/ts-config": "workspace:*",
+    "@lumpik/ts-config": "workspace:^0.1.0",
     "typescript": "^5.3.3"
   },
   "prettier": "@lumpik/prettier-config"

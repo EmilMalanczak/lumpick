@@ -16,7 +16,7 @@
     "expo-status-bar": "~1.11.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-native": "0.73.4",
+    "react-native": "^0.73.4",
     "react-native-web": "^0.19.10"
   },
   "devDependencies": {
@@ -24,6 +24,20 @@
     "@expo/webpack-config": "^19.0.0",
     "@types/react": "^18.2.46",
     "@types/react-native": "^0.73.0",
-    "typescript": "^5.3.3"
-  }
+    "typescript": "^5.3.3",
+    "@lumpik/ts-config": "workspace:^0.1.0",
+    "@lumpik/eslint-config": "workspace:^0.1.0",
+    "@lumpik/prettier-config": "workspace:^0.1.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@lumpik/eslint-config/base",
+      "@lumpik/eslint-config/react"
+    ],
+    "ignorePatterns": [
+      "expo-plugins/**"
+    ]
+  },
+  "prettier": "@lumpik/prettier-config"
 }

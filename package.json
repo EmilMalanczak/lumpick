@@ -4,11 +4,19 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "clean": "turbo run clean && rm -rf node_modules",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\" --ignore-path .gitignore"
+    "format": "turbo format --continue -- --cache --cache-location node_modules/.cache/.prettiercache",
+    "format:fix": "turbo format --continue -- --write --cache --cache-location node_modules/.cache/.prettiercache",
+    "lint": "turbo lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
+    "lint:fix": "turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
+    "lint:ws": "pnpm dlx sherif@latest",
+    "postinstall": "pnpm lint:ws",
+    "typecheck": "turbo typecheck"
   },
   "devDependencies": {
-    "prettier": "^3.1.1",
-    "turbo": "latest"
+    "prettier": "^3.2.5",
+    "turbo": "latest",
+    "typescript": "^5.3.3",
+    "@lumpik/prettier-config": "workspace:*"
   },
   "engines": {
     "node": ">=18"
@@ -17,5 +25,6 @@
   "volta": {
     "node": "18.19.1",
     "pnpm": "8.7.3"
-  }
+  }, 
+  "prettier": "@lumpik/prettier-config"
 }

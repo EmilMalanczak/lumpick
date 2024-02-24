@@ -2,6 +2,8 @@ import { StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Button } from "@repo/ui";
 
+import { Test } from "~/components/Test";
+
 export default function Native() {
   return (
     <View style={styles.container}>
@@ -13,6 +15,7 @@ export default function Native() {
         }}
         text="Boop"
       />
+      <Test />
       <StatusBar style="auto" />
     </View>
   );

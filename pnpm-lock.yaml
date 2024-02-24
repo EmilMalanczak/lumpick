@@ -8,12 +8,18 @@ importers:
 
   .:
     devDependencies:
+      '@lumpik/prettier-config':
+        specifier: workspace:*
+        version: link:tooling/prettier-config
       prettier:
-        specifier: ^3.1.1
+        specifier: ^3.2.5
         version: 3.2.5
       turbo:
         specifier: latest
         version: 1.12.4
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
 
   apps/native:
     dependencies:
@@ -33,7 +39,7 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       react-native:
-        specifier: 0.73.4
+        specifier: ^0.73.4
         version: 0.73.4(@babel/core@7.23.9)(@babel/preset-env@7.23.9)(react@18.2.0)
       react-native-web:
         specifier: ^0.19.10
@@ -45,6 +51,15 @@ importers:
       '@expo/webpack-config':
         specifier: ^19.0.0
         version: 19.0.1(expo@50.0.7)
+      '@lumpik/eslint-config':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/eslint-config
+      '@lumpik/prettier-config':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/prettier-config
+      '@lumpik/ts-config':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/ts-config
       '@types/react':
         specifier: ^18.2.46
         version: 18.2.58
@@ -151,10 +166,10 @@ importers:
         version: 4.6.0(eslint@8.57.0)
     devDependencies:
       '@lumpik/prettier-config':
-        specifier: workspace:*
+        specifier: workspace:^0.1.0
         version: link:../prettier-config
       '@lumpik/ts-config':
-        specifier: workspace:*
+        specifier: workspace:^0.1.0
         version: link:../ts-config
       '@types/eslint':
         specifier: ^8.56.2
@@ -179,7 +194,7 @@ importers:
         version: 3.2.5
     devDependencies:
       '@lumpik/ts-config':
-        specifier: workspace:*
+        specifier: workspace:^0.1.0
         version: link:../ts-config
       typescript:
         specifier: ^5.3.3
