@@ -10,7 +10,8 @@
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:ws": "pnpm dlx sherif@latest",
     "postinstall": "pnpm lint:ws",
-    "typecheck": "turbo typecheck"
+    "typecheck": "turbo typecheck",
+    "generate": "turbo gen init"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
@@ -25,6 +26,6 @@
   "volta": {
     "node": "18.19.1",
     "pnpm": "8.7.3"
-  }, 
+  },
   "prettier": "@lumpik/prettier-config"
 }
