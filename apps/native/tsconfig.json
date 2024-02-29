@@ -1,11 +1,17 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": ["@lumpik/ts-config/base.json"],
+  "extends": [
+    "@lumpik/ts-config/base.json"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"],
-      "~components": ["./src/components/Test.tsx"]
+      "~/*": [
+        "./src/*"
+      ],
+      "~components": [
+        "./src/components/Test.tsx"
+      ]
     },
     "jsx": "react-native",
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
@@ -14,9 +20,9 @@
     "src",
     "*.ts",
     "*.tsx",
-    "*.js",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "*.js"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

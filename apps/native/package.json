@@ -1,5 +1,5 @@
 {
-  "name": "native",
+  "name": "@lumpik/native",
   "version": "1.0.0",
   "private": true,
   "main": "index.js",
@@ -11,23 +11,29 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@lumpik/api": "workspace:*",
     "@repo/ui": "workspace:*",
+    "@tanstack/react-query": "^5.24.1",
+    "@trpc/client": "^10.45.1",
+    "@trpc/react-query": "^10.45.1",
     "expo": "^50.0.7",
+    "expo-constants": "^15.4.5",
     "expo-status-bar": "~1.11.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-native": "^0.73.4",
-    "react-native-web": "^0.19.10"
+    "react-native-web": "^0.19.10",
+    "superjson": "^2.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
     "@expo/webpack-config": "^19.0.0",
+    "@lumpik/eslint-config": "workspace:^0.1.0",
+    "@lumpik/prettier-config": "workspace:^0.1.0",
+    "@lumpik/ts-config": "workspace:^0.1.0",
     "@types/react": "^18.2.46",
     "@types/react-native": "^0.73.0",
-    "typescript": "^5.3.3",
-    "@lumpik/ts-config": "workspace:^0.1.0",
-    "@lumpik/eslint-config": "workspace:^0.1.0",
-    "@lumpik/prettier-config": "workspace:^0.1.0"
+    "typescript": "^5.3.3"
   },
   "eslintConfig": {
     "root": true,
