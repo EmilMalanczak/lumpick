@@ -12,6 +12,7 @@
     "Pino",
     "topo",
     "tsbuildinfo",
+    "tsup",
     "Turborepo",
     "typecheck"
   ]
