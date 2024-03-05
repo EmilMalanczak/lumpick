@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1709486473936,
+      "tag": "0000_parallel_slayback",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1709486523669,
+      "tag": "0001_quick_epoch",
+      "breakpoints": true
+    }
+  ]
+}

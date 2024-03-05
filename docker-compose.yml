@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    container_name: lumpik-db
+    environment:
+      - POSTGRES_USER=lumpik-org
+      - POSTGRES_PASSWORD=fJWof4L+WyZkd68z
+      - POSTGRES_DB=lumpik
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+volumes:
+  postgres:

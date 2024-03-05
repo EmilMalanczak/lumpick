@@ -3,8 +3,10 @@ import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
 import fastify from "fastify";
 
 import type { AppRouter } from "./src/root";
+import { env } from "./src/config/env";
 import { appRouter } from "./src/root";
 import { createTRPCContext } from "./src/trpc";
+import { logger } from "./src/utils/logger";
 
 export { appRouter, type AppRouter } from "./src/root";
 export { createTRPCContext } from "./src/trpc";
@@ -21,10 +23,9 @@ export type RouterInputs = inferRouterInputs<AppRouter>;
  **/
 export type RouterOutputs = inferRouterOutputs<AppRouter>;
 
-const dev = process.env.NODE_ENV !== "production";
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const isDev = env.ENV !== "production";
 const prefix = "/";
-const server = fastify({ logger: dev });
+const server = fastify({ logger: isDev ? logger : false });
 
 void server.register(fastifyTRPCPlugin, {
   prefix,
@@ -32,17 +33,14 @@ void server.register(fastifyTRPCPlugin, {
     router: appRouter,
     ctx: createTRPCContext,
     createContext: createTRPCContext,
-    // onError({ path, error }) {
-    //   // report to error monitoring
-    //   console.error(`Error in tRPC handler on path '${path}':`, error);
-    // },
   },
 });
 
+logger.debug(env, "ENV");
+
 const start = async () => {
   try {
-    await server.listen({ port, host: "0.0.0.0" });
-    console.log(`tRPC server running at http://localhost:${port}`);
+    await server.listen({ port: env.PORT, host: env.HOST });
   } catch (err) {
     server.log.error(err);
     process.exit(1);
