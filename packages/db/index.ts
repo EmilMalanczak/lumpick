@@ -1,14 +1,13 @@
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 
-import * as userSchemas from "./src/schema/user";
+import { schema } from "./src/schema";
 
-export const schema = { ...userSchemas };
-
-export { lumpikTable } from "./src/_table";
+export type { User } from "./src/tables/users.table";
 
 export * from "drizzle-orm";
 
 const client = postgres(process.env.DATABASE_URL!);
+const db = drizzle(client, { schema, logger: true });
 
-export const db = drizzle(client, { schema });
+export { schema, db };
