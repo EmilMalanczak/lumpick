@@ -16,10 +16,8 @@
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "push": "drizzle-kit push:pg",
-    "generate": "drizzle-kit generate:pg",
     "build": "tsup src/index.ts --format esm",
-    "migrate": "pnpm with-env tsx migrate/index.mts",
+    "migrate": "pnpm with-env tsx src/index.ts",
     "studio": "drizzle-kit studio",
     "with-env": "dotenv -e ../../.env --"
   },
@@ -45,6 +43,7 @@
   "prettier": "@lumpik/prettier-config",
   "dependencies": {
     "drizzle-orm": "^0.29.4",
-    "postgres": "^3.4.3"
+    "postgres": "^3.4.3",
+    "@lumpik/db": "workspace:^0.1.0"
   }
 }

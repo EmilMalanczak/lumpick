@@ -4,30 +4,32 @@
   "version": "0.1.0",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./index.ts"
   },
+  "main": "./index.ts",
+  "types": "./index.ts",
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "push": "drizzle-kit push:pg",
-    "generate": "drizzle-kit generate:pg",
-    "studio": "drizzle-kit studio",
+    "push": "pnpm with-env drizzle-kit push:pg",
+    "generate": "pnpm with-env drizzle-kit generate:pg",
+    "studio": "pnpm with-env drizzle-kit studio --verbose",
     "with-env": "dotenv -e ../../.env --"
   },
   "devDependencies": {
     "@lumpik/eslint-config": "workspace:^0.1.0",
     "@lumpik/prettier-config": "workspace:^0.1.0",
     "@lumpik/ts-config": "workspace:^0.1.0",
-    "eslint": "^8.56.0",
-    "prettier": "^3.2.5",
-    "typescript": "^5.3.3",
+    "@types/pg": "^8.11.2",
     "drizzle-kit": "^0.20.14",
-    "pg": "^8.11.3",
     "dotenv-cli": "^7.3.0",
-    "@types/pg": "^8.11.2"
+    "eslint": "^8.56.0",
+    "pg": "^8.11.3",
+    "prettier": "^3.2.5",
+    "typescript": "^5.3.3"
   },
   "eslintConfig": {
     "root": true,
@@ -38,6 +40,8 @@
   "prettier": "@lumpik/prettier-config",
   "dependencies": {
     "drizzle-orm": "^0.29.4",
-    "postgres": "^3.4.3"
+    "drizzle-zod": "^0.5.1",
+    "postgres": "^3.4.3",
+    "zod": "^3.22.4"
   }
 }
