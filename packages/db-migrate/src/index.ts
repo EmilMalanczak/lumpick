@@ -2,19 +2,26 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
 import postgres from "postgres";
 
-const sourceDir = new URL("../migrations", import.meta.url);
-console.log("launched...");
+import { schema } from "@lumpik/db";
 
-const connectionString = process.env.DATABASE_URL!;
-const sql = postgres(connectionString, { max: 1 });
-const db = drizzle(sql);
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL is not set");
+}
+
+const client = postgres(process.env.DATABASE_URL, { max: 1 });
+const db = drizzle(client, {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  schema,
+  logger: true,
+});
 
 (async () => {
-  console.log("migrating database...");
+  const sourceDir = new URL("../migrations", import.meta.url);
+
   await migrate(db, { migrationsFolder: sourceDir.pathname });
   console.log("migrations successful.");
 
-  await sql.end();
+  await client.end();
   process.exit(0);
 })().catch((e) => {
   // Deal with the fact the chain failed
