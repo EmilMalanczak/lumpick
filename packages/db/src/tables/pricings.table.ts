@@ -24,7 +24,9 @@ export const pricings = lumpikTable("pricings", {
   currency: varchar("currency", { length: 4 }).notNull(),
   shopId: integer("shop_id")
     .notNull()
-    .references(() => shops.id),
+    .references(() => shops.id, {
+      onDelete: "cascade",
+    }),
   ...createDataColumns(),
 });
 

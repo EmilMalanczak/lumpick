@@ -10,7 +10,9 @@ export const profiles = lumpikTable("profiles", {
   bio: varchar("name", { length: 500 }),
   userId: integer("user_id")
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, {
+      onDelete: "cascade",
+    }),
   ...createDataColumns(),
 });
 

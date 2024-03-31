@@ -10,7 +10,9 @@ export const shopOwners = lumpikTable("shop_owners", {
   verified: boolean("verified").default(false),
   userId: integer("user_id")
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, {
+      onDelete: "cascade",
+    }),
   ...createDataColumns(),
 });
 

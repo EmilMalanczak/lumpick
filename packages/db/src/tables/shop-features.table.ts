@@ -10,10 +10,14 @@ export const shopFeatures = lumpikTable(
   {
     shopId: integer("shop_id")
       .notNull()
-      .references(() => shops.id),
+      .references(() => shops.id, {
+        onDelete: "cascade",
+      }),
     featureId: integer("feature_id")
       .notNull()
-      .references(() => features.id),
+      .references(() => features.id, {
+        onDelete: "cascade",
+      }),
   },
   (table) => ({
     pk: primaryKey({

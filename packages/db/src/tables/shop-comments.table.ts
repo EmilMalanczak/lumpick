@@ -11,7 +11,9 @@ export const shopComments = lumpikTable("shop_comments", {
   comment: varchar("comment", { length: 255 }).notNull(),
   shopId: integer("shop_id")
     .notNull()
-    .references(() => shops.id),
+    .references(() => shops.id, {
+      onDelete: "cascade",
+    }),
   ...createDataColumns(),
 });
 
