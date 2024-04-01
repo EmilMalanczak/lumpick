@@ -12,6 +12,14 @@ export const openApiDocument = generateOpenApiDocument(appRouter, {
   description: "OpenAPI compliant REST API built using tRPC with Fastify",
   baseUrl: "http://localhost:3000/api",
   tags: ["auth"],
+  securitySchemes: {
+    Bearer: {
+      description: 'Authorization header token, sample: "Bearer ******"',
+      type: "apiKey",
+      name: "Authorization",
+      in: "header",
+    },
+  },
 });
 
 export const swaggerPlugin = fp<FastifyDynamicSwaggerOptions>(
@@ -26,17 +34,14 @@ export const swaggerPlugin = fp<FastifyDynamicSwaggerOptions>(
 
     await fastify.register(swaggerUi, {
       routePrefix: "/docs",
-
       uiConfig: {
-        docExpansion: "full",
+        docExpansion: "list",
         deepLinking: false,
         displayOperationId: true,
       },
       staticCSP: true,
       transformStaticCSP: (header) => header,
-      transformSpecification: (swaggerObject) => {
-        return swaggerObject;
-      },
+      transformSpecification: (swaggerObject) => swaggerObject,
       transformSpecificationClone: true,
     });
   },

@@ -1,6 +1,6 @@
 import type { CreateFastifyContextOptions } from "@trpc/server/adapters/fastify";
 
-import { verifyUserToken } from "./utils/verify-user-token";
+import { verifyUserToken } from "./services/auth.service";
 
 /**
  * This is the actual context you'll use in your router. It will be used to
@@ -18,6 +18,8 @@ export const createTRPCContext = async ({
     token = req.headers.authorization.split(" ")[1]!;
   }
 
+  console.log("headers", req.headers);
+
   const user = token ? await verifyUserToken(token) : null;
 
   return {
@@ -26,6 +28,5 @@ export const createTRPCContext = async ({
     res,
   };
 };
-
 
 export type Context = Awaited<ReturnType<typeof createTRPCContext>>;

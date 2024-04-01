@@ -4,12 +4,16 @@ import { t } from "../trpc";
 
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.user) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "User is not logged in",
+    });
   }
 
   return next({
     ctx: {
       // infers the `session` as non-nullable
+      ...ctx,
       user: ctx.user,
     },
   });
