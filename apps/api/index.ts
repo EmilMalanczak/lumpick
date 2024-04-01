@@ -42,6 +42,9 @@ const start = async () => {
         ctx: createTRPCContext,
         createContext: createTRPCContext,
       },
+      onError: (err: unknown) => {
+        logger.error("Error: ", err);
+      },
     });
     await server.register(fastifyTRPCOpenApiPlugin, {
       basePath: "/api",

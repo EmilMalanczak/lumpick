@@ -37,7 +37,6 @@ class JWTToken<T extends string | object | Buffer> {
 }
 
 type TokenPayload = {
-  sub: number;
   userId: number;
 };
 
@@ -45,7 +44,7 @@ export const accessToken = new JWTToken<TokenPayload>(
   env.ACCESS_TOKEN_SECRET,
   env.ACCESS_TOKEN_PUBLIC,
   {
-    algorithm: "ES256",
+    algorithm: "RS256",
     subject: "user",
     expiresIn: tokenConfig.accessTokenExpiry,
   },
@@ -54,7 +53,7 @@ export const refreshToken = new JWTToken<TokenPayload>(
   env.REFRESH_TOKEN_SECRET,
   env.REFRESH_TOKEN_PUBLIC,
   {
-    algorithm: "ES256",
+    algorithm: "RS256",
     subject: "user",
     expiresIn: tokenConfig.refreshTokenExpiry,
   },

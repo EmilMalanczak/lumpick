@@ -21,6 +21,12 @@ export const authRouter = createTRPCRouter({
         summary: "Login",
         path: "/auth/login",
         tags: ["auth"],
+        example: {
+          request: {
+            email: "emil.malanczak@gmail.com",
+            password: "password123",
+          },
+        },
       },
     })
     .input(loginUserSchema.input)
@@ -34,6 +40,14 @@ export const authRouter = createTRPCRouter({
         summary: "Register a new user",
         path: "/auth/register",
         tags: ["auth"],
+        example: {
+          request: {
+            email: "emil.malanczak@gmail.com",
+            name: "test user",
+            password: "password123",
+            passwordConfirm: "password123",
+          },
+        },
       },
     })
     .input(createUserSchema.input)
