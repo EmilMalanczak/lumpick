@@ -1,7 +1,18 @@
 {
   "extends": "@lumpik/ts-config/base.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "baseUrl": "./",
+    "paths": {
+      "~utils/*": ["src/utils/*"],
+      "~mails/*": ["src/mails/*"],
+      "~config/*": ["src/config/*"],
+      "~procedures/*": ["src/procedures/*"],
+      "~plugins/*": ["src/plugins/*"],
+      "~controllers/*": ["src/controllers/*"],
+      "~schemas/*": ["src/schemas/*"],
+      "~services/*": ["src/services/*"]
+    }
   },
   "include": ["*.ts", "src"],
   "exclude": ["node_modules"]
