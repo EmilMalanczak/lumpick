@@ -6,6 +6,7 @@ import type {
   CreateUserInput,
   LoginUserInput,
   RefreshTokenInput,
+  ResendVerifyEmailInput,
   VerifyEmailInput,
 } from "../schemas/auth.schema";
 import {
@@ -13,10 +14,12 @@ import {
   createVerificationToken,
   findUserByEmail,
   findUserById,
+  getUserVerificationToken,
   getVerificationToken,
   removeVerificationToken,
   sendVerificationEmail,
   signTokens,
+  updateUserVerificationToken,
   validateVerifyToken,
   verifyUserEmail,
 } from "../services/auth.service";
@@ -168,13 +171,6 @@ export const verifyEmailHandler = async (
   { ctx }: { ctx: Context },
 ) => {
   try {
-    console.log("token", token);
-    console.log("token", token);
-    console.log("token", token);
-    console.log("token", token);
-    console.log("token", token);
-    console.log("token", token);
-    console.log("token", token);
     if (!token) {
       throw new TRPCError({ code: "BAD_REQUEST", message: "Token is missing" });
     }
@@ -221,4 +217,39 @@ export const verifyEmailHandler = async (
       message: "Failed to verify email",
     });
   }
+};
+
+export const resendVerifyEmailHandler = async (
+  input: ResendVerifyEmailInput,
+) => {
+  const user = await findUserByEmail(input.email);
+
+  if (!user) {
+    throw new TRPCError({
+      code: "NOT_FOUND",
+      message: "User not found",
+    });
+  }
+
+  // Check if token already exists
+  let verifyToken = await getUserVerificationToken(user.id);
+
+  if (!verifyToken) {
+    verifyToken = await createVerificationToken(user);
+  } else if (!validateVerifyToken(verifyToken)) {
+    verifyToken = await updateUserVerificationToken(user);
+  }
+
+  if (!verifyToken) {
+    throw new TRPCError({
+      code: "NOT_FOUND",
+      message: "Failed to create verification token",
+    });
+  }
+
+  await sendVerificationEmail(verifyToken.token, user);
+
+  return {
+    message: "Verification email sent successfully. Please check your email.",
+  };
 };

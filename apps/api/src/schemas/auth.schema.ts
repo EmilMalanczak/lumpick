@@ -77,3 +77,19 @@ export const verifyEmailSchema = {
 
 export type VerifyEmailInput = TypeOf<(typeof verifyEmailSchema)["input"]>;
 export type VerifyEmailOutput = TypeOf<(typeof verifyEmailSchema)["output"]>;
+
+export const resendVerifyEmailSchema = {
+  input: object({
+    email: string().email(),
+  }),
+  output: object({
+    message: string(),
+  }),
+};
+
+export type ResendVerifyEmailInput = TypeOf<
+  (typeof resendVerifyEmailSchema)["input"]
+>;
+export type ResendVerifyEmailOutput = TypeOf<
+  (typeof resendVerifyEmailSchema)["output"]
+>;

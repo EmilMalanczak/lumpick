@@ -2,6 +2,7 @@ import {
   loginMutationHandler,
   refreshTokenHandler,
   registerMutationHandler,
+  resendVerifyEmailHandler,
   verifyEmailHandler,
 } from "../controller/auth.controller";
 import { publicProcedure } from "../procedures";
@@ -9,6 +10,7 @@ import {
   createUserSchema,
   loginUserSchema,
   refreshTokenSchema,
+  resendVerifyEmailSchema,
   verifyEmailSchema,
 } from "../schemas/auth.schema";
 import { createTRPCRouter } from "../trpc";
@@ -81,4 +83,17 @@ export const authRouter = createTRPCRouter({
     .mutation(({ input, ctx }) => {
       return verifyEmailHandler(input, { ctx });
     }),
+
+  resendVerifyEmail: publicProcedure
+    .meta({
+      openapi: {
+        method: "GET",
+        summary: "Resend verify user email",
+        path: "/auth/verify-email/resend",
+        tags: ["auth"],
+      },
+    })
+    .input(resendVerifyEmailSchema.input)
+    .output(resendVerifyEmailSchema.output)
+    .mutation(({ input }) => resendVerifyEmailHandler(input)),
 });
