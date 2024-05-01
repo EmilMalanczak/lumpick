@@ -1,8 +1,8 @@
 import fs from "node:fs/promises";
 import type { Page } from "puppeteer";
 
-import { storeJson } from "../utils/store-json.js";
-import { getShop } from "./get-shop.js";
+import { storeJson } from "../utils/json";
+import { getShop } from "./get-shop";
 
 export const getShopStore = async (
   url: string,

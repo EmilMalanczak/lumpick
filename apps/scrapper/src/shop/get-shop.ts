@@ -1,15 +1,13 @@
 import type { Page } from "puppeteer";
 
-import {
-  getShopAdditionalTreats,
-  getShopDeliveries,
-  getShopLinkedDataJson,
-  getShopPrices,
-  getShopRelations,
-  getShopStock,
-  getShopWebsite,
-  getShopWorkHours,
-} from "./index.js";
+import { getShopAdditionalTreats } from "./get-shop-additional-treats";
+import { getShopDeliveries } from "./get-shop-deliveries";
+import { getShopLinkedDataJson } from "./get-shop-linked-data-json";
+import { getShopPrices } from "./get-shop-prices";
+import { getShopRelations } from "./get-shop-relations";
+import { getShopStock } from "./get-shop-stock";
+import { getShopWebsite } from "./get-shop-website";
+import { getShopWorkHours } from "./get-shop-work-hours";
 
 export const getShop = async (url: string, page: Page) => {
   try {

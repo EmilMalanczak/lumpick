@@ -6,7 +6,7 @@ export const getShopDeliveries = async (page: Page): Promise<string[]> => {
       document.querySelectorAll(".upcoming-event-date span"),
     );
 
-    return Array.from(shopDeliveriesElements).map(
+    return shopDeliveriesElements.map(
       (shopDeliveriesElement) =>
         shopDeliveriesElement?.textContent?.trim() ?? "",
     );

@@ -16,11 +16,11 @@ export const formatDeliveriesToTimestamp = (shopDeliveries: string[]) => {
 
   const deliveriesTimestamp = shopDeliveries.map((delivery) => {
     const [day, month, year, timeStart, , timeEnd] = delivery.split(" ");
-    const [startHour, startMinute] = timeStart.split(":");
-    const [endHour, endMinute] = timeEnd.split(":");
+    const [startHour, startMinute] = timeStart!.split(":");
+    const [endHour, endMinute] = timeEnd!.split(":");
 
-    const monthPad = monthNames[month].toString().padStart(2, "0");
-    const dayPad = day.toString().padStart(2, "0");
+    const monthPad = monthNames[month!]?.toString().padStart(2, "0");
+    const dayPad = day?.toString().padStart(2, "0");
 
     const startString = `${year}-${monthPad}-${dayPad}T${startHour}:${startMinute}:00.000Z`;
     const endString = `${year}-${monthPad}-${dayPad}T${endHour}:${endMinute}:00.000Z`;

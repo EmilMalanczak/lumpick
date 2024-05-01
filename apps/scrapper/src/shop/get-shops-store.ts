@@ -1,7 +1,7 @@
 import type { Page } from "puppeteer";
 
-import { sleep } from "../utils/sleep.js";
-import { getShopStore } from "./index.js";
+import { sleep } from "../utils/sleep";
+import { getShopStore } from "./get-shop-store";
 
 export const getShopsStore = async (
   urls: string[],

@@ -10,6 +10,8 @@
     "nextjs",
     "openapi",
     "Pino",
+    "Subpage",
+    "subpages",
     "topo",
     "tsbuildinfo",
     "tsup",

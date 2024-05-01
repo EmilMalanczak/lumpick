@@ -1,0 +1,61 @@
+{
+  "shopLinkedDataJson": {
+    "@context": "http://www.schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://secondhandy.com.pl/sklep/roz-n-owe/",
+    "name": "Róż.n.owe",
+    "legalName": "Róż.n.owe",
+    "url": "https://secondhandy.com.pl/sklep/roz-n-owe/",
+    "openingHours": [
+      "Mo 10:00-18:00",
+      "Tu 10:00-18:00",
+      "We 10:00-18:00",
+      "Th 10:00-18:00",
+      "Fr 10:00-18:00",
+      "Sa 10:00-00:15"
+    ],
+    "hasMap": "https://www.google.com/maps/@54.52133,18.53768z",
+    "sameAs": ["https://www.facebook.com/roznowe/"],
+    "address": {
+      "address": "Starowiejska 28a, 81-356 Gdynia, Pomeranian Voivodeship, PL",
+      "lat": "54.52133",
+      "lng": "18.53768"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer support"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "54.52133",
+      "longitude": "18.53768"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "9.4",
+      "reviewCount": "3",
+      "bestRating": "10"
+    }
+  },
+  "shopRelations": [],
+  "shopUrl": "",
+  "shopPrices": [],
+  "shopDeliveries": [],
+  "shopHours": [
+    { "day": "Poniedziałek", "workHours": "10:00 - 18:00" },
+    { "day": "Wtorek", "workHours": "10:00 - 18:00" },
+    { "day": "Środa", "workHours": "10:00 - 18:00" },
+    { "day": "Czwartek", "workHours": "10:00 - 18:00" },
+    { "day": "Piątek", "workHours": "10:00 - 18:00" },
+    { "day": "Sobota", "workHours": "10:00 - 00:15" },
+    { "day": "Niedziela", "workHours": "Zamknięte" }
+  ],
+  "shopStock": [
+    "Galanteria",
+    "Obuwie",
+    "Odzież damska",
+    "Odzież dziecięca",
+    "Odzież męska"
+  ],
+  "shopAdditionalTreats": []
+}
