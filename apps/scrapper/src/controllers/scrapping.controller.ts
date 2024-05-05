@@ -1,62 +1,67 @@
-import fs from "node:fs/promises";
-import puppeteer from "puppeteer";
+import { confirm, input } from "@inquirer/prompts";
 
+import { readScrappedShopUrls } from "../services/dump.service";
+import { getShopsData, saveShopsData } from "../services/shop.service";
 import {
-  SCRAP_DATA_FOLDER,
-  SCRAP_SHOPS_DATA_FOLDER,
-} from "../config/constants";
-import { readScrappedShopUrls } from "../services/scrapped-data.service";
-import { getShopsUrls, saveShopUrls } from "../services/shop-urls.service";
-import { getShop } from "../shop";
-import { storeJson } from "../utils/json";
+  getSitemapShopsUrls,
+  saveSitemapShopUrls,
+} from "../services/sitemap.service";
 import { logger } from "../utils/logger";
 import { sleep } from "../utils/sleep";
-import { slugify } from "../utils/slugify";
+import { withTerminalLoader } from "../utils/terminal-loading";
 
-export const scrapShopsUrls = async () => {
-  await fs.mkdir(SCRAP_DATA_FOLDER, { recursive: true });
+export const scrapShops = async () => {
+  let shopUrls = await readScrappedShopUrls();
 
-  logger.info("Starting to scrap shop urls");
+  const shouldScrapUrls =
+    !shopUrls ||
+    (await confirm({
+      default: true,
+      message: "Do you want to update the shop urls?",
+    }));
 
-  const shopUrls = await getShopsUrls();
+  if (shouldScrapUrls) {
+    await withTerminalLoader(async () => {
+      shopUrls = await getSitemapShopsUrls();
 
-  logger.info("Saving urls...");
-
-  await saveShopUrls(shopUrls);
-};
-
-export const scrapShopData = async () => {
-  const browser = await puppeteer.launch({
-    defaultViewport: null,
-    headless: false,
-    dumpio: true,
-    args: ["--disable-extensions", "--enable-chrome-browser-cloud-management"],
-  });
-
-  const [page] = await browser.pages();
-
-  if (!page) {
-    throw new Error("Failed to create a new page");
+      await saveSitemapShopUrls(shopUrls);
+    }, "Scrapping shop urls");
   }
 
-  const shopUrls = await readScrappedShopUrls();
-
-  await fs.mkdir(SCRAP_SHOPS_DATA_FOLDER, { recursive: true });
-
-  for await (const { url } of shopUrls) {
-    const data = await getShop(url, page);
-
-    if (!data) throw new Error("Failed to get shop data");
-
-    const serializedShopSlug = slugify(data?.shopLinkedDataJson.name);
-
-    await storeJson(
-      `${SCRAP_SHOPS_DATA_FOLDER}/${serializedShopSlug}`,
-      JSON.stringify(data),
-    );
-    await sleep(1000);
+  if (!shopUrls || shopUrls.length === 0) {
+    throw new Error("No shops to scrap");
   }
 
-  logger.info("Finished scrapping shops");
-  await browser.close();
+  await sleep(1000);
+
+  const urlsCount = shopUrls.length;
+
+  const shopLimit = Number(
+    await input({
+      message: `How many shops do you want to scrap? (-1 for all) (max ${urlsCount})`,
+      validate: (value) => {
+        const parsedValue = Number(value);
+
+        return Number.isNaN(parsedValue)
+          ? "You must provide a number"
+          : parsedValue > urlsCount
+            ? `You must provide a number in range of 1-${urlsCount + 1} or -1 for all`
+            : true;
+      },
+      default: "-1",
+    }),
+  );
+
+  const urlsToScrap = shopLimit > 0 ? shopUrls.slice(0, shopLimit) : shopUrls;
+
+  const shops = await withTerminalLoader(
+    async () => await getShopsData(urlsToScrap),
+    "Scrapping shops",
+  );
+
+  await saveShopsData(shops);
+
+  logger.trace("Shops data saved");
+
+  process.exit(0);
 };

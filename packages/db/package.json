@@ -24,7 +24,6 @@
     "@lumpik/prettier-config": "workspace:^0.1.0",
     "@lumpik/ts-config": "workspace:^0.1.0",
     "@types/pg": "^8.11.2",
-    "drizzle-kit": "^0.20.14",
     "dotenv-cli": "^7.3.0",
     "eslint": "^8.56.0",
     "pg": "^8.11.3",
@@ -39,6 +38,7 @@
   },
   "prettier": "@lumpik/prettier-config",
   "dependencies": {
+    "drizzle-kit": "^0.20.17",
     "drizzle-orm": "^0.29.4",
     "drizzle-zod": "^0.5.1",
     "postgres": "^3.4.3",

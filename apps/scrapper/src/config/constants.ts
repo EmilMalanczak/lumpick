@@ -5,4 +5,7 @@ export const API_ALL_SHOPS_ENDPOINT = `https://secondhandy.com.pl/sitemap_index.
 
 export const SCRAP_DATA_FOLDER = "dump";
 export const SCRAP_SHOPS_DATA_FOLDER = "dump/shops";
+export const SCRAP_ERROR_DATA_FOLDER = "dump/errors";
 export const SHOP_URLS_FILENAME = "urls";
+
+export const SCRAPE_RATE_LIMIT = 1000;

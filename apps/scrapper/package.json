@@ -2,7 +2,6 @@
   "name": "@lumpik/scrapper",
   "private": true,
   "version": "0.1.0",
-  "type": "module",
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
@@ -11,7 +10,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "dev": "tsx ./src/scrap.ts",
-    "build": "tsc"
+    "build": "esbuild scrap.ts --bundle --packages=external --platform=node --format=cjs --outdir=dist"
   },
   "devDependencies": {
     "@lumpik/eslint-config": "workspace:^0.1.0",
@@ -29,8 +28,13 @@
   },
   "prettier": "@lumpik/prettier-config",
   "dependencies": {
+    "@inquirer/prompts": "^5.0.2",
+    "@inquirer/type": "^1.3.1",
     "@lumpik/api": "workspace:^0.1.0",
+    "esbuild": "0.20.1",
+    "esbuild-plugin-pino": "2.1.1",
     "pino": "^8.19.0",
+    "prompts": "link:@types/@inquirer/prompts",
     "puppeteer": "22.6.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.7.1",

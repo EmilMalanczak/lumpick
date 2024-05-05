@@ -1,3 +1,4 @@
+import fs from "node:fs/promises";
 import { parseStringPromise } from "xml2js";
 
 import {
@@ -68,7 +69,9 @@ const getShopUrlsFromSitemaps = async (sitemaps: SitemapItem[]) => {
   return allShopUrls;
 };
 
-export const getShopsUrls = async () => {
+export const getSitemapShopsUrls = async () => {
+  await fs.mkdir(SCRAP_DATA_FOLDER, { recursive: true });
+
   const response = await fetch(API_ALL_SHOPS_ENDPOINT);
   const responseBody = await response.text();
 
@@ -85,7 +88,7 @@ export const getShopsUrls = async () => {
   return await getShopUrlsFromSitemaps(subpages);
 };
 
-export const saveShopUrls = async (urls: SitemapItem[]) => {
+export const saveSitemapShopUrls = async (urls: SitemapItem[]) => {
   const file = `${SCRAP_DATA_FOLDER}/${SHOP_URLS_FILENAME}`;
 
   await storeJson(file, JSON.stringify(urls));
