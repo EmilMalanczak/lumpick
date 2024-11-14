@@ -6,7 +6,7 @@ export const transformDumpShopData = async (
   // eslint-disable-next-line @typescript-eslint/require-await
 ): Promise<Shop<"insert">> => {
   console.log("Transforming dump shop data...", dumpShop);
-  // @ts-expect-error - dsadsa
+  // @ts-expect-error - TODO: add dto transformation 
   return {
     description: "",
     name: "",
