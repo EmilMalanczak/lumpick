@@ -17,13 +17,13 @@
     "db:studio": "pnpm -F db studio",
     "db:generate": "pnpm -F db generate",
     "db:migrate": "pnpm -F db-migrate migrate",
-    "scrap": "pnpm turbo run build --filter=@lumpik/scrapper && node ./apps/scrapper/dist/scrap.js"
+    "scrap": "pnpm turbo run build --filter=@lumpik/scrapper && node ./apps/scrapper/dist/index.js"
   },
   "devDependencies": {
+    "@lumpik/prettier-config": "workspace:*",
     "prettier": "^3.2.5",
     "turbo": "latest",
-    "typescript": "^5.3.3",
-    "@lumpik/prettier-config": "workspace:*"
+    "typescript": "^5.3.3"
   },
   "engines": {
     "node": ">=18"

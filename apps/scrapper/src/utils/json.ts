@@ -7,8 +7,11 @@ const getRoot = () => {
   return path.resolve(__dirname, "../");
 };
 
-const getFilePath = (filename: string) => {
-  return `${getRoot()}/${filename}.json`;
+const getFilePath = (
+  filename: string,
+  { addSuffix = true }: { addSuffix?: boolean } = {},
+) => {
+  return `${getRoot()}/${filename}${addSuffix ? ".json" : ""}`;
 };
 
 export const storeJson = async (filename: string, json: string) => {
@@ -21,14 +24,22 @@ export const storeJson = async (filename: string, json: string) => {
   }
 };
 
-export const readJson = async <T>(filename: string) => {
+export const readJson = async <T>(
+  filename: string,
+  { addSuffix = true }: { addSuffix?: boolean } = {},
+) => {
   try {
-    const data = await fs.readFile(getFilePath(filename), "utf-8");
+    const data = await fs.readFile(
+      getFilePath(filename, { addSuffix }),
+      "utf-8",
+    );
 
     return data ? (JSON.parse(data) as T) : null;
   } catch (error) {
     logger.error(error);
 
-    throw new Error(`Error while reading ${filename}.json`);
+    throw new Error(
+      `Error while reading ${filename}${addSuffix ? ".json" : ""}`,
+    );
   }
 };

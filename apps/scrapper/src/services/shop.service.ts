@@ -13,7 +13,7 @@ import { logger } from "../utils/logger";
 import { sleep } from "../utils/sleep";
 import { slugify } from "../utils/slugify";
 
-type Business = {
+type ShopMetadata = {
   "@context": string;
   "@type": string;
   "@id": string;
@@ -61,8 +61,15 @@ type AggregateRating = {
   bestRating: string;
 };
 
+type WorkHours = {
+  day: string;
+  closed?: boolean;
+  from: string | null;
+  to: string | null;
+};
+
 export type DumpShop = {
-  shopLinkedDataJson: Business;
+  shopLinkedDataJson: ShopMetadata;
   shopRelations: string[];
   shopUrl: string;
   shopPrices: {
@@ -70,10 +77,7 @@ export type DumpShop = {
     price: string;
   }[];
   shopDeliveries: string[];
-  shopHours: {
-    day: string;
-    workHours: string;
-  }[];
+  shopHours: WorkHours[];
   shopStock: string[];
   shopAdditionalTreats: string[];
 };
@@ -115,17 +119,17 @@ export const getShopDeliveries = (page: Page): Promise<string[]> =>
     );
   });
 
-export const getShopLinkedDataJson = async (page: Page): Promise<Business> => {
+export const getShopMetadata = async (page: Page): Promise<ShopMetadata> => {
   const shopLinkedData = await page.evaluate(() => {
     const scriptElements = Array.from(
       document.querySelectorAll('script[type="application/ld+json"]'),
     );
-    const scriptContent = scriptElements.find((script, index) => index === 1);
+    const scriptContent = scriptElements.find((_, index) => index === 1);
 
     return scriptContent?.textContent ? scriptContent.textContent : "{}";
   });
 
-  return (await JSON.parse(shopLinkedData)) as Business;
+  return (await JSON.parse(shopLinkedData)) as ShopMetadata;
 };
 
 export const getShopPrices = (
@@ -214,14 +218,7 @@ export const getShopWebsite = (page: Page): Promise<string> =>
     return websiteElement?.getAttribute("href") ?? "";
   });
 
-export const getShopWorkHours = (
-  page: Page,
-): Promise<
-  {
-    day: string;
-    workHours: string;
-  }[]
-> =>
+export const getShopWorkHours = (page: Page): Promise<WorkHours[]> =>
   page.evaluate(() => {
     const shopWorkHoursElements = Array.from(
       document.querySelectorAll(".block-type-work_hours ul li"),
@@ -236,7 +233,20 @@ export const getShopWorkHours = (
         ? workHoursElement.textContent.trim()
         : "";
 
-      return { day, workHours };
+      switch (workHours) {
+        case "Zamknięte":
+          return { day, from: null, to: null, closed: true };
+        case "N/A":
+        case "Otwarte 24h":
+        case "Tylko po wcześniejszym umówieniu":
+          return { day, from: null, to: null, closed: undefined };
+
+        default: {
+          const [from, to] = workHours.split(" - ") as [string, string];
+
+          return { day, from, to, closed: false };
+        }
+      }
     });
 
     return shopWorkHoursMap;
@@ -248,7 +258,7 @@ export const getShop = async (
 ): Promise<DumpShop | null> => {
   try {
     const data = await Promise.all([
-      getShopLinkedDataJson(page),
+      getShopMetadata(page),
       getShopRelations(page),
       getShopWebsite(page),
       getShopPrices(page),
@@ -296,13 +306,11 @@ export const getShop = async (
   }
 };
 
-export const getShopsData = async (urls: SitemapItem[]) => {
-  const shops = [];
-
+const openBrowser = async () => {
   const browser = await puppeteer.launch({
     defaultViewport: null,
     headless: false,
-    dumpio: true,
+    // dumpio: true,
     args: ["--disable-extensions", "--enable-chrome-browser-cloud-management"],
   });
 
@@ -312,7 +320,15 @@ export const getShopsData = async (urls: SitemapItem[]) => {
     throw new Error("Failed to create a new page");
   }
 
+  return { page, browser };
+};
+
+export const getShopsData = async (urls: SitemapItem[]) => {
+  const { browser, page } = await openBrowser();
+
   await fs.mkdir(SCRAP_SHOPS_DATA_FOLDER, { recursive: true });
+
+  const shops = [];
 
   try {
     for await (const { url } of urls) {
@@ -327,16 +343,33 @@ export const getShopsData = async (urls: SitemapItem[]) => {
       await sleep(SCRAPE_RATE_LIMIT);
     }
   } catch (error) {
-    await browser.close();
-
     logger.error(error);
 
     return shops;
+  } finally {
+    await browser.close();
   }
 
-  await browser.close();
-
   return shops;
+};
+
+export const getSingleShopData = async (url: string) => {
+  const { browser, page } = await openBrowser();
+
+  try {
+    await page.goto(url, { waitUntil: "networkidle2" });
+
+    return await getShop(url, page);
+  } finally {
+    await browser.close();
+  }
+};
+
+export const saveShopData = async (shop: DumpShop) => {
+  const fileName = slugify(shop.shopLinkedDataJson.name);
+  const filePath = `${SCRAP_SHOPS_DATA_FOLDER}/${fileName}`;
+
+  await storeJson(filePath, JSON.stringify(shop));
 };
 
 export const saveShopsData = async (shopsData: DumpShop[]) => {
@@ -345,10 +378,5 @@ export const saveShopsData = async (shopsData: DumpShop[]) => {
     return;
   }
 
-  for (const shopData of shopsData) {
-    const fileName = slugify(shopData.shopLinkedDataJson.name);
-    const filePath = `${SCRAP_SHOPS_DATA_FOLDER}/${fileName}`;
-
-    await storeJson(filePath, JSON.stringify(shopData));
-  }
+  await Promise.all(shopsData.map(saveShopData));
 };

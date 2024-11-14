@@ -12,6 +12,7 @@ export const terminalLoading = (
 
   return () => {
     clearInterval(intervalId);
+    process.stdout.write("\r");
   };
 };
 

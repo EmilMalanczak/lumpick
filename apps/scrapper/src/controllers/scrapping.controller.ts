@@ -1,12 +1,16 @@
 import { confirm, input } from "@inquirer/prompts";
 
 import { readScrappedShopUrls } from "../services/dump.service";
-import { getShopsData, saveShopsData } from "../services/shop.service";
+import {
+  getShopsData,
+  getSingleShopData,
+  saveShopData,
+  saveShopsData,
+} from "../services/shop.service";
 import {
   getSitemapShopsUrls,
   saveSitemapShopUrls,
 } from "../services/sitemap.service";
-import { logger } from "../utils/logger";
 import { sleep } from "../utils/sleep";
 import { withTerminalLoader } from "../utils/terminal-loading";
 
@@ -61,7 +65,32 @@ export const scrapShops = async () => {
 
   await saveShopsData(shops);
 
-  logger.trace("Shops data saved");
+  return shops;
+};
 
-  process.exit(0);
+export const scrapSingleShop = async () => {
+  const url = await input({
+    message: "Enter shop url",
+    validate: (url) => {
+      try {
+        new URL(url);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    },
+  });
+
+  const shopData = await withTerminalLoader(
+    async () => await getSingleShopData(url),
+    `Scraping ${url}`,
+  );
+
+  if (!shopData) {
+    throw new Error(`Couldn't get data for shop: ${url}`);
+  }
+
+  await saveShopData(shopData);
+
+  return shopData;
 };
