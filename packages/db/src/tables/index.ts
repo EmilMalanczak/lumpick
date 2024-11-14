@@ -8,3 +8,4 @@ export * from "./shop-owners.table";
 export * from "./shops.table";
 export * from "./shop-comments.table";
 export * from "./verify-tokens.table";
+export * from "./addresses.table";
