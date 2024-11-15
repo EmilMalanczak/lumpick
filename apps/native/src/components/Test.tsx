@@ -1,15 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
-import { api } from "~/utils/trpc";
 
 export const Test = () => {
-  const { data: posts, isLoading } = api.post.all.useQuery();
-
+  // const { data: posts, isLoading } = api.post.all.useQuery();
+ 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>{isLoading ? "Loading..." : "Native"}</Text>
-      {posts?.map((post) => <Text key={post.id}>{post.title}</Text>)}
+    <View style={styles.container}>  
+      <Text style={styles.header}>Hi</Text>
+      {/* {posts?.map((post) => <Text key={post.id}>{post.title}</Text>)} */}
       <StatusBar style="auto" />
     </View>
   );

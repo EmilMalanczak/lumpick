@@ -1,5 +1,5 @@
 export const env = {
-  PORT: 3000,
+  PORT: 3003,
   HOST: "0.0.0.0",
   ENV: "development",
   DATABASE_URL: process.env.DATABASE_URL,

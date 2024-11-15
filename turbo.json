@@ -1,9 +1,8 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "globalDotEnv": [".env"],
-
-  "pipeline": {
+  "globalEnv": [".env"],
+  "tasks": {
     "topo": {
       "dependsOn": ["^topo"]
     },
@@ -14,12 +13,12 @@
     "dev": {
       "cache": false,
       "persistent": true,
-      "dotEnv": [".env.development"],
+      "env": [".env.development"],
       "dependsOn": ["^build"]
     },
     "format": {
       "outputs": ["node_modules/.cache/.prettiercache"],
-      "outputMode": "new-only"
+      "cache": true
     },
     "lint": {
       "dependsOn": ["^topo"],

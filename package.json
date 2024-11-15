@@ -9,7 +9,7 @@
     "format:fix": "turbo format --continue -- --write --cache --cache-location node_modules/.cache/.prettiercache",
     "lint": "turbo lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
-    "lint:ws": "pnpm dlx sherif@latest",
+    "lint:ws": "pnpm dlx sherif@latest --fix",
     "postinstall": "pnpm lint:ws",
     "typecheck": "turbo typecheck",
     "generate": "turbo gen init",
@@ -22,16 +22,16 @@
   "devDependencies": {
     "@lumpik/prettier-config": "workspace:*",
     "prettier": "^3.2.5",
-    "turbo": "latest",
+    "turbo": "2.3.0",
     "typescript": "^5.3.3"
   },
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "pnpm@8.7.3",
+  "packageManager": "pnpm@9.12.3",
   "volta": {
-    "node": "18.19.1",
-    "pnpm": "8.7.3"
+    "node": "20.17.0",
+    "pnpm": "9.12.3"
   },
   "prettier": "@lumpik/prettier-config"
 }

@@ -9,7 +9,7 @@
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "dev": "tsx ./src/scrap.ts",
+    "scrap": "tsx ./src/scrap.ts",
     "build": "esbuild index.ts --bundle --packages=external --platform=node --format=cjs --outdir=dist"
   },
   "devDependencies": {
@@ -39,5 +39,12 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.7.1",
     "xml2js": "^0.6.2"
+  },
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "exclude": ["@lumpik/*"]
+      }
+    }
   }
 }

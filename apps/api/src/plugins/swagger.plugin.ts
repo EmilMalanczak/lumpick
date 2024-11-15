@@ -10,8 +10,8 @@ const openApiDocument = generateOpenApiDocument(appRouter, {
   title: "Lumpik OpenAPI",
   version: "1.0.0",
   description: "OpenAPI compliant REST API built using tRPC with Fastify",
-  baseUrl: "http://localhost:3000/api",
-  tags: ["auth"],
+  baseUrl: "http://localhost:3009/api",
+  tags: ["auth"], 
   securitySchemes: {
     Bearer: {
       description: 'Authorization header token, sample: "Bearer ******"',
