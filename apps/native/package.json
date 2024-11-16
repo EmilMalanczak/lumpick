@@ -2,13 +2,15 @@
   "name": "@lumpik/native",
   "version": "1.0.0",
   "private": true,
-  "main": "index.js",
+  "main": "expo-router/entry",
   "scripts": {
-    "dev": "expo start --ios",
+    "dev": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "clean": "rm -rf .expo node_modules",
+    "postinstall": "npx tailwindcss -i ./global.css -o ./node_modules/.cache/nativewind/global.css"
   },
   "dependencies": {
     "@lumpik/api": "workspace:*",
@@ -18,12 +20,17 @@
     "@trpc/react-query": "^10.45.2",
     "expo": "^52.0.7",
     "expo-constants": "^17.0.3",
+    "expo-router": "^4.0.6",
     "expo-status-bar": "^2.0.0",
+    "nativewind": "^4.1.23",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-native": "^0.76.2",
+    "react-native-reanimated": "^3.16.1",
+    "react-native-safe-area-context": "^4.14.0",
     "react-native-web": "^0.19.13",
-    "superjson": "^2.2.1"
+    "superjson": "^2.2.1",
+    "tailwindcss": "^3.4.15"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
@@ -33,6 +40,7 @@
     "@lumpik/ts-config": "workspace:^0.1.0",
     "@types/react": "^18.3.12",
     "@types/react-native": "^0.73.0",
+    "babel-plugin-module-resolver": "^5.0.2",
     "typescript": "^5.6.3"
   },
   "eslintConfig": {
