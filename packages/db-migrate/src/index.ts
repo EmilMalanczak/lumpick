@@ -10,7 +10,6 @@ if (!process.env.DATABASE_URL) {
 
 const client = postgres(process.env.DATABASE_URL, { max: 1 });
 const db = drizzle(client, {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   schema,
   logger: true,
 });
