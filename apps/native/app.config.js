@@ -29,4 +29,8 @@ export default ({ config }) => ({
   experiments: {
     typedRoutes: true,
   },
+  newArchEnabled: true,
+  extra: {
+    storybookEnabled: process.env.STORYBOOK_ENABLED,
+  },
 });

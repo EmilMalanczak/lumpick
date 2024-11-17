@@ -18,6 +18,7 @@ module.exports = function (api) {
             "~": "./",
             "~utils": "./utils",
             "~constants": "./constants",
+            "~storybook": ".storybook",
           },
         },
       ],

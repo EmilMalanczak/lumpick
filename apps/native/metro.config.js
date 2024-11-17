@@ -3,14 +3,17 @@
 const { getDefaultConfig } = require("expo/metro-config");
 const { FileStore } = require("metro-cache");
 const { withNativeWind } = require("nativewind/metro");
+const withStorybook = require("@storybook/react-native/metro/withStorybook");
 
 const path = require("path");
 
 module.exports = withTurborepoManagedCache(
   withMonorepoPaths(
-    withNativeWind(getDefaultConfig(__dirname), {
-      input: "./global.css",
-    }),
+    withStorybookConfig(
+      withNativeWind(getDefaultConfig(__dirname), {
+        input: "./global.css",
+      }),
+    ),
   ),
 );
 
@@ -52,4 +55,23 @@ function withTurborepoManagedCache(config) {
     new FileStore({ root: path.join(__dirname, "node_modules/.cache/metro") }),
   ];
   return config;
+}
+
+/**
+ * Storybook on react native is a normal React Native component that can be used or hidden
+ * anywhere in RN application. withStorybook is a wrapper function to extend Metro config for Storybook
+ *
+ * @param {import('expo/metro-config').MetroConfig} config
+ * @returns {import('expo/metro-config').MetroConfig}
+ */
+function withStorybookConfig(config) {
+  return withStorybook(config, {
+    enabled: process.env.STORYBOOK_ENABLED,
+    configPath: path.resolve(__dirname, "./.storybook"),
+    /**
+     * If onDisabledRemoveStorybook true and enabled is false, the storybook package will be removed from the build.
+     * Useful for production build.
+     */
+    onDisabledRemoveStorybook: true,
+  });
 }

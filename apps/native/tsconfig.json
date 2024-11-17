@@ -7,7 +7,8 @@
       "~/*": ["./*"],
       "~components/*": ["./components/*"],
       "~constants/*": ["./constants/*"],
-      "~utils/*": ["./utils/*"]
+      "~utils/*": ["./utils/*"],
+      "~storybook/*": [".storybook/*"]
     },
     "jsx": "react-native",
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
@@ -17,7 +18,8 @@
     "**/*.tsx",
     "nativewind-env.d.ts",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "expo-env.d.ts",
+    ".storybook"
   ],
   "exclude": ["node_modules"]
 }
