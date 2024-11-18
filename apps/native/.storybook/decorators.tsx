@@ -7,7 +7,6 @@ export { withBackgrounds } from "@storybook/addon-ondevice-backgrounds";
 export function withClassName(className: string) {
   return function (Story: StoryFn) {
     return (
-      // @ts-ignore
       <View className={className}>
         <Story />
       </View>

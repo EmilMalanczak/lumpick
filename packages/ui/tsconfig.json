@@ -1,10 +1,7 @@
 {
-  "extends": "@lumpik/ts-config/base.json",
-  "include": ["."],
-  "exclude": ["dist", "build", "node_modules"],
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": ["@lumpik/ts-config/base.json"],
   "compilerOptions": {
-    "strict": true,
-    "incremental": true,
-    "tsBuildInfoFile": "./build/cache/.tsbuildinfo"
-  } 
+    "jsx": "react-native"
+  }
 }

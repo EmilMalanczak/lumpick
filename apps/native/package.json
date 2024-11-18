@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@lumpik/api": "workspace:*",
-    "@repo/ui": "workspace:*",
+    "@lumpik/ui": "workspace:*",
     "@tanstack/react-query": "^5.60.4",
     "@trpc/client": "^10.45.2",
     "@trpc/react-query": "^10.45.2",
