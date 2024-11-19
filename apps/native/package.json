@@ -10,7 +10,6 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "clean": "rm -rf .expo node_modules",
-    "postinstall": "npx tailwindcss -i ./global.css -o ./node_modules/.cache/nativewind/global.css",
     "build-storybook": "storybook build",
     "storybook-generate": "sb-rn-get-stories",
     "storybook": "cross-env STORYBOOK_ENABLED=1 expo start",

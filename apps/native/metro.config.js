@@ -2,19 +2,12 @@
 // Learn more: https://docs.expo.dev/guides/monorepos/
 const { getDefaultConfig } = require("expo/metro-config");
 const { FileStore } = require("metro-cache");
-const { withNativeWind } = require("nativewind/metro");
 const withStorybook = require("@storybook/react-native/metro/withStorybook");
 
 const path = require("path");
 
 module.exports = withTurborepoManagedCache(
-  withMonorepoPaths(
-    withStorybookConfig(
-      withNativeWind(getDefaultConfig(__dirname), {
-        input: "./global.css",
-      }),
-    ),
-  ),
+  withMonorepoPaths(withStorybookConfig(getDefaultConfig(__dirname))),
 );
 
 /**

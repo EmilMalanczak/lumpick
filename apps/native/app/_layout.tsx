@@ -1,5 +1,4 @@
 import "~/scripts/polyfills";
-import "../global.css";
 
 import React, { Suspense } from "react";
 import Constants from "expo-constants";
