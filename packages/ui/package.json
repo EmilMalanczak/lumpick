@@ -67,8 +67,7 @@
     "extends": [
       "@lumpik/eslint-config/base",
       "@lumpik/eslint-config/react",
-      "@lumpik/eslint-config/react-native",
-      "plugin:storybook/recommended"
+      "@lumpik/eslint-config/react-native"
     ]
   },
   "prettier": "@lumpik/prettier-config",

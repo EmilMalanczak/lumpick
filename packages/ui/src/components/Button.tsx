@@ -13,7 +13,7 @@ export const MyButton: FC<MyButtonProps> = ({ onPress, text }) => {
       onPress={onPress}
       activeOpacity={0.8}
     >
-      <Text>{text}</Text>
+      <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
   );
 };
@@ -27,5 +27,5 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: "blue",
   },
-  text: { color: "red" },
+  text: { color: "yellow" },
 });
