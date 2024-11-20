@@ -1,8 +1,8 @@
 import type { SignOptions } from "jsonwebtoken";
 import jwt from "jsonwebtoken";
 
-import { env } from "../plugins/config/env";
-import { tokenConfig } from "../plugins/config/token";
+import { env } from "../config/env";
+import { tokenConfig } from "../config/token";
 
 class JWTToken<T extends string | object | Buffer> {
   private secret: string;

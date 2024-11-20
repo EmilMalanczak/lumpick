@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 
-import { t } from "../trpc";
+import { t } from "~/trpc";
 
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.user) {

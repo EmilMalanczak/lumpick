@@ -4,6 +4,7 @@ import postgres from "postgres";
 import { schema } from "./src/schema";
 
 export type { User } from "./src/tables/users.table";
+export type { VerifyToken } from "./src/tables";
 
 export * from "drizzle-orm";
 

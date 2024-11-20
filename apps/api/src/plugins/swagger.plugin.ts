@@ -11,7 +11,7 @@ const openApiDocument = generateOpenApiDocument(appRouter, {
   version: "1.0.0",
   description: "OpenAPI compliant REST API built using tRPC with Fastify",
   baseUrl: "http://localhost:3009/api",
-  tags: ["auth"], 
+  tags: ["auth"],
   securitySchemes: {
     Bearer: {
       description: 'Authorization header token, sample: "Bearer ******"',

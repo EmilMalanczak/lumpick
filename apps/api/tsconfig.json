@@ -6,12 +6,10 @@
     "paths": {
       "~utils/*": ["src/utils/*"],
       "~mails/*": ["src/mails/*"],
-      "~config/*": ["src/plugins/config/*"],
-      "~procedures/*": ["src/procedures/*"],
+      "~config/*": ["src/config/*"],
+      "~modules/*": ["src/modules/*"],
       "~plugins/*": ["src/plugins/*"],
-      "~controllers/*": ["src/controllers/*"],
-      "~schemas/*": ["src/schemas/*"],
-      "~services/*": ["src/services/*"]
+      "~/*": ["src/*"]
     }
   },
   "include": ["*.ts", "src"],

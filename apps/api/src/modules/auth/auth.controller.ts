@@ -1,7 +1,9 @@
 import { TRPCError } from "@trpc/server";
+import { isDbError } from "~utils/is-db-error";
+import { refreshToken } from "~utils/jwt";
+import { logger } from "~utils/logger";
 import bcrypt from "bcryptjs";
 
-import type { Context } from "../../context";
 import type {
   CreateUserInput,
   LoginUserInput,
@@ -9,9 +11,7 @@ import type {
   ResendVerifyEmailInput,
   VerifyEmailInput,
 } from "./auth.schema";
-import { isDbError } from "../../utils/is-db-error";
-import { refreshToken } from "../../utils/jwt";
-import { logger } from "../../utils/logger";
+import type { Context } from "~/context";
 import {
   createUser,
   createVerificationToken,

@@ -1,6 +1,5 @@
-import { publicProcedure } from "~plugins/procedures";
-
-import { createTRPCRouter } from "../../trpc";
+import { publicProcedure } from "~/procedures";
+import { createTRPCRouter } from "~/trpc";
 import {
   loginMutationHandler,
   refreshTokenHandler,

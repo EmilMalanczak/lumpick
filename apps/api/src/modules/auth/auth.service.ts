@@ -4,13 +4,11 @@ import { emailConfirmationEmailHtml } from "~mails/email-confirmation";
 import { isDbError } from "~utils/is-db-error";
 import { accessToken, refreshToken } from "~utils/jwt";
 import { mailer } from "~utils/mailer";
+import { users, verifyTokens } from "node_modules/@lumpik/db/src/tables";
 import { v4 as uuid } from "uuid";
 
-import type { User } from "@lumpik/db";
+import type { User, VerifyToken } from "@lumpik/db";
 import { db, eq } from "@lumpik/db";
-
-import type { VerifyToken } from "../../../../../packages/db/src/tables";
-import { users, verifyTokens } from "../../../../../packages/db/src/tables";
 
 export const createUser = async (input: User<"insert">) => {
   const [user] = await db.insert(users).values(input).returning({
