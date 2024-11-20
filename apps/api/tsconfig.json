@@ -6,7 +6,7 @@
     "paths": {
       "~utils/*": ["src/utils/*"],
       "~mails/*": ["src/mails/*"],
-      "~config/*": ["src/config/*"],
+      "~config/*": ["src/plugins/config/*"],
       "~procedures/*": ["src/procedures/*"],
       "~plugins/*": ["src/plugins/*"],
       "~controllers/*": ["src/controllers/*"],

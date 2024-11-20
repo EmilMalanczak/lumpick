@@ -1,7 +1,7 @@
 import type { TypeOf } from "zod";
 import { object, string, void as zodVoid } from "zod";
 
-import { selectUserSchema } from "../../../../packages/db/src/tables";
+import { selectUserSchema } from "../../../../../packages/db/src/tables";
 
 export const createUserSchema = {
   input: object({

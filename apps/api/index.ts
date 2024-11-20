@@ -6,8 +6,8 @@ import fastify from "fastify";
 import { fastifyTRPCOpenApiPlugin } from "trpc-openapi";
 
 import type { AppRouter } from "./src/root";
-import { env } from "./src/config/env";
 import { createTRPCContext } from "./src/context";
+import { env } from "./src/plugins/config/env";
 import { swaggerPlugin } from "./src/plugins/swagger.plugin";
 import { appRouter } from "./src/root";
 import { logger } from "./src/utils/logger";

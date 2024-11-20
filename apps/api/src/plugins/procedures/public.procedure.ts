@@ -1,4 +1,4 @@
-import { t } from "../trpc";
+import { t } from "src/trpc";
 
 /**
  * Public (unauthed) procedure

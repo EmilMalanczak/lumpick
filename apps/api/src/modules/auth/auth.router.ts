@@ -1,19 +1,20 @@
+import { publicProcedure } from "~plugins/procedures";
+
+import { createTRPCRouter } from "../../trpc";
 import {
   loginMutationHandler,
   refreshTokenHandler,
   registerMutationHandler,
   resendVerifyEmailHandler,
   verifyEmailHandler,
-} from "../controller/auth.controller";
-import { publicProcedure } from "../procedures";
+} from "./auth.controller";
 import {
   createUserSchema,
   loginUserSchema,
   refreshTokenSchema,
   resendVerifyEmailSchema,
   verifyEmailSchema,
-} from "../schemas/auth.schema";
-import { createTRPCRouter } from "../trpc";
+} from "./auth.schema";
 
 export const authRouter = createTRPCRouter({
   login: publicProcedure

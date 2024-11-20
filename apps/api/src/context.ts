@@ -1,6 +1,6 @@
 import type { CreateFastifyContextOptions } from "@trpc/server/adapters/fastify";
 
-import { verifyUserToken } from "./services/auth.service";
+import { verifyUserToken } from "./modules/auth/auth.service";
 
 /**
  * This is the actual context you'll use in your router. It will be used to

@@ -9,8 +9,8 @@ import { v4 as uuid } from "uuid";
 import type { User } from "@lumpik/db";
 import { db, eq } from "@lumpik/db";
 
-import type { VerifyToken } from "../../../../packages/db/src/tables";
-import { users, verifyTokens } from "../../../../packages/db/src/tables";
+import type { VerifyToken } from "../../../../../packages/db/src/tables";
+import { users, verifyTokens } from "../../../../../packages/db/src/tables";
 
 export const createUser = async (input: User<"insert">) => {
   const [user] = await db.insert(users).values(input).returning({

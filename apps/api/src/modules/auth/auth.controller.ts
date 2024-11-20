@@ -1,14 +1,17 @@
 import { TRPCError } from "@trpc/server";
 import bcrypt from "bcryptjs";
 
-import type { Context } from "../context";
+import type { Context } from "../../context";
 import type {
   CreateUserInput,
   LoginUserInput,
   RefreshTokenInput,
   ResendVerifyEmailInput,
   VerifyEmailInput,
-} from "../schemas/auth.schema";
+} from "./auth.schema";
+import { isDbError } from "../../utils/is-db-error";
+import { refreshToken } from "../../utils/jwt";
+import { logger } from "../../utils/logger";
 import {
   createUser,
   createVerificationToken,
@@ -22,10 +25,7 @@ import {
   updateUserVerificationToken,
   validateVerifyToken,
   verifyUserEmail,
-} from "../services/auth.service";
-import { isDbError } from "../utils/is-db-error";
-import { refreshToken } from "../utils/jwt";
-import { logger } from "../utils/logger";
+} from "./auth.service";
 
 export const registerMutationHandler = async (input: CreateUserInput) => {
   try {
