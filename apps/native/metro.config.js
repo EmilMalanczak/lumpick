@@ -6,9 +6,13 @@ const withStorybook = require("@storybook/react-native/metro/withStorybook");
 
 const path = require("path");
 
-module.exports = withTurborepoManagedCache(
-  withMonorepoPaths(withStorybookConfig(getDefaultConfig(__dirname))),
-);
+const defaultConfig = getDefaultConfig(__dirname);
+
+module.exports = pipe(
+  withTurborepoManagedCache,
+  withMonorepoPaths,
+  withStorybookConfig,
+)(defaultConfig);
 
 /**
  * Add the monorepo paths to the Metro config.
@@ -67,4 +71,14 @@ function withStorybookConfig(config) {
      */
     onDisabledRemoveStorybook: true,
   });
+}
+
+/**
+ * Pipe function to compose functions from right to left.
+ * @param  {...Function} configFns
+ * @returns {Function}
+ */
+function pipe(...configFns) {
+  return (initialValue) =>
+    configFns.reduceRight((value, fn) => fn(value), initialValue);
 }
