@@ -4,7 +4,7 @@ import swaggerUi from "@fastify/swagger-ui";
 import fp from "fastify-plugin";
 import { generateOpenApiDocument } from "trpc-openapi";
 
-import { appRouter } from "../root";
+import { appRouter } from "~/root";
 
 const openApiDocument = generateOpenApiDocument(appRouter, {
   title: "Lumpik OpenAPI",
