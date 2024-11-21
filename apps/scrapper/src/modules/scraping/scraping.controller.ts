@@ -1,7 +1,8 @@
+import { withTerminalLoader } from "~utils/with-terminal-loading";
+
 import type { PromptService } from "./services/prompt.service";
 import type { ScrapingService } from "./services/scraping.service";
 import type { SitemapService } from "./services/sitemap.service";
-import { withTerminalLoader } from "../../utils/with-terminal-loading";
 
 type ScrapingControllerDependencies = {
   scrapingService: ScrapingService;

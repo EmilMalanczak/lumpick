@@ -1,13 +1,15 @@
 import path from "node:path";
 import { Worker } from "node:worker_threads";
+import puppeteer from "puppeteer";
+
 import { logger } from "~utils/logger";
 import { sleep } from "~utils/sleep";
 import { getRoot } from "~utils/storage";
 import { createTerminalLoader } from "~utils/with-terminal-loading";
-import puppeteer from "puppeteer";
 
-import type { ScrapedShop } from "../utils/scrapping.utils";
+import type { ScrapedShop, ScrapWorkerMessage } from "../scraping.types";
 import type { StorageService } from "./storage.service";
+
 import {
   scrapShopAdditionalTreats,
   scrapShopDeliveries,
@@ -23,13 +25,6 @@ type ScrapingServiceDependencies = {
   storageService: StorageService;
 };
 
-export type WorkerMessage =
-  | { success: true; url: string; data: ScrapedShop }
-  | { success: false; url: string; error: string };
-
-export type WorkerData = {
-  url: string;
-};
 export const createScrapingService = (deps: ScrapingServiceDependencies) => {
   const { storageService } = deps;
 
@@ -127,7 +122,7 @@ export const createScrapingService = (deps: ScrapingServiceDependencies) => {
     failedShops: { url: string; error: string }[];
     shops: ScrapedShop[];
   }> {
-    const results: WorkerMessage[] = [];
+    const results: ScrapWorkerMessage[] = [];
     const totalBatches = Math.ceil(urls.length / batchSize);
 
     const loader = createScrapeLoader(urls.length);
@@ -208,14 +203,14 @@ export const createScrapingService = (deps: ScrapingServiceDependencies) => {
 
       const shops = results
         .filter(
-          (result): result is Extract<WorkerMessage, { success: true }> =>
+          (result): result is Extract<ScrapWorkerMessage, { success: true }> =>
             result.success,
         )
         .map((result) => result.data);
 
       const failedShops = results
         .filter(
-          (result): result is Extract<WorkerMessage, { success: false }> =>
+          (result): result is Extract<ScrapWorkerMessage, { success: false }> =>
             !result.success,
         )
         .map(({ url, error }) => ({ url, error }));
@@ -256,7 +251,7 @@ export const createScrapingService = (deps: ScrapingServiceDependencies) => {
     return { page, browser };
   }
 
-  async function createShopWorker(url: string): Promise<WorkerMessage> {
+  async function createShopWorker(url: string): Promise<ScrapWorkerMessage> {
     return new Promise((resolve, reject) => {
       const worker = new Worker(
         path.resolve(`${getRoot()}/dist/scrap-worker.js`),
@@ -265,7 +260,7 @@ export const createScrapingService = (deps: ScrapingServiceDependencies) => {
         },
       );
 
-      worker.on("message", (message: WorkerMessage) => {
+      worker.on("message", (message: ScrapWorkerMessage) => {
         resolve(message);
         void worker.terminate();
       });

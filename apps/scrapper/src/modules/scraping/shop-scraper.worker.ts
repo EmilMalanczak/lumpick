@@ -1,8 +1,12 @@
 import { parentPort, workerData } from "node:worker_threads";
 import puppeteer from "puppeteer";
 
-import type { WorkerData, WorkerMessage } from "./services/scraping.service";
-import type { ScrapedShop } from "./utils/scrapping.utils";
+import type {
+  ScrapedShop,
+  ScrapWorkerData,
+  ScrapWorkerMessage,
+} from "./scraping.types";
+
 import {
   scrapShopAdditionalTreats,
   scrapShopDeliveries,
@@ -61,7 +65,7 @@ async function workerScrapeShop(url: string): Promise<ScrapedShop> {
   }
 }
 
-const { url } = workerData as WorkerData;
+const { url } = workerData as ScrapWorkerData;
 
 void (async () => {
   try {
@@ -70,13 +74,13 @@ void (async () => {
       success: true,
       url,
       data: shopData,
-    } as WorkerMessage);
+    } as ScrapWorkerMessage);
   } catch (error) {
     parentPort?.postMessage({
       success: false,
       url,
       error: error instanceof Error ? error.message : "Unknown error",
-    } as WorkerMessage);
+    } as ScrapWorkerMessage);
   } finally {
     process.exit(0);
   }

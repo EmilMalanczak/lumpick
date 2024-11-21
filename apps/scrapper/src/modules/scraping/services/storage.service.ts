@@ -1,9 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import type { ScrapedShop } from "../utils/scrapping.utils";
-import { SCRAP_SHOPS_DATA_FOLDER } from "../../../config/constants";
-import { getRoot, readJson, storeJson } from "../../../utils/storage";
+import { SCRAP_SHOPS_DATA_FOLDER } from "~/config/constants";
+import { getRoot, readJson, storeJson } from "~/utils/storage";
+
+import type { ScrapedShop } from "../scraping.types";
 
 export function createStorageService() {
   async function getScrappedShops(): Promise<ScrapedShop[]> {
