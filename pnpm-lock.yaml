@@ -85,13 +85,13 @@ importers:
         version: 3.23.8
     devDependencies:
       '@lumpik/eslint-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/eslint-config
       '@lumpik/prettier-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/prettier-config
       '@lumpik/ts-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/ts-config
       '@types/bcryptjs':
         specifier: ^2.4.6
@@ -200,13 +200,13 @@ importers:
         specifier: ^5.0.5
         version: 5.0.5(@types/react-native@0.73.0(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.12)(react@18.3.1))(@types/react@18.3.12)(react-native-gesture-handler@2.21.0(react-native@0.76.2(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.12)(react@18.3.1))(react@18.3.1))(react-native-reanimated@3.16.1(@babel/core@7.26.0)(react-native@0.76.2(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.12)(react@18.3.1))(react@18.3.1))(react-native@0.76.2(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.12)(react@18.3.1))(react@18.3.1)
       '@lumpik/eslint-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/eslint-config
       '@lumpik/prettier-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/prettier-config
       '@lumpik/ts-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/ts-config
       '@react-native-async-storage/async-storage':
         specifier: ^2.1.0
@@ -269,7 +269,7 @@ importers:
         specifier: ^5.0.2
         version: 5.5.0
       '@lumpik/api':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../api
       pino:
         specifier: ^8.19.0
@@ -285,13 +285,13 @@ importers:
         specifier: ^1.3.1
         version: 1.5.5
       '@lumpik/eslint-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/eslint-config
       '@lumpik/prettier-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/prettier-config
       '@lumpik/ts-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/ts-config
       '@types/xml2js':
         specifier: ^0.4.14
@@ -377,13 +377,13 @@ importers:
         version: 3.23.8
     devDependencies:
       '@lumpik/eslint-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/eslint-config
       '@lumpik/prettier-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/prettier-config
       '@lumpik/ts-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/ts-config
       '@types/pg':
         specifier: ^8.11.10
@@ -407,7 +407,7 @@ importers:
   packages/db-migrate:
     dependencies:
       '@lumpik/db':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../db
       drizzle-kit:
         specifier: ^0.28.1
@@ -420,13 +420,13 @@ importers:
         version: 3.4.5
     devDependencies:
       '@lumpik/eslint-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/eslint-config
       '@lumpik/prettier-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/prettier-config
       '@lumpik/ts-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/ts-config
       '@types/pg':
         specifier: ^8.11.10
@@ -456,13 +456,13 @@ importers:
   packages/ui:
     devDependencies:
       '@lumpik/eslint-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/eslint-config
       '@lumpik/prettier-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/prettier-config
       '@lumpik/ts-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/ts-config
       '@types/react':
         specifier: ^18.3.12
@@ -501,16 +501,16 @@ importers:
         specifier: ^5.0.5
         version: 5.0.5(@types/react-native@0.73.0(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.12)(react@18.3.1))(@types/react@18.3.12)(react-native-gesture-handler@2.21.0(react-native@0.76.2(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.12)(react@18.3.1))(react@18.3.1))(react-native-reanimated@3.16.1(@babel/core@7.26.0)(react-native@0.76.2(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.12)(react@18.3.1))(react@18.3.1))(react-native@0.76.2(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.12)(react@18.3.1))(react@18.3.1)
       '@lumpik/eslint-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/eslint-config
       '@lumpik/prettier-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/prettier-config
       '@lumpik/ts-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/ts-config
       '@lumpik/ui':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../ui
       '@react-native-async-storage/async-storage':
         specifier: ^2.1.0
@@ -582,10 +582,10 @@ importers:
   tooling/eslint-config:
     devDependencies:
       '@lumpik/prettier-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../prettier-config
       '@lumpik/ts-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../ts-config
       '@next/eslint-plugin-next':
         specifier: ^14.1.0
@@ -633,7 +633,7 @@ importers:
         specifier: ^4.1.1
         version: 4.4.0(prettier@3.3.3)
       '@lumpik/ts-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:*
         version: link:../ts-config
       prettier:
         specifier: ^3.2.5
