@@ -18,7 +18,7 @@
     "db:studio": "pnpm -F db studio",
     "db:generate": "pnpm -F db generate",
     "db:migrate": "pnpm -F db-migrate migrate",
-    "scrap": "pnpm turbo run build --filter=@lumpik/scrapper && node ./apps/scrapper/dist/index.js"
+    "scrap": "turbo build --filter=@lumpik/scrapper && node ./apps/scrapper/dist/index.js"
   },
   "devDependencies": {
     "@lumpik/prettier-config": "workspace:*",
