@@ -7,17 +7,19 @@
       "~/*": ["./*"],
       "~components/*": ["./components/*"],
       "~constants/*": ["./constants/*"],
-      "~utils/*": ["./utils/*"]
+      "~utils/*": ["./utils/*"],
+      "~storybook/*": [".storybook/*"]
     },
     "jsx": "react-native",
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext"
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "nativewind-env.d.ts",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ],
-  "exclude": ["node_modules"]
+    "expo-env.d.ts",
+    ".storybook"
+  ]
 }

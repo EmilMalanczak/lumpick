@@ -1,9 +1,19 @@
-import { Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+
+import { MyButton } from "@lumpik/ui";
 
 export default function HomeScreen() {
   return (
-    <View className="justify-center items-center flex flex-1">
-      <Text>Hi!</Text>
+    <View style={styles.wrapper}>
+      <MyButton text="hello world" />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});

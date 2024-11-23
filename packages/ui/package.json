@@ -1,21 +1,78 @@
 {
-  "name": "@repo/ui",
-  "version": "0.0.0",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "name": "@lumpik/ui",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Lumpik UI library",
+  "source": "./src/index.tsx",
+  "main": "./dist/commonjs/index.js",
+  "module": "./dist/module/index.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/typescript/module/index.d.ts",
+        "default": "./dist/module/index.js"
+      },
+      "require": {
+        "types": "./dist/typescript/commonjs/index.d.ts",
+        "default": "./dist/commonjs/index.js"
+      }
+    }
+  },
+  "files": [
+    "src",
+    "dist",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.json",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "clean": "rm -rf dist"
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "rm -rf dist",
+    "build": "bob build"
   },
   "devDependencies": {
-    "@lumpik/ts-config": "workspace:*",
+    "@lumpik/eslint-config": "workspace:^0.1.0",
+    "@lumpik/prettier-config": "workspace:^0.1.0",
+    "@lumpik/ts-config": "workspace:^0.1.0",
     "@types/react": "^18.3.12",
-    "tsup": "^8.3.5",
-    "typescript": "^5.6.3" 
-  },
-  "dependencies": {
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.5",
     "react": "^18.3.1",
-    "react-native": "^0.76.2"
-  }
+    "react-native": "^0.76.2",
+    "react-native-builder-bob": "^0.32.1",
+    "typescript": "^5.6.3"
+  },
+  "resolutions": {
+    "@types/react": "^18.3.12"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@lumpik/eslint-config/base",
+      "@lumpik/eslint-config/react",
+      "@lumpik/eslint-config/react-native"
+    ]
+  },
+  "prettier": "@lumpik/prettier-config",
+  "eslintIgnore": [
+    "node_modules/",
+    "dist/"
+  ]
 }

@@ -7,6 +7,7 @@ const config = {
   ],
   rules: {
     "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
   },
   globals: {
     React: "writable",

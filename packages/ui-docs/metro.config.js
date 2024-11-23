@@ -63,13 +63,8 @@ function withTurborepoManagedCache(config) {
  */
 function withStorybookConfig(config) {
   return withStorybook(config, {
-    enabled: process.env.STORYBOOK_ENABLED,
+    enabled: true,
     configPath: path.resolve(__dirname, "./.storybook"),
-    /**
-     * If onDisabledRemoveStorybook true and enabled is false, the storybook package will be removed from the build.
-     * Useful for production build.
-     */
-    onDisabledRemoveStorybook: true,
   });
 }
 
