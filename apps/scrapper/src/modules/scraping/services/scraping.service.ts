@@ -1,13 +1,15 @@
-import path from "node:path";
-import { Worker } from "node:worker_threads";
 import puppeteer from "puppeteer";
 
+import { WorkerPool } from "~/utils/worker-pool";
 import { logger } from "~utils/logger";
-import { sleep } from "~utils/sleep";
 import { getRoot } from "~utils/storage";
 import { createTerminalLoader } from "~utils/with-terminal-loading";
 
-import type { ScrapedShop, ScrapWorkerMessage } from "../scraping.types";
+import type {
+  ScrapedShop,
+  ScrapWorkerData,
+  ScrapWorkerResult,
+} from "../scraping.types";
 import type { StorageService } from "./storage.service";
 
 import {
@@ -82,22 +84,17 @@ export const createScrapingService = (deps: ScrapingServiceDependencies) => {
         text: "",
         state: {
           completed: 0,
+          failed: 0,
           total,
-          currentBatch: {
-            number: 1,
-            total: 1,
-            urls: [] as string[],
-          },
+          activeUrls: [] as string[],
         },
       },
       {
         onTick: ({ state }) => {
-          const { completed, total, currentBatch } = state!;
+          const { completed, total, failed, activeUrls } = state!;
           const percentage = ((completed / total) * 100).toFixed(1);
-          const progress = `${completed}/${total} - ${percentage}%`;
-          const batch = `[Batch ${currentBatch.number}/${currentBatch.total}]`;
 
-          const currentUrls = currentBatch.urls
+          const currentUrls = activeUrls
             .map((url) => {
               try {
                 return new URL(url).pathname;
@@ -107,7 +104,7 @@ export const createScrapingService = (deps: ScrapingServiceDependencies) => {
             })
             .join(", ");
 
-          return `Scrapping shops (${progress}) ${batch}${
+          return `Scrapping: Success ${completed}, Failed ${failed}, Total: ${completed + failed}/${total} (${percentage}%) ${
             currentUrls ? ` Current: ${currentUrls}` : ""
           }`;
         },
@@ -117,118 +114,69 @@ export const createScrapingService = (deps: ScrapingServiceDependencies) => {
 
   async function scrapeShops(
     urls: string[],
-    batchSize: number,
-  ): Promise<{
-    failedShops: { url: string; error: string }[];
-    shops: ScrapedShop[];
-  }> {
-    const results: ScrapWorkerMessage[] = [];
-    const totalBatches = Math.ceil(urls.length / batchSize);
-
+    numberOfThreads: number,
+  ): Promise<ScrapedShop[]> {
     const loader = createScrapeLoader(urls.length);
 
-    try {
-      loader.start();
+    const scrapWorkersPool = new WorkerPool<ScrapWorkerData, ScrapWorkerResult>(
+      `${getRoot()}/dist/scrap-worker.js`,
+      {
+        numberOfThreads,
+        retry: {
+          maxRetries: 3,
+          shouldRetry: (error: Error) => {
+            return error.message.includes("Navigation timeout");
+          },
+          delayMs: (attempt: number) => Math.pow(2, attempt) * 1000,
+        },
+      },
+    );
 
-      for (
-        let startIndex = 0;
-        startIndex < urls.length;
-        startIndex += batchSize
-      ) {
-        const batch = urls.slice(startIndex, startIndex + batchSize);
-        const currentBatch = Math.floor(startIndex / batchSize) + 1;
-
+    scrapWorkersPool.on(
+      "progress",
+      ({ total, finished, failed, activeJobs }) => {
         loader.updateState({
           state: {
-            completed: startIndex,
-            total: urls.length,
-            currentBatch: {
-              number: currentBatch,
-              total: totalBatches,
-              urls: batch,
-            },
+            completed: finished,
+            failed,
+            total,
+            activeUrls: activeJobs.map((job) => job.url),
           },
         });
+      },
+    );
 
-        const batchResults = await Promise.allSettled(
-          batch.map(async (url) => {
-            const workerResult = await createShopWorker(url);
-
-            if (workerResult.success) {
-              const { data } = workerResult;
-
-              await storageService.saveShopData(data);
-
-              loader.log(`Scrapped shop: ${data.metadata.slug}`);
-            } else {
-              loader.log(`Failed to scrap shop: ${url}`);
-            }
-
-            return workerResult;
-          }),
-        );
-
-        batchResults.forEach((result, index) => {
-          if (result.status === "fulfilled") {
-            results.push(result.value);
-          } else {
-            results.push({
-              success: false,
-              url: batch[index]!,
-              error:
-                result.reason instanceof Error
-                  ? result.reason.message
-                  : String(result.reason),
-            });
-          }
+    scrapWorkersPool.on("success", ({ data }) => {
+      void storageService
+        .saveShopData(data)
+        .then(() => {
+          loader.log(`Scrapped shop: ${data.metadata.slug}`);
+        })
+        .catch((error) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          logger.error("Failed to save shops error", { error });
         });
+    });
 
-        if (startIndex + batchSize < urls.length) {
-          await sleep(1000);
-        }
-      }
-
-      // Update final state
-      loader.updateState({
-        state: {
-          completed: urls.length,
-          total: urls.length,
-          currentBatch: {
-            number: totalBatches,
-            total: totalBatches,
-            urls: [],
-          },
-        },
-      });
-
-      const shops = results
-        .filter(
-          (result): result is Extract<ScrapWorkerMessage, { success: true }> =>
-            result.success,
+    scrapWorkersPool.on("failed", ({ input, error }) => {
+      void storageService
+        .saveShopError(
+          input.url,
+          error instanceof Error ? error.message : "Unknown error",
         )
-        .map((result) => result.data);
-
-      const failedShops = results
-        .filter(
-          (result): result is Extract<ScrapWorkerMessage, { success: false }> =>
-            !result.success,
-        )
-        .map(({ url, error }) => ({ url, error }));
-
-      if (failedShops.length > 0) {
-        logger.info("\nFailed to scrape the following shops:");
-        failedShops.forEach(({ url, error }) => {
-          logger.info(`- ${url}: ${error}`);
+        .finally(() => {
+          loader.log(`Failed to scrap shop: ${input.url}`);
         });
-      }
+    });
 
-      return {
-        shops,
-        failedShops,
-      };
-    } finally {
-      loader.stop();
-    }
+    loader.start();
+
+    const results = await scrapWorkersPool.executeAll(
+      urls.map((url) => ({ url })),
+    );
+    loader.stop();
+
+    return results;
   }
 
   async function openBrowser() {
@@ -249,33 +197,6 @@ export const createScrapingService = (deps: ScrapingServiceDependencies) => {
     }
 
     return { page, browser };
-  }
-
-  async function createShopWorker(url: string): Promise<ScrapWorkerMessage> {
-    return new Promise((resolve, reject) => {
-      const worker = new Worker(
-        path.resolve(`${getRoot()}/dist/scrap-worker.js`),
-        {
-          workerData: { url },
-        },
-      );
-
-      worker.on("message", (message: ScrapWorkerMessage) => {
-        resolve(message);
-        void worker.terminate();
-      });
-
-      worker.on("error", (error) => {
-        reject(error);
-        void worker.terminate();
-      });
-
-      worker.on("exit", (code) => {
-        if (code !== 0) {
-          reject(new Error(`Worker stopped with exit code ${code}`));
-        }
-      });
-    });
   }
 
   return {

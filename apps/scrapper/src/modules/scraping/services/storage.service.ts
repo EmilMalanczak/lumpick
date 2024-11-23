@@ -1,7 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { SCRAP_SHOPS_DATA_FOLDER } from "~/config/constants";
+import {
+  SCRAP_ERROR_DATA_FOLDER,
+  SCRAP_SHOPS_DATA_FOLDER,
+} from "~/config/constants";
 import { getRoot, readJson, storeJson } from "~/utils/storage";
 
 import type { ScrapedShop } from "../scraping.types";
@@ -33,10 +36,19 @@ export function createStorageService() {
     return readJson<ScrapedShop>(filePath, { addSuffix: false });
   }
 
+  async function saveShopError(url: string, error: string) {
+    const slug = new URL(url).pathname;
+
+    const filePath = `${SCRAP_ERROR_DATA_FOLDER}/${slug}`;
+
+    await storeJson(filePath, error);
+  }
+
   return {
     getScrappedShops,
     saveShopData,
     getShopData,
+    saveShopError,
   };
 }
 

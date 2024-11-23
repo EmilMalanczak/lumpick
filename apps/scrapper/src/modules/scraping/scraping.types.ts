@@ -1,7 +1,4 @@
-export type ScrapWorkerMessage =
-  | { success: true; url: string; data: ScrapedShop }
-  | { success: false; url: string; error: string };
-
+export type ScrapWorkerResult = ScrapedShop;
 export type ScrapWorkerData = {
   url: string;
 };

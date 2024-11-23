@@ -50,13 +50,9 @@ void (async () => {
         name: "Full scrap",
         type: "FULL_SCRAP",
         handler: async () => {
-          const { shops, failedShops } =
-            await scrapingController.scrapMultipleShops();
+          await scrapingController.scrapMultipleShops();
 
-          logger.info("Full scraping completed", {
-            success: shops.length,
-            failed: failedShops.length,
-          });
+          logger.info("Full scraping completed");
         },
       },
     ];

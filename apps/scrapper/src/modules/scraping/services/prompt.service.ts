@@ -27,7 +27,7 @@ export function createPromptService() {
   }
 
   async function getThreadCount() {
-    const maxThreads = availableParallelism();
+    const maxThreads = Math.min(availableParallelism(), 5);
 
     return Number(
       await input({

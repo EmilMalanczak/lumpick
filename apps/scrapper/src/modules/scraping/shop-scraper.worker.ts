@@ -1,11 +1,9 @@
-import { parentPort, workerData } from "node:worker_threads";
+import { parentPort } from "node:worker_threads";
 import puppeteer from "puppeteer";
 
-import type {
-  ScrapedShop,
-  ScrapWorkerData,
-  ScrapWorkerMessage,
-} from "./scraping.types";
+import type { WorkerResult, WorkerTask } from "~/utils/worker-pool";
+
+import type { ScrapedShop, ScrapWorkerData } from "./scraping.types";
 
 import {
   scrapShopAdditionalTreats,
@@ -65,23 +63,26 @@ async function workerScrapeShop(url: string): Promise<ScrapedShop> {
   }
 }
 
-const { url } = workerData as ScrapWorkerData;
+if (parentPort) {
+  parentPort.on("message", (task: WorkerTask<ScrapWorkerData>) => {
+    void workerScrapeShop(task.data.url)
+      .then((shopData) => {
+        const result: WorkerResult<ScrapWorkerData, ScrapedShop> = {
+          id: task.id,
+          data: shopData,
+          success: true,
+        };
 
-void (async () => {
-  try {
-    const shopData = await workerScrapeShop(url);
-    parentPort?.postMessage({
-      success: true,
-      url,
-      data: shopData,
-    } as ScrapWorkerMessage);
-  } catch (error) {
-    parentPort?.postMessage({
-      success: false,
-      url,
-      error: error instanceof Error ? error.message : "Unknown error",
-    } as ScrapWorkerMessage);
-  } finally {
-    process.exit(0);
-  }
-})();
+        parentPort?.postMessage(result);
+      })
+      .catch((error) => {
+        const failedResult: WorkerResult<ScrapWorkerData, ScrapedShop> = {
+          id: task.id,
+          error: error instanceof Error ? error : new Error(String(error)),
+          success: false,
+          input: task.data,
+        };
+        parentPort?.postMessage(failedResult);
+      });
+  });
+}
