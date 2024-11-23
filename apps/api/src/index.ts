@@ -5,14 +5,14 @@ import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
 import fastify from "fastify";
 import { fastifyTRPCOpenApiPlugin } from "trpc-openapi";
 
-import type { AppRouter } from "./src/root";
-import { env } from "./src/config/env";
-import { createTRPCContext } from "./src/context";
-import { swaggerPlugin } from "./src/plugins/swagger.plugin";
-import { appRouter } from "./src/root";
-import { logger } from "./src/utils/logger";
+import type { AppRouter } from "./root";
+import { env } from "./config/env";
+import { createTRPCContext } from "./context";
+import { swaggerPlugin } from "./plugins/swagger.plugin";
+import { appRouter } from "./root";
+import { logger } from "./utils/logger";
 
-export { appRouter, type AppRouter } from "./src/root";
+export { appRouter, type AppRouter } from "./root";
 
 /**
  * Inference helpers for input types

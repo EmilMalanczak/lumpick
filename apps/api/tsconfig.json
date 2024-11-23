@@ -7,11 +7,9 @@
       "~utils/*": ["src/utils/*"],
       "~mails/*": ["src/mails/*"],
       "~config/*": ["src/config/*"],
-      "~procedures/*": ["src/procedures/*"],
+      "~modules/*": ["src/modules/*"],
       "~plugins/*": ["src/plugins/*"],
-      "~controllers/*": ["src/controllers/*"],
-      "~schemas/*": ["src/schemas/*"],
-      "~services/*": ["src/services/*"]
+      "~/*": ["src/*"]
     }
   },
   "include": ["*.ts", "src"],

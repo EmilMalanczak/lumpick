@@ -1,61 +1,17 @@
+import { publicProcedure } from "~/procedures";
+import { createTRPCRouter } from "~/trpc";
 import {
-  loginMutationHandler,
   refreshTokenHandler,
-  registerMutationHandler,
   resendVerifyEmailHandler,
   verifyEmailHandler,
-} from "../controller/auth.controller";
-import { publicProcedure } from "../procedures";
+} from "./auth.controller";
 import {
-  createUserSchema,
-  loginUserSchema,
   refreshTokenSchema,
   resendVerifyEmailSchema,
   verifyEmailSchema,
-} from "../schemas/auth.schema";
-import { createTRPCRouter } from "../trpc";
+} from "./auth.schema";
 
 export const authRouter = createTRPCRouter({
-  login: publicProcedure
-    .meta({
-      openapi: {
-        method: "POST",
-        summary: "Login",
-        path: "/auth/login",
-        tags: ["auth"],
-        example: {
-          request: {
-            email: "emil.malanczak@gmail.com",
-            password: "password123",
-          },
-        },
-      },
-    })
-    .input(loginUserSchema.input)
-    .output(loginUserSchema.output)
-    .mutation(({ input }) => loginMutationHandler(input)),
-
-  register: publicProcedure
-    .meta({
-      openapi: {
-        method: "POST",
-        summary: "Register a new user",
-        path: "/auth/register",
-        tags: ["auth"],
-        example: {
-          request: {
-            email: "emil.malanczak@gmail.com",
-            name: "test user",
-            password: "password123",
-            passwordConfirm: "password123",
-          },
-        },
-      },
-    })
-    .input(createUserSchema.input)
-    .output(createUserSchema.output)
-    .mutation(({ input }) => registerMutationHandler(input)),
-
   refreshToken: publicProcedure
     .meta({
       openapi: {
