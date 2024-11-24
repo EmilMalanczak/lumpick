@@ -214,8 +214,21 @@ export class WorkerPool<
     return new Promise<TOutput>((resolve, reject) => {
       const queueItem: QueueItem<TInput, TOutput> = {
         task,
-        resolve,
-        reject,
+        resolve: (result) => {
+          resolve(result);
+
+          this.emit("success", { id: task.id, data: result, success: true });
+        },
+        reject: (error) => {
+          reject(error);
+
+          this.emit("failed", {
+            id: task.id,
+            error,
+            input: task.data,
+            success: false,
+          });
+        },
         retriesLeft: this.retryConfig.maxRetries,
       };
 

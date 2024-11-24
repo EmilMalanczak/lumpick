@@ -1,14 +1,15 @@
 import fs from "node:fs/promises";
+import { parseStringPromise } from "xml2js";
+
 import {
   API_ALL_SHOPS_ENDPOINT,
   SCRAP_DATA_FOLDER,
   SHOP_URLS_FILENAME,
 } from "~config/constants";
 import { getRoot, readJson, storeJson } from "~utils/storage";
-import { parseStringPromise } from "xml2js";
 
 type SitemapItemRaw = {
-  loc: [string]; 
+  loc: [string];
   lastmod: [string];
 };
 
