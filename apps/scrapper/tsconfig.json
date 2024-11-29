@@ -1,9 +1,15 @@
 {
   "extends": "@lumpik/ts-config/base.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-    "outDir": "dist"
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"],
+      "~utils/*": ["./src/utils/*"],
+      "~config/*": ["./src/config/*"],
+      "~modules/*": ["./src/modules/*"]
+    }
   },
-  "include": ["*.ts", "src"],
+  "include": ["*.ts", "src", "scripts"],
   "exclude": ["node_modules"]
 }

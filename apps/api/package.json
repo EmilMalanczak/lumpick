@@ -3,25 +3,25 @@
   "version": "0.1.0",
   "type": "module",
   "exports": {
-    ".": "./index.ts"
+    ".": "./src/index.ts"
   },
-  "main": "./index.ts",
-  "types": "./index.ts",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "license": "MIT",
   "scripts": {
-    "build": "esbuild index.ts --bundle --packages=external --platform=node --format=cjs --outdir=dist --sourcemap",
+    "build": "esbuild src/index.ts --bundle --packages=external --platform=node --format=cjs --outdir=dist --sourcemap",
     "dev": "dotenv -e .env.development -- tsx watch --clear-screen=false index",
     "dev:studio": "pnpm dlx prisma studio --browser none",
-    "serve": "esbuild index.ts --bundle --packages=external --platform=node --format=cjs --outdir=dist --sourcemap && node dist/index.js",
+    "serve": "esbuild src/index.ts --bundle --packages=external --platform=node --format=cjs --outdir=dist --sourcemap && node dist/index.js",
     "clean": "rm -rf .turbo node_modules dist",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@lumpik/eslint-config": "workspace:^0.1.0",
-    "@lumpik/prettier-config": "workspace:^0.1.0",
-    "@lumpik/ts-config": "workspace:^0.1.0",
+    "@lumpik/eslint-config": "workspace:*",
+    "@lumpik/prettier-config": "workspace:*",
+    "@lumpik/ts-config": "workspace:*",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.6",
     "dotenv": "^16.4.5",
@@ -42,7 +42,7 @@
     ]
   },
   "prettier": "@lumpik/prettier-config",
-  "dependencies": { 
+  "dependencies": {
     "@fastify/autoload": "^6.0.2",
     "@fastify/cors": "^10.0.1",
     "@fastify/sensible": "^6.0.1",

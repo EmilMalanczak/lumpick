@@ -1,13 +1,16 @@
 import fs from "node:fs/promises";
-import path from "path";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { logger } from "./logger";
 
-const getRoot = () => {
-  return path.resolve(__dirname, "../");
+export const getRoot = () => {
+  const dir = path.dirname(fileURLToPath(import.meta.url));
+
+  return path.resolve(dir, "../");
 };
 
-const getFilePath = (
+export const getFilePath = (
   filename: string,
   { addSuffix = true }: { addSuffix?: boolean } = {},
 ) => {
@@ -16,7 +19,14 @@ const getFilePath = (
 
 export const storeJson = async (filename: string, json: string) => {
   try {
-    return await fs.writeFile(getFilePath(filename), json);
+    const filePath = getFilePath(filename);
+    const dir = path.dirname(filePath);
+
+    // Ensure the directory exists
+    await fs.mkdir(dir, { recursive: true });
+
+    // Write the file
+    return await fs.writeFile(filePath, json);
   } catch (error) {
     logger.error(error);
 
