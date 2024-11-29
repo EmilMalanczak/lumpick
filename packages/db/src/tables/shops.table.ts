@@ -35,11 +35,13 @@ export const shops = lumpikTable(
     slug: varchar("slug", { length: 255 }).unique().notNull(),
     description: text("description").notNull(),
     url: text("url"),
-    telephone: varchar("telephone", { length: 63 }),
+    telephone: varchar("telephone", { length: 15 }),
     email: varchar("email", { length: 255 }),
-    image: text("avatar"),
+    image: text("image"),
     addressId: integer("address_id").notNull(),
     hours: jsonb("hours").$type<WeekHours[]>().notNull(),
+    facebookUrl: text("facebook_url"),
+    instagramUrl: text("instagram_url"),
     ownerId: integer("owner_id")
       .notNull()
       .references(() => shopOwners.id),
