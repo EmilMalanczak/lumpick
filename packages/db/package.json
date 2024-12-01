@@ -14,8 +14,9 @@
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "push": "pnpm with-env drizzle-kit push:pg",
-    "generate": "pnpm with-env drizzle-kit generate:pg",
+    "drizzle-up": "pnpm with-env drizzle-kit up",
+    "push": "pnpm with-env drizzle-kit push",
+    "generate": "pnpm with-env drizzle-kit generate",
     "studio": "pnpm with-env drizzle-kit studio --verbose",
     "with-env": "dotenv -e ../../.env --"
   },

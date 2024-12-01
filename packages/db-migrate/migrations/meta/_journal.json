@@ -43,6 +43,13 @@
       "when": 1711908318600,
       "tag": "0005_lowly_enchantress",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1732925976135,
+      "tag": "0006_polite_whirlwind",
+      "breakpoints": true
     }
   ]
 }

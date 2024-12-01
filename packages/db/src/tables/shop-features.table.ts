@@ -1,6 +1,7 @@
 import { integer, primaryKey } from "drizzle-orm/pg-core";
 
 import type { DataTableType, DataType } from "../types/table-data-type";
+
 import { lumpikTable } from "../utils/lumpik-table";
 import { features } from "./features.table";
 import { shops } from "./shops.table";
@@ -19,11 +20,13 @@ export const shopFeatures = lumpikTable(
         onDelete: "cascade",
       }),
   },
-  (table) => ({
-    pk: primaryKey({
-      columns: [table.shopId, table.featureId],
-    }),
-  }),
+  (table) => [
+    {
+      pk: primaryKey({
+        columns: [table.shopId, table.featureId],
+      }),
+    },
+  ],
 );
 
 export type ShopFeature<T extends DataType = "select"> = DataTableType<
