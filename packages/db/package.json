@@ -24,11 +24,11 @@
     "@lumpik/prettier-config": "workspace:*",
     "@lumpik/ts-config": "workspace:*",
     "@types/pg": "^8.11.10",
-    "dotenv-cli": "^7.3.0",
-    "eslint": "^8.56.0",
+    "dotenv-cli": "^7.4.4",
+    "eslint": "^8.57.1",
     "pg": "^8.13.1",
-    "prettier": "^3.2.5",
-    "typescript": "^5.6.3"
+    "prettier": "^3.4.1",
+    "typescript": "^5.7.2"
   },
   "eslintConfig": {
     "root": true,
@@ -39,7 +39,7 @@
   "prettier": "@lumpik/prettier-config",
   "dependencies": {
     "drizzle-kit": "^0.28.1",
-    "drizzle-orm": "^0.36.3",
+    "drizzle-orm": "^0.36.4",
     "drizzle-zod": "^0.5.1",
     "postgres": "^3.4.5",
     "zod": "^3.23.8"
