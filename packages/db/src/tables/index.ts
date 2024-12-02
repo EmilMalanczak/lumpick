@@ -9,3 +9,5 @@ export * from "./shops.table";
 export * from "./shop-comments.table";
 export * from "./verify-tokens.table";
 export * from "./addresses.table";
+export * from "./deliveries.table";
+export * from "./pricings.table";

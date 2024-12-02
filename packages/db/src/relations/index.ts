@@ -7,3 +7,5 @@ export * from "./shop.relations";
 export * from "./shop-comments.relations";
 export * from "./verify-token.relations";
 export * from "./addresses.relations";
+export * from "./deliveries.relations";
+export * from "./pricings.relations";

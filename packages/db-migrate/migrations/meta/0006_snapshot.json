@@ -1,7 +1,190 @@
 {
+  "id": "0a03a3f1-e18a-4dbe-8ed9-4e2175b67e66",
+  "prevId": "2798ceab-ce29-4752-99ff-ccd801c957b0",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.lumpik_addresses": {
+      "name": "lumpik_addresses",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "numeric(9, 6)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "numeric(8, 6)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "street": {
+          "name": "street",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "city": {
+          "name": "city",
+          "type": "varchar(63)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "country": {
+          "name": "country",
+          "type": "varchar(63)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "postcode": {
+          "name": "postcode",
+          "type": "varchar(63)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "shop_id": {
+          "name": "shop_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "google_maps_link": {
+          "name": "google_maps_link",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "lumpik_addresses_shop_id_lumpik_shops_id_fk": {
+          "name": "lumpik_addresses_shop_id_lumpik_shops_id_fk",
+          "tableFrom": "lumpik_addresses",
+          "tableTo": "lumpik_shops",
+          "columnsFrom": [
+            "shop_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.lumpik_deliveries": {
+      "name": "lumpik_deliveries",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "shop_id": {
+          "name": "shop_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "delivery_type": {
+          "name": "delivery_type",
+          "type": "delivery_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'general'"
+        },
+        "is_periodic": {
+          "name": "is_periodic",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "repeat_interval": {
+          "name": "repeat_interval",
+          "type": "interval",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "delivery_duration": {
+          "name": "delivery_duration",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "next_delivery": {
+          "name": "next_delivery",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "lumpik_deliveries_shop_id_lumpik_shops_id_fk": {
+          "name": "lumpik_deliveries_shop_id_lumpik_shops_id_fk",
+          "tableFrom": "lumpik_deliveries",
+          "tableTo": "lumpik_shops",
+          "columnsFrom": [
+            "shop_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.lumpik_features": {
       "name": "lumpik_features",
       "schema": "",
@@ -21,6 +204,7 @@
         "type": {
           "name": "type",
           "type": "shop_features_type",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
         }
@@ -30,8 +214,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.lumpik_profiles": {
       "name": "lumpik_profiles",
@@ -75,22 +259,22 @@
         "lumpik_profiles_user_id_lumpik_users_id_fk": {
           "name": "lumpik_profiles_user_id_lumpik_users_id_fk",
           "tableFrom": "lumpik_profiles",
+          "tableTo": "lumpik_users",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "lumpik_users",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.lumpik_users": {
       "name": "lumpik_users",
@@ -154,22 +338,22 @@
       "uniqueConstraints": {
         "lumpik_users_name_unique": {
           "name": "lumpik_users_name_unique",
+          "nullsNotDistinct": false,
           "columns": [
             "name"
-          ],
-          "nullsNotDistinct": false
+          ]
         },
         "lumpik_users_email_unique": {
           "name": "lumpik_users_email_unique",
+          "nullsNotDistinct": false,
           "columns": [
             "email"
-          ],
-          "nullsNotDistinct": false
+          ]
         }
       },
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.lumpik_shops": {
       "name": "lumpik_shops",
@@ -187,11 +371,65 @@
           "primaryKey": false,
           "notNull": true
         },
+        "slug": {
+          "name": "slug",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
         "description": {
           "name": "description",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "url": {
+          "name": "url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "telephone": {
+          "name": "telephone",
+          "type": "varchar(15)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image": {
+          "name": "image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "address_id": {
+          "name": "address_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hours": {
+          "name": "hours",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "facebook_url": {
+          "name": "facebook_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "instagram_url": {
+          "name": "instagram_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "owner_id": {
           "name": "owner_id",
@@ -219,22 +457,37 @@
         "lumpik_shops_owner_id_lumpik_shop_owners_id_fk": {
           "name": "lumpik_shops_owner_id_lumpik_shop_owners_id_fk",
           "tableFrom": "lumpik_shops",
+          "tableTo": "lumpik_shop_owners",
           "columnsFrom": [
             "owner_id"
           ],
-          "tableTo": "lumpik_shop_owners",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "lumpik_shops_name_unique": {
+          "name": "lumpik_shops_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "name"
+          ]
+        },
+        "lumpik_shops_slug_unique": {
+          "name": "lumpik_shops_slug_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "slug"
+          ]
+        }
+      },
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.lumpik_pricings": {
       "name": "lumpik_pricings",
@@ -246,35 +499,57 @@
           "primaryKey": true,
           "notNull": true
         },
-        "name": {
-          "name": "name",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "prices": {
-          "name": "prices",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "type": {
-          "name": "type",
-          "type": "pricing_type",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "currency": {
-          "name": "currency",
-          "type": "varchar(4)",
-          "primaryKey": false,
-          "notNull": true
-        },
         "shop_id": {
           "name": "shop_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
+        },
+        "day": {
+          "name": "day",
+          "type": "day_of_week",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "week": {
+          "name": "week",
+          "type": "week_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'WEEK_1'"
+        },
+        "price_type": {
+          "name": "price_type",
+          "type": "price_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "currency": {
+          "name": "currency",
+          "type": "varchar(5)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "amount": {
+          "name": "amount",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "percentage_off": {
+          "name": "percentage_off",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",
@@ -296,22 +571,22 @@
         "lumpik_pricings_shop_id_lumpik_shops_id_fk": {
           "name": "lumpik_pricings_shop_id_lumpik_shops_id_fk",
           "tableFrom": "lumpik_pricings",
+          "tableTo": "lumpik_shops",
           "columnsFrom": [
             "shop_id"
           ],
-          "tableTo": "lumpik_shops",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.lumpik_shop_features": {
       "name": "lumpik_shop_features",
@@ -335,43 +610,35 @@
         "lumpik_shop_features_shop_id_lumpik_shops_id_fk": {
           "name": "lumpik_shop_features_shop_id_lumpik_shops_id_fk",
           "tableFrom": "lumpik_shop_features",
+          "tableTo": "lumpik_shops",
           "columnsFrom": [
             "shop_id"
           ],
-          "tableTo": "lumpik_shops",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "lumpik_shop_features_feature_id_lumpik_features_id_fk": {
           "name": "lumpik_shop_features_feature_id_lumpik_features_id_fk",
           "tableFrom": "lumpik_shop_features",
+          "tableTo": "lumpik_features",
           "columnsFrom": [
             "feature_id"
           ],
-          "tableTo": "lumpik_features",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {
-        "lumpik_shop_features_shop_id_feature_id_pk": {
-          "name": "lumpik_shop_features_shop_id_feature_id_pk",
-          "columns": [
-            "shop_id",
-            "feature_id"
-          ]
-        }
-      },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.lumpik_shop_owners": {
       "name": "lumpik_shop_owners",
@@ -416,22 +683,22 @@
         "lumpik_shop_owners_user_id_lumpik_users_id_fk": {
           "name": "lumpik_shop_owners_user_id_lumpik_users_id_fk",
           "tableFrom": "lumpik_shop_owners",
+          "tableTo": "lumpik_users",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "lumpik_users",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.lumpik_shop_comments": {
       "name": "lumpik_shop_comments",
@@ -481,22 +748,22 @@
         "lumpik_shop_comments_shop_id_lumpik_shops_id_fk": {
           "name": "lumpik_shop_comments_shop_id_lumpik_shops_id_fk",
           "tableFrom": "lumpik_shop_comments",
+          "tableTo": "lumpik_shops",
           "columnsFrom": [
             "shop_id"
           ],
-          "tableTo": "lumpik_shops",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.lumpik_verify_tokens": {
       "name": "lumpik_verify_tokens",
@@ -533,30 +800,30 @@
         "lumpik_verify_tokens_user_id_lumpik_users_id_fk": {
           "name": "lumpik_verify_tokens_user_id_lumpik_users_id_fk",
           "tableFrom": "lumpik_verify_tokens",
+          "tableTo": "lumpik_users",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "lumpik_users",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "lumpik_verify_tokens_token_unique": {
           "name": "lumpik_verify_tokens_token_unique",
+          "nullsNotDistinct": false,
           "columns": [
             "token"
-          ],
-          "nullsNotDistinct": false
+          ]
         }
       },
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.lumpik_shop-favourites": {
       "name": "lumpik_shop-favourites",
@@ -580,46 +847,50 @@
         "lumpik_shop-favourites_shop_id_lumpik_shops_id_fk": {
           "name": "lumpik_shop-favourites_shop_id_lumpik_shops_id_fk",
           "tableFrom": "lumpik_shop-favourites",
+          "tableTo": "lumpik_shops",
           "columnsFrom": [
             "shop_id"
           ],
-          "tableTo": "lumpik_shops",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "lumpik_shop-favourites_user_id_lumpik_users_id_fk": {
           "name": "lumpik_shop-favourites_user_id_lumpik_users_id_fk",
           "tableFrom": "lumpik_shop-favourites",
+          "tableTo": "lumpik_users",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "lumpik_users",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {
-        "lumpik_shop-favourites_shop_id_user_id_pk": {
-          "name": "lumpik_shop-favourites_shop_id_user_id_pk",
-          "columns": [
-            "shop_id",
-            "user_id"
-          ]
-        }
-      },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     }
   },
   "enums": {
+    "public.delivery_type": {
+      "name": "delivery_type",
+      "schema": "public",
+      "values": [
+        "general",
+        "shoes",
+        "clothes",
+        "accessories",
+        "seasonal",
+        "premium"
+      ]
+    },
     "public.shop_features_type": {
       "name": "shop_features_type",
       "schema": "public",
@@ -629,26 +900,48 @@
         "other"
       ]
     },
-    "public.pricing_type": {
-      "name": "pricing_type",
+    "public.day_of_week": {
+      "name": "day_of_week",
       "schema": "public",
       "values": [
-        "weight",
-        "percentage",
-        "piece"
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THURSDAY",
+        "FRIDAY",
+        "SATURDAY",
+        "SUNDAY"
+      ]
+    },
+    "public.price_type": {
+      "name": "price_type",
+      "schema": "public",
+      "values": [
+        "per_weight",
+        "per_piece",
+        "percentage_off",
+        "custom"
+      ]
+    },
+    "public.week_type": {
+      "name": "week_type",
+      "schema": "public",
+      "values": [
+        "WEEK_1",
+        "WEEK_2",
+        "WEEK_3",
+        "WEEK_4"
       ]
     }
   },
   "schemas": {},
-  "_meta": {
-    "schemas": {},
-    "tables": {},
-    "columns": {}
-  },
-  "id": "e563c770-8969-4232-aae7-cdbd5e535feb",
-  "prevId": "037ea293-6a75-41f1-936f-3eab9bba0841",
   "sequences": {},
+  "roles": {},
   "policies": {},
   "views": {},
-  "roles": {}
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
 }

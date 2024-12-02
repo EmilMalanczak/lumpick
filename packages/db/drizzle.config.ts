@@ -1,16 +1,18 @@
-import type { Config } from "drizzle-kit";
+import { defineConfig } from "drizzle-kit";
+
+import { TABLE_PREFIX } from "./src/utils/lumpik-table";
 
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL is not set");
 }
 
-export default {
+export default defineConfig({
   schema: ["./src/tables", "./src/relations"],
   out: "../db-migrate/migrations",
-  driver: "pg",
+  dialect: "postgresql",
   dbCredentials: {
-    connectionString: process.env.DATABASE_URL,
+    url: process.env.DATABASE_URL,
   },
   verbose: true,
-  tablesFilter: ["lumpik_*"],
-} satisfies Config;
+  tablesFilter: [TABLE_PREFIX],
+});
