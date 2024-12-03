@@ -2,7 +2,7 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
 import postgres from "postgres";
 
-import { schema } from "@lumpik/db";
+import { __drizzleSchema } from "@lumpik/db";
 
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL is not set");
@@ -10,7 +10,7 @@ if (!process.env.DATABASE_URL) {
 
 const client = postgres(process.env.DATABASE_URL, { max: 1 });
 const db = drizzle(client, {
-  schema,
+  schema: __drizzleSchema,
   logger: true,
 });
 
