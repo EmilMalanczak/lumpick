@@ -1,13 +1,40 @@
-export * from "./profiles.table";
-export * from "./users.table";
-export * from "./shops.table";
-export * from "./pricings.table";
-export * from "./features.table";
-export * from "./shop-features.table";
-export * from "./shop-owners.table";
-export * from "./shops.table";
-export * from "./shop-comments.table";
-export * from "./verify-tokens.table";
-export * from "./addresses.table";
-export * from "./deliveries.table";
-export * from "./pricings.table";
+import { addresses } from "./addresses/addresses.table";
+import { deliveries, deliveryTypeEnum } from "./deliveries/deliveries.table";
+import { features, featuresTypeEnum } from "./features/features.table";
+import {
+  dayOfWeekEnum,
+  priceTypeEnum,
+  pricings,
+  weekTypeEnum,
+} from "./pricings/pricings.table";
+import { profiles } from "./profiles/profiles.table";
+import { shopComments } from "./shop-comments/shop-comments.table";
+import { shopFavourites } from "./shop-favourites/shop-favourites.table";
+import { shopFeatures } from "./shop-features/shop-features.table";
+import { shopOwners } from "./shop-owners/shop-owners.table";
+import { shops } from "./shops/shops.table";
+import { users } from "./users/users.table";
+import { verifyTokens } from "./verify-tokens/verify-tokens.table";
+
+export const tables = {
+  profiles,
+  users,
+  shops,
+  features,
+  shopFeatures,
+  shopOwners,
+  shopFavourites,
+  shopComments,
+  verifyTokens,
+  addresses,
+  deliveries,
+  pricings,
+};
+
+export const enums = {
+  weekTypeEnum,
+  dayOfWeekEnum,
+  priceTypeEnum,
+  deliveryTypeEnum,
+  featuresTypeEnum,
+};

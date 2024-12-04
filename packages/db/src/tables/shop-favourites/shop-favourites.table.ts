@@ -1,10 +1,8 @@
 import { integer, primaryKey } from "drizzle-orm/pg-core";
 
-import type { DataTableType, DataType } from "../types/table-data-type";
-
-import { lumpikTable } from "../utils/lumpik-table";
-import { shops } from "./shops.table";
-import { users } from "./users.table";
+import { lumpikTable } from "../../utils/lumpik-table";
+import { shops } from "../shops/shops.table";
+import { users } from "../users/users.table";
 
 export const shopFavourites = lumpikTable(
   "shop-favourites",
@@ -28,8 +26,3 @@ export const shopFavourites = lumpikTable(
     },
   ],
 );
-
-export type ShopFavourite<T extends DataType = "select"> = DataTableType<
-  typeof shopFavourites,
-  T
->;

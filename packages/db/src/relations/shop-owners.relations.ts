@@ -1,11 +1,14 @@
 import { relations } from "drizzle-orm";
 
-import { shopOwners, shops, users } from "../tables";
+import { tables } from "../tables";
 
-export const shopOwnersRelations = relations(shopOwners, ({ many, one }) => ({
-  shops: many(shops),
-  user: one(users, {
-    fields: [shopOwners.userId],
-    references: [users.id],
+export const shopOwnersRelations = relations(
+  tables.shopOwners,
+  ({ many, one }) => ({
+    shops: many(tables.shops),
+    user: one(tables.users, {
+      fields: [tables.shopOwners.userId],
+      references: [tables.users.id],
+    }),
   }),
-}));
+);

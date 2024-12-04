@@ -1,11 +1,13 @@
 import { relations } from "drizzle-orm";
 
-import { users } from "../tables";
-import { verifyTokens } from "../tables/verify-tokens.table";
+import { tables } from "../tables";
 
-export const verifyTokenRelations = relations(verifyTokens, ({ one }) => ({
-  user: one(users, {
-    fields: [verifyTokens.userId],
-    references: [users.id],
+export const verifyTokenRelations = relations(
+  tables.verifyTokens,
+  ({ one }) => ({
+    user: one(tables.users, {
+      fields: [tables.verifyTokens.userId],
+      references: [tables.users.id],
+    }),
   }),
-}));
+);

@@ -1,14 +1,14 @@
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 
-import { schema } from "./src/schema";
-
-export type { User } from "./src/tables/users.table";
-export type { VerifyToken } from "./src/tables";
+import { relations } from "./src/relations";
+import { enums, tables } from "./src/tables";
 
 export * from "drizzle-orm";
 
-const client = postgres(process.env.DATABASE_URL!);
-const db = drizzle(client, { schema, logger: true });
+const __drizzleSchema = { ...tables, ...enums, ...relations };
 
-export { db, schema };
+const client = postgres(process.env.DATABASE_URL!);
+const db = drizzle(client, { schema: __drizzleSchema, logger: true });
+
+export { db, __drizzleSchema, tables, enums };

@@ -1,14 +1,14 @@
 import { relations } from "drizzle-orm";
 
-import { profiles, users, verifyTokens } from "../tables";
+import { tables } from "../tables";
 
-export const userRelations = relations(users, ({ one }) => ({
-  profile: one(profiles, {
-    fields: [users.id],
-    references: [profiles.userId],
+export const userRelations = relations(tables.users, ({ one }) => ({
+  profile: one(tables.profiles, {
+    fields: [tables.users.id],
+    references: [tables.profiles.userId],
   }),
-  verifyToken: one(verifyTokens, {
-    fields: [users.id],
-    references: [verifyTokens.userId],
+  verifyToken: one(tables.verifyTokens, {
+    fields: [tables.users.id],
+    references: [tables.verifyTokens.userId],
   }),
 }));

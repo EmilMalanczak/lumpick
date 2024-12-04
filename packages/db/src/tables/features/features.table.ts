@@ -1,7 +1,6 @@
 import { pgEnum, serial, varchar } from "drizzle-orm/pg-core";
 
-import type { DataTableType, DataType } from "../types/table-data-type";
-import { lumpikTable } from "../utils/lumpik-table";
+import { lumpikTable } from "../../utils/lumpik-table";
 
 export const featuresTypeEnum = pgEnum("shop_features_type", [
   "assortment",
@@ -15,11 +14,4 @@ export const features = lumpikTable("features", {
   type: featuresTypeEnum("type").notNull(),
 });
 
-export type Feature<T extends DataType = "select"> = DataTableType<
-  typeof features,
-  T
->;
 
-const { enumValues } = featuresTypeEnum;
-
-export type FeatureType = (typeof enumValues)[number];

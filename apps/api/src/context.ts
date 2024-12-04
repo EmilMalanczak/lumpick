@@ -18,8 +18,6 @@ export const createTRPCContext = async ({
     token = req.headers.authorization.split(" ")[1]!;
   }
 
-  console.log("headers", req.headers);
-
   const user = token ? await verifyUserToken(token) : null;
 
   return {

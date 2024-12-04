@@ -7,11 +7,9 @@ import {
   timestamp,
 } from "drizzle-orm/pg-core";
 
-import type { DataTableType, DataType } from "../types/table-data-type";
-
-import { createDataColumns } from "../utils/create-data-columns";
-import { lumpikTable } from "../utils/lumpik-table";
-import { shops } from "./shops.table";
+import { createDataColumns } from "../../utils/create-data-columns";
+import { lumpikTable } from "../../utils/lumpik-table";
+import { shops } from "../shops/shops.table";
 
 export const deliveryTypeEnum = pgEnum("delivery_type", [
   "general", // Regular delivery with mixed items
@@ -34,8 +32,3 @@ export const deliveries = lumpikTable("deliveries", {
   nextDelivery: timestamp("next_delivery").notNull(),
   ...createDataColumns(),
 });
-
-export type Delivery<T extends DataType = "select"> = DataTableType<
-  typeof deliveries,
-  T
->;
