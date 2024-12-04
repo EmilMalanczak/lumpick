@@ -1,21 +1,21 @@
-/* eslint-disable @typescript-eslint/require-await */
 import { TRPCError } from "@trpc/server";
+import { tables } from "node_modules/@lumpik/db/src/tables";
+import { v4 as uuid } from "uuid";
+
+import type { User, VerifyToken } from "@lumpik/db/types";
+import { db, eq } from "@lumpik/db";
+
 import { emailConfirmationEmailHtml } from "~mails/email-confirmation";
 import { findUserById } from "~modules/user/user.service";
 import { accessToken, refreshToken } from "~utils/jwt";
 import { mailer } from "~utils/mailer";
-import { users, verifyTokens } from "node_modules/@lumpik/db/src/tables";
-import { v4 as uuid } from "uuid";
-
-import type { User, VerifyToken } from "@lumpik/db";
-import { db, eq } from "@lumpik/db";
 
 export const createUser = async (input: User<"insert">) => {
-  const [user] = await db.insert(users).values(input).returning({
-    id: users.id,
-    email: users.email,
-    name: users.name,
-    provider: users.provider,
+  const [user] = await db.insert(tables.users).values(input).returning({
+    id: tables.users.id,
+    email: tables.users.email,
+    name: tables.users.name,
+    provider: tables.users.provider,
   });
 
   return user;
@@ -58,7 +58,9 @@ export const verifyUserToken = async (token: string) => {
 };
 
 export const removeVerificationToken = async (token: string) => {
-  await db.delete(verifyTokens).where(eq(verifyTokens.token, token));
+  await db
+    .delete(tables.verifyTokens)
+    .where(eq(tables.verifyTokens.token, token));
 };
 
 export const validateVerifyToken = (token: VerifyToken) => {
@@ -68,7 +70,7 @@ export const validateVerifyToken = (token: VerifyToken) => {
 
 export const getVerificationToken = async (token: string) => {
   const verifyToken = await db.query.verifyTokens.findFirst({
-    where: eq(verifyTokens.token, token),
+    where: eq(tables.verifyTokens.token, token),
   });
 
   return verifyToken;
@@ -78,7 +80,7 @@ export const createVerificationToken = async (
   user: Pick<User, "id" | "email">,
 ) => {
   const [verifyToken] = await db
-    .insert(verifyTokens)
+    .insert(tables.verifyTokens)
     .values({
       userId: user.id,
       token: uuid(),
@@ -91,7 +93,7 @@ export const createVerificationToken = async (
 
 export const getUserVerificationToken = async (userId: number) => {
   const verifyToken = await db.query.verifyTokens.findFirst({
-    where: eq(verifyTokens.userId, userId),
+    where: eq(tables.verifyTokens.userId, userId),
   });
 
   return verifyToken;
@@ -101,12 +103,12 @@ export const updateUserVerificationToken = async (
   user: Pick<User, "id" | "email">,
 ) => {
   const [updatedVerifyToken] = await db
-    .update(verifyTokens)
+    .update(tables.verifyTokens)
     .set({
       createdAt: new Date(),
       token: uuid(),
     })
-    .where(eq(verifyTokens.userId, user.id))
+    .where(eq(tables.verifyTokens.userId, user.id))
     .returning();
 
   return updatedVerifyToken;

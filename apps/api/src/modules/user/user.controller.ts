@@ -1,4 +1,6 @@
 import { TRPCError } from "@trpc/server";
+import bcrypt from "bcryptjs";
+
 import {
   createUser,
   createVerificationToken,
@@ -7,9 +9,9 @@ import {
 } from "~modules/auth/auth.service";
 import { isDbError } from "~utils/is-db-error";
 import { logger } from "~utils/logger";
-import bcrypt from "bcryptjs";
 
-import { CreateUserInput, LoginUserInput } from "./user.schema";
+import type { CreateUserInput, LoginUserInput } from "./user.schema";
+
 import { findUserByEmail } from "./user.service";
 
 export const registerMutationHandler = async (input: CreateUserInput) => {
