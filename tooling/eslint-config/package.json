@@ -1,5 +1,5 @@
 {
-  "name": "@lumpik/eslint-config",
+  "name": "@lumpick/eslint-config",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
@@ -16,8 +16,8 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@lumpik/prettier-config": "workspace:*",
-    "@lumpik/ts-config": "workspace:*",
+    "@lumpick/prettier-config": "workspace:*",
+    "@lumpick/ts-config": "workspace:*",
     "@next/eslint-plugin-next": "^14.1.0",
     "@react-native/eslint-config": "^0.73.1",
     "@types/eslint": "^8.56.2",
@@ -38,5 +38,5 @@
       "./base.js"
     ]
   },
-  "prettier": "@lumpik/prettier-config"
+  "prettier": "@lumpick/prettier-config"
 }

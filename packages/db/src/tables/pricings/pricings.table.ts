@@ -1,7 +1,7 @@
 import { decimal, integer, pgEnum, serial, varchar } from "drizzle-orm/pg-core";
 
 import { createDataColumns } from "../../utils/create-data-columns";
-import { lumpikTable } from "../../utils/lumpik-table";
+import { lumpickTable } from "../../utils/lumpick-table";
 import { shops } from "../shops/shops.table";
 
 export const dayOfWeekEnum = pgEnum("day_of_week", [
@@ -28,7 +28,7 @@ export const priceTypeEnum = pgEnum("price_type", [
   "custom",
 ]);
 
-export const pricings = lumpikTable("pricings", {
+export const pricings = lumpickTable("pricings", {
   id: serial("id").primaryKey(),
   shopId: integer("shop_id")
     .notNull()

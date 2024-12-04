@@ -1,7 +1,6 @@
+import type { User } from "@lumpick/db/types";
+import { db, eq, tables } from "@lumpick/db";
 import { TRPCError } from "@trpc/server";
-
-import type { User } from "@lumpik/db/types";
-import { db, eq, tables } from "@lumpik/db";
 
 import { isDbError } from "~utils/is-db-error";
 

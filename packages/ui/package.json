@@ -1,8 +1,8 @@
 {
-  "name": "@lumpik/ui",
+  "name": "@lumpick/ui",
   "private": true,
   "version": "0.1.0",
-  "description": "Lumpik UI library",
+  "description": "Lumpick UI library",
   "source": "./src/index.tsx",
   "main": "./dist/commonjs/index.js",
   "module": "./dist/module/index.js",
@@ -44,9 +44,9 @@
     "build": "bob build"
   },
   "devDependencies": {
-    "@lumpik/eslint-config": "workspace:*",
-    "@lumpik/prettier-config": "workspace:*",
-    "@lumpik/ts-config": "workspace:*",
+    "@lumpick/eslint-config": "workspace:*",
+    "@lumpick/prettier-config": "workspace:*",
+    "@lumpick/ts-config": "workspace:*",
     "@types/react": "^18.3.12",
     "eslint": "^8.56.0",
     "prettier": "^3.2.5",
@@ -65,12 +65,12 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@lumpik/eslint-config/base",
-      "@lumpik/eslint-config/react",
-      "@lumpik/eslint-config/react-native"
+      "@lumpick/eslint-config/base",
+      "@lumpick/eslint-config/react",
+      "@lumpick/eslint-config/react-native"
     ]
   },
-  "prettier": "@lumpik/prettier-config",
+  "prettier": "@lumpick/prettier-config",
   "eslintIgnore": [
     "node_modules/",
     "dist/"

@@ -23,7 +23,7 @@ export const emailConfirmationEmailHtml = ({
  <meta name="x-apple-disable-message-reformatting" /> 
  <link href="https://fonts.googleapis.com/css?family=Inter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900" rel="stylesheet" />
  <link href="https://fonts.googleapis.com/css?family=Sora:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800" rel="stylesheet" />
- <title>Lumpik confirm email</title>
+ <title>Lumpick confirm email</title>
  <style>
  html,
          body {
@@ -509,7 +509,7 @@ export const emailConfirmationEmailHtml = ({
                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" align="center">
                     <tr>
                      <td valign="top" class="pc-font-alt pc-w620-lineHeight-140pc" align="center" style="mso-line-height: exactly;line-height: 143%;letter-spacing: -0.2px;font-family: Inter, Arial, Helvetica, sans-serif;font-size: 14px;font-weight: normal;color: #ffffff;text-align: center;text-align-last: center;font-variant-ligatures: normal;">
-                      <div><span style="font-weight: 400;font-style: normal;color: rgb(255, 255, 255);">Copyright © 2024 Lumpik. All rights reserved.</span>
+                      <div><span style="font-weight: 400;font-style: normal;color: rgb(255, 255, 255);">Copyright © 2024 Lumpick. All rights reserved.</span>
                       </div>
                      </td>
                     </tr>

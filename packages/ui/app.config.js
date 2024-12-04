@@ -1,5 +1,5 @@
 export default ({ config }) => ({
   ...config,
-  name: "Lumpik UI",
-  slug: "lumpik-ui",
+  name: "Lumpick UI",
+  slug: "lumpick-ui",
 });

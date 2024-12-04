@@ -19,7 +19,7 @@ class JWTToken<T extends string | object | Buffer> {
 
     return jwt.sign(payload, privateKey, {
       ...this.options,
-      issuer: "lumpik-api-service",
+      issuer: "lumpick-api-service",
     });
   }
 

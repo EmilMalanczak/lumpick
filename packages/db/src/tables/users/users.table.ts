@@ -1,9 +1,9 @@
 import { boolean, serial, text, varchar } from "drizzle-orm/pg-core";
 
 import { createDataColumns } from "../../utils/create-data-columns";
-import { lumpikTable } from "../../utils/lumpik-table";
+import { lumpickTable } from "../../utils/lumpick-table";
 
-export const users = lumpikTable("users", {
+export const users = lumpickTable("users", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 64 }).notNull().unique(),
   password: varchar("password", { length: 128 }).notNull(),

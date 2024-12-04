@@ -11,6 +11,6 @@ export const mailer = nodemailer.createTransport(
     },
   },
   {
-    from: "Lumpik <imgonnamissit123@gmail.com>",
+    from: "Lumpick <imgonnamissit123@gmail.com>",
   },
 );

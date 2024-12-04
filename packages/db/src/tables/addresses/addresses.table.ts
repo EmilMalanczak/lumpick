@@ -1,10 +1,10 @@
 import { integer, numeric, serial, varchar } from "drizzle-orm/pg-core";
 
 import { createDataColumns } from "../../utils/create-data-columns";
-import { lumpikTable } from "../../utils/lumpik-table";
+import { lumpickTable } from "../../utils/lumpick-table";
 import { shops } from "../shops/shops.table";
 
-export const addresses = lumpikTable("addresses", {
+export const addresses = lumpickTable("addresses", {
   id: serial("id").primaryKey(),
   longitude: numeric("longitude", { precision: 9, scale: 6 }),
   latitude: numeric("latitude", { precision: 8, scale: 6 }),

@@ -1,7 +1,7 @@
 import type { TypeOf } from "zod";
 import { object, string } from "zod";
 
-import { schemas } from "@lumpik/db/schemas";
+import { schemas } from "@lumpick/db/schemas";
 
 export const createUserSchema = {
   input: object({

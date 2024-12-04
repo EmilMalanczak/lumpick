@@ -1,9 +1,9 @@
 import { TRPCError } from "@trpc/server";
-import { tables } from "node_modules/@lumpik/db/src/tables";
+import { tables } from "node_modules/@lumpick/db/src/tables";
 import { v4 as uuid } from "uuid";
 
-import type { User, VerifyToken } from "@lumpik/db/types";
-import { db, eq } from "@lumpik/db";
+import type { User, VerifyToken } from "@lumpick/db/types";
+import { db, eq } from "@lumpick/db";
 
 import { emailConfirmationEmailHtml } from "~mails/email-confirmation";
 import { findUserById } from "~modules/user/user.service";
@@ -122,7 +122,7 @@ export const sendVerificationEmail = async (
   url.searchParams.append("token", token);
 
   await mailer.sendMail({
-    subject: "Welcome to Lumpik - Confirm Your Registration!",
+    subject: "Welcome to Lumpick - Confirm Your Registration!",
     to: user.email,
     html: emailConfirmationEmailHtml({
       name: user.name,
