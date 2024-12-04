@@ -1,5 +1,7 @@
-import { selectUserSchema } from "node_modules/@lumpik/db/src/tables";
-import { object, string, TypeOf, void as zodVoid } from "zod";
+import type { TypeOf } from "zod";
+import { object, string } from "zod";
+
+import { schemas } from "@lumpik/db/schemas";
 
 export const createUserSchema = {
   input: object({
@@ -17,7 +19,7 @@ export const createUserSchema = {
   }),
   output: object({
     status: string(),
-    data: selectUserSchema.pick({
+    data: schemas.users.select.pick({
       name: true,
       email: true,
       id: true,
@@ -41,7 +43,7 @@ export const loginUserSchema = {
   output: object({
     accessToken: string(),
     refreshToken: string(),
-    user: selectUserSchema.pick({
+    user: schemas.users.select.pick({
       id: true,
       name: true,
       email: true,

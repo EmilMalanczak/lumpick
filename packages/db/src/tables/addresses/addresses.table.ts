@@ -1,8 +1,8 @@
 import { integer, numeric, serial, varchar } from "drizzle-orm/pg-core";
 
-import { createDataColumns } from "../utils/create-data-columns";
-import { lumpikTable } from "../utils/lumpik-table";
-import { shops } from "./shops.table";
+import { createDataColumns } from "../../utils/create-data-columns";
+import { lumpikTable } from "../../utils/lumpik-table";
+import { shops } from "../shops/shops.table";
 
 export const addresses = lumpikTable("addresses", {
   id: serial("id").primaryKey(),

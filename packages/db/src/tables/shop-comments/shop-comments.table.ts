@@ -1,9 +1,8 @@
 import { integer, serial, smallint, varchar } from "drizzle-orm/pg-core";
 
-import type { DataTableType, DataType } from "../types/table-data-type";
-import { createDataColumns } from "../utils/create-data-columns";
-import { lumpikTable } from "../utils/lumpik-table";
-import { shops } from "./shops.table";
+import { createDataColumns } from "../../utils/create-data-columns";
+import { lumpikTable } from "../../utils/lumpik-table";
+import { shops } from "../shops/shops.table";
 
 export const shopComments = lumpikTable("shop_comments", {
   id: serial("id").primaryKey(),
@@ -16,8 +15,3 @@ export const shopComments = lumpikTable("shop_comments", {
     }),
   ...createDataColumns(),
 });
-
-export type ShopComment<T extends DataType = "select"> = DataTableType<
-  typeof shopComments,
-  T
->;

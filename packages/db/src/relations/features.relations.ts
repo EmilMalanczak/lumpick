@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm";
 
-import { features, shopFeatures } from "../tables";
+import { tables } from "../tables";
 
-export const featuresRelations = relations(features, ({ many }) => ({
-  features: many(shopFeatures),
+export const featuresRelations = relations(tables.features, ({ many }) => ({
+  features: many(tables.shopFeatures),
 }));

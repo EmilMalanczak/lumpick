@@ -1,9 +1,8 @@
 import { integer, serial, varchar } from "drizzle-orm/pg-core";
 
-import type { DataTableType, DataType } from "../types/table-data-type";
-import { createDataColumns } from "../utils/create-data-columns";
-import { lumpikTable } from "../utils/lumpik-table";
-import { users } from "./users.table";
+import { createDataColumns } from "../../utils/create-data-columns";
+import { lumpikTable } from "../../utils/lumpik-table";
+import { users } from "../users/users.table";
 
 export const profiles = lumpikTable("profiles", {
   id: serial("id").primaryKey(),
@@ -15,8 +14,3 @@ export const profiles = lumpikTable("profiles", {
     }),
   ...createDataColumns(),
 });
-
-export type Profile<T extends DataType = "select"> = DataTableType<
-  typeof profiles,
-  T
->;

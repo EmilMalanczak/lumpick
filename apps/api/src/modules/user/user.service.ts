@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/require-await */
 import { TRPCError } from "@trpc/server";
-import { isDbError } from "~utils/is-db-error";
-import { users } from "node_modules/@lumpik/db/src/tables";
 
-import type { User } from "@lumpik/db";
-import { db, eq } from "@lumpik/db";
+import type { User } from "@lumpik/db/types";
+import { db, eq, tables } from "@lumpik/db";
+
+import { isDbError } from "~utils/is-db-error";
 
 export const findUserById = async (id: User["id"]) => {
   const user = await db.query.users.findFirst({
-    where: eq(users.id, id),
+    where: eq(tables.users.id, id),
   });
 
   return user;
@@ -16,19 +15,23 @@ export const findUserById = async (id: User["id"]) => {
 
 export const findUserByEmail = async (email: User["email"]) => {
   const user = await db.query.users.findFirst({
-    where: eq(users.email, email),
+    where: eq(tables.users.email, email),
   });
 
   return user;
 };
 
+// eslint-disable-next-line @typescript-eslint/require-await
 export const updateUser = async () => {
   return null;
 };
 
 export const verifyUserEmail = async (userId: number) => {
   try {
-    await db.update(users).set({ verified: true }).where(eq(users.id, userId));
+    await db
+      .update(tables.users)
+      .set({ verified: true })
+      .where(eq(tables.users.id, userId));
   } catch (err) {
     if (isDbError(err) && err.code === "23503") {
       throw new TRPCError({

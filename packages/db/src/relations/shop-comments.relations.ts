@@ -1,10 +1,13 @@
 import { relations } from "drizzle-orm";
 
-import { shopComments, shops } from "../tables";
+import { tables } from "../tables";
 
-export const shopCommentsRelations = relations(shopComments, ({ one }) => ({
-  shop: one(shops, {
-    fields: [shopComments.shopId],
-    references: [shops.id],
+export const shopCommentsRelations = relations(
+  tables.shopComments,
+  ({ one }) => ({
+    shop: one(tables.shops, {
+      fields: [tables.shopComments.shopId],
+      references: [tables.shops.id],
+    }),
   }),
-}));
+);

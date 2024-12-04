@@ -1,8 +1,7 @@
 import { relations } from "drizzle-orm";
 
-import { shops } from "../tables";
-import { addresses } from "../tables/addresses.table";
+import { tables } from "../tables";
 
-export const addressesRelations = relations(addresses, ({ one }) => ({
-  features: one(shops),
+export const addressesRelations = relations(tables.addresses, ({ one }) => ({
+  features: one(tables.shops),
 }));

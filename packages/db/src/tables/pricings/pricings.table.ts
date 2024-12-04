@@ -1,10 +1,8 @@
 import { decimal, integer, pgEnum, serial, varchar } from "drizzle-orm/pg-core";
 
-import type { DataTableType, DataType } from "../types/table-data-type";
-
-import { createDataColumns } from "../utils/create-data-columns";
-import { lumpikTable } from "../utils/lumpik-table";
-import { shops } from "./shops.table";
+import { createDataColumns } from "../../utils/create-data-columns";
+import { lumpikTable } from "../../utils/lumpik-table";
+import { shops } from "../shops/shops.table";
 
 export const dayOfWeekEnum = pgEnum("day_of_week", [
   "MONDAY",
@@ -46,10 +44,3 @@ export const pricings = lumpikTable("pricings", {
   description: varchar("description", { length: 500 }),
   ...createDataColumns(),
 });
-
-export type Pricing<T extends DataType = "select"> = DataTableType<
-  typeof pricings,
-  T
->;
-
-export type PricingType = (typeof priceTypeEnum.enumValues)[number];
