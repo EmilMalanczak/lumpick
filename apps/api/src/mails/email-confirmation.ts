@@ -3,7 +3,7 @@ type EmailConfirmationEmailParams = {
   confirmUrl: string;
 };
 
-export const emailConfirmationEmailHtml = ({
+export const generateEmailConfirmationMail = ({
   name,
   confirmUrl,
 }: EmailConfirmationEmailParams) => `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -195,7 +195,7 @@ export const emailConfirmationEmailHtml = ({
                <!--[if !gte mso 9]><! -->
                <td valign="top" class="pc-w620-padding-32-16-0-16" style="background-size: cover; background-position: top left; background-repeat: no-repeat;padding: 64px 24px 24px 24px;border-radius: 20px 20px 0px 0px;background-color: #111747;" bgcolor="#111747" background="https://cloudfilesdm.com/postcards/image-1711995320504.png">
                 <!--<![endif]-->
-                <!--[if gte mso 9]>
+                <!--[if gte mso 9]> 
                 <td valign="top"  align="center" style="background-size: cover; background-position: top left; background-repeat: no-repeat;background-color: #111747;border-radius: 20px 20px 0px 0px;" bgcolor="#111747" background="https://cloudfilesdm.com/postcards/image-1711995320504.png">
             <![endif]-->
                 <!--[if gte mso 9]>

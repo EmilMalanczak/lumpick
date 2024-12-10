@@ -1,13 +1,13 @@
-import type { OpenApiMeta } from "trpc-openapi";
+import type { TRPCPanelMeta } from "trpc-panel";
 import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import type { createTRPCContext } from "./context";
+import type { TrpcContext } from "./context";
 
 export const t = initTRPC
-  .meta<OpenApiMeta>()
-  .context<typeof createTRPCContext>()
+  .meta<TRPCPanelMeta>()
+  .context<TrpcContext>()
   .create({
     transformer: superjson,
     errorFormatter: ({ shape, error }) => ({

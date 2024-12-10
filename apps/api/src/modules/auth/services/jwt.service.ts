@@ -1,9 +1,7 @@
 import type { SignOptions } from "jsonwebtoken";
-import { env } from "~config/env";
-import { tokenConfig } from "~config/token";
 import jwt from "jsonwebtoken";
 
-class JWTToken<T extends string | object | Buffer> {
+export class JWTTokenService<T extends string | object | Buffer> {
   private secret: string;
   private public: string;
   private options: SignOptions;
@@ -14,7 +12,7 @@ class JWTToken<T extends string | object | Buffer> {
     this.options = options ?? {};
   }
 
-  sign(payload: T) {
+  public sign(payload: T) {
     const privateKey = Buffer.from(this.secret, "base64").toString("ascii");
 
     return jwt.sign(payload, privateKey, {
@@ -23,7 +21,7 @@ class JWTToken<T extends string | object | Buffer> {
     });
   }
 
-  decode(token: string): T | null {
+  public decode(token: string): T | null {
     try {
       const publicKey = Buffer.from(this.public, "base64").toString("ascii");
 
@@ -34,26 +32,3 @@ class JWTToken<T extends string | object | Buffer> {
     }
   }
 }
-
-type TokenPayload = {
-  userId: number;
-};
-
-export const accessToken = new JWTToken<TokenPayload>(
-  env.ACCESS_TOKEN_SECRET,
-  env.ACCESS_TOKEN_PUBLIC,
-  {
-    algorithm: "RS256",
-    subject: "user",
-    expiresIn: tokenConfig.accessTokenExpiry,
-  },
-);
-export const refreshToken = new JWTToken<TokenPayload>(
-  env.REFRESH_TOKEN_SECRET,
-  env.REFRESH_TOKEN_PUBLIC,
-  {
-    algorithm: "RS256",
-    subject: "user",
-    expiresIn: tokenConfig.refreshTokenExpiry,
-  },
-);

@@ -9,6 +9,11 @@ export * from "drizzle-orm";
 const __drizzleSchema = { ...tables, ...enums, ...relations };
 
 const client = postgres(process.env.DATABASE_URL!);
-const db = drizzle(client, { schema: __drizzleSchema, logger: true });
 
-export { db, __drizzleSchema, tables, enums };
+const setupDb = () =>
+  drizzle(client, { schema: __drizzleSchema, logger: true });
+
+type DbClient = ReturnType<typeof setupDb>;
+
+export { setupDb, __drizzleSchema, tables, enums };
+export type { DbClient };
