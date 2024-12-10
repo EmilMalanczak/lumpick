@@ -146,7 +146,7 @@ export class AuthService {
     try {
       const verifyToken = await this.getOrUpdateUserVerificationToken(user.id);
 
-      const url = new URL(`${this.baseUrl}/api/auth/verify-email`);
+      const url = new URL(`${this.baseUrl}/auth/verify-email`);
       url.searchParams.append("token", verifyToken.token);
 
       await this.mailerService.sendMail({

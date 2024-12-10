@@ -55,7 +55,7 @@ export const setupAuthModule = ({ mailer, db }: AuthModuleDependencies) => {
     accessTokenService,
     refreshTokenService,
     mailerService: mailer,
-    baseUrl: process.env.BASE_URL ?? "http://localhost:3000",
+    baseUrl: process.env.BASE_URL ?? "http://localhost:3003",
   });
 
   return {

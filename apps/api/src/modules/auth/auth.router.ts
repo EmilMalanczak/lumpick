@@ -53,14 +53,14 @@ export const authRouter = createTRPCRouter({
     }),
 
   verifyEmail: publicProcedure
-    .meta({
-      openapi: {
-        method: "GET",
-        summary: "Verify user email",
-        path: "/auth/verify-email",
-        tags: ["auth"],
-      },
-    })
+    // .meta({
+    //   openapi: {
+    //     method: "GET",
+    //     summary: "Verify user email",
+    //     path: "/auth/verify-email",
+    //     tags: ["auth"],
+    //   },
+    // })
     .input(verifyEmailSchema.input)
     .output(verifyEmailSchema.output)
     .query(async ({ input, ctx }) => {

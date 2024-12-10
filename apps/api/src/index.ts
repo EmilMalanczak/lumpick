@@ -8,7 +8,6 @@ import { renderTrpcPanel } from "trpc-panel";
 import { setupDb } from "@lumpick/db";
 
 import { setupAuthModule } from "~modules/auth/setup-auth-module";
-import { openApiPlugin, swaggerPlugin } from "~modules/open-api";
 import { LoggerService } from "~modules/shared/logger.service";
 import { MailService } from "~modules/shared/mail.service";
 
@@ -17,6 +16,7 @@ import type { AppRouter } from "./root";
 import { env } from "./config/env";
 import { createTRPCContext } from "./context";
 import { appRouter } from "./root";
+import { createCallerFactory } from "./trpc";
 
 export { appRouter, type AppRouter } from "./root";
 
@@ -90,21 +90,28 @@ const start = async () => {
         );
     });
 
-    // await server.register(openApiPlugin, {
-    //   basePath: "/api",
-    //   router: appRouter,
-    //   createContext: trpcContextCreator,
-    //   onError: (err: unknown) => {
-    //     logger.error(err);
-    //   },
-    //   responseMeta: (res: unknown) => res,
-    //   maxBodySize: 1024 * 1024 * 10, // 10MB
-    // });
+    const callerFactory = createCallerFactory(appRouter);
 
-    // await server.register(swaggerPlugin);
+    server.get("/auth/verify-email", async (req, res) => {
+      const caller = callerFactory(await trpcContextCreator({ req, res }));
+
+      const searchParams = new URLSearchParams(
+        req.query as Record<string, string>,
+      );
+      const token = searchParams.get("token");
+
+      if (!token) {
+        await res.status(400).send("Token is required");
+        return;
+      }
+
+      const user = await caller.auth.verifyEmail({ token });
+
+      return user;
+    });
 
     await server.listen({ port: env.PORT, host: env.HOST });
-    logger.log(`\nSwagger UI: http://localhost:${env.PORT}/docs\n`);
+    logger.log(`\nSwagger UI: http://localhost:${env.PORT}/panel\n`);
   } catch (err) {
     console.error(err);
     process.exit(1);
