@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "turbo dev --parallel",
     "dev:ui": "turbo watch dev --filter=@lumpick/ui-docs",
+    "dev:api": "turbo dev --filter=@lumpick/api",
     "build": "turbo build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",

@@ -24,7 +24,9 @@ export const deliveries = lumpickTable("deliveries", {
   id: serial("id").primaryKey(),
   shopId: integer("shop_id")
     .notNull()
-    .references(() => shops.id),
+    .references(() => shops.id, {
+      onDelete: "cascade",
+    }),
   deliveryType: deliveryTypeEnum("delivery_type").notNull().default("general"),
   isPeriodic: boolean("is_periodic").notNull().default(false),
   repeatInterval: interval("repeat_interval"),
