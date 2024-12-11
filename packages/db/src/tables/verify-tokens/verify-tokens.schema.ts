@@ -1,12 +1,20 @@
-import type { TypeOf } from "zod";
+import {
+  createInsertSchema,
+  createSelectSchema,
+  createUpdateSchema,
+} from "drizzle-zod";
 
-import type { DataType } from "../../types/table-data-type";
+import type { DataType, TableSchemaData } from "../../types/table-schema";
 
-import { createTableSchema } from "../../utils/create-table-schema";
 import { verifyTokens } from "./verify-tokens.table";
 
-export const verifyTokensSchema = createTableSchema(verifyTokens);
+export const verifyTokensSchema = {
+  insert: createInsertSchema(verifyTokens),
+  select: createSelectSchema(verifyTokens),
+  update: createUpdateSchema(verifyTokens),
+};
 
-export type VerifyToken<T extends DataType = "select"> = T extends "insert"
-  ? TypeOf<typeof verifyTokensSchema.insert>
-  : TypeOf<typeof verifyTokensSchema.select>;
+export type VerifyToken<T extends DataType = "select"> = TableSchemaData<
+  T,
+  typeof verifyTokensSchema
+>;

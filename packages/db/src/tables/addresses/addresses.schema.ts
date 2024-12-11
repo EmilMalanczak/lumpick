@@ -1,12 +1,20 @@
-import type { TypeOf } from "zod";
+import {
+  createInsertSchema,
+  createSelectSchema,
+  createUpdateSchema,
+} from "drizzle-zod";
 
-import type { DataType } from "../../types/table-data-type";
+import type { DataType, TableSchemaData } from "../../types/table-schema";
 
-import { createTableSchema } from "../../utils/create-table-schema";
 import { addresses } from "./addresses.table";
 
-export const addressesSchema = createTableSchema(addresses);
+export const addressesSchema = {
+  insert: createInsertSchema(addresses),
+  select: createSelectSchema(addresses),
+  update: createUpdateSchema(addresses),
+};
 
-export type Address<T extends DataType = "select"> = T extends "insert"
-  ? TypeOf<typeof addressesSchema.insert>
-  : TypeOf<typeof addressesSchema.select>;
+export type ShopComment<T extends DataType = "select"> = TableSchemaData<
+  T,
+  typeof addressesSchema
+>;
