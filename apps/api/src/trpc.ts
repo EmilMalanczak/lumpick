@@ -1,4 +1,4 @@
-import type { TRPCPanelMeta } from "trpc-panel";
+import type { TRPCPanelMeta } from "trpc-ui";
 import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";

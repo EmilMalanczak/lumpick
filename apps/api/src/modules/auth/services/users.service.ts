@@ -30,7 +30,7 @@ export class UsersService {
 
       return createdUser;
     } catch (error) {
-      if (isDbError(error) && error.message === "User already exists") {
+      if (isDbError(error) && error.code === "23505") {
         throw new LumpickError("CONFLICT", error.message);
       }
 

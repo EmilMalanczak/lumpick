@@ -3,7 +3,7 @@ import cors from "@fastify/cors";
 import sensible from "@fastify/sensible";
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
 import fastify from "fastify";
-import { renderTrpcPanel } from "trpc-panel";
+import { renderTrpcPanel } from "trpc-ui";
 
 import { setupDb } from "@lumpick/db";
 
