@@ -1,8 +1,11 @@
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 import cors from "@fastify/cors";
 import sensible from "@fastify/sensible";
-import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
-import fastify from "fastify";
+import {
+  CreateFastifyContextOptions,
+  fastifyTRPCPlugin,
+} from "@trpc/server/adapters/fastify";
+import fastify, { FastifyReply, FastifyRequest } from "fastify";
 import { renderTrpcPanel } from "trpc-ui";
 
 import { setupDb } from "@lumpick/db";
@@ -93,7 +96,9 @@ const start = async () => {
     const callerFactory = createCallerFactory(appRouter);
 
     server.get("/auth/verify-email", async (req, res) => {
-      const caller = callerFactory(await trpcContextCreator({ req, res }));
+      const caller = callerFactory(
+        await trpcContextCreator({ req, res } as CreateFastifyContextOptions),
+      );
 
       const searchParams = new URLSearchParams(
         req.query as Record<string, string>,
