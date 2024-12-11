@@ -1,22 +1,18 @@
 import { integer, primaryKey } from "drizzle-orm/pg-core";
 
-import { lumpikTable } from "../../utils/lumpik-table";
+import { lumpickTable } from "../../utils/lumpick-table";
 import { features } from "../features/features.table";
 import { shops } from "../shops/shops.table";
 
-export const shopFeatures = lumpikTable(
+export const shopFeatures = lumpickTable(
   "shop_features",
   {
     shopId: integer("shop_id")
       .notNull()
-      .references(() => shops.id, {
-        onDelete: "cascade",
-      }),
+      .references(() => shops.id),
     featureId: integer("feature_id")
       .notNull()
-      .references(() => features.id, {
-        onDelete: "cascade",
-      }),
+      .references(() => features.id),
   },
   (table) => [
     {

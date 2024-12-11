@@ -1,10 +1,10 @@
 import { integer, primaryKey } from "drizzle-orm/pg-core";
 
-import { lumpikTable } from "../../utils/lumpik-table";
+import { lumpickTable } from "../../utils/lumpick-table";
 import { shops } from "../shops/shops.table";
 import { users } from "../users/users.table";
 
-export const shopFavourites = lumpikTable(
+export const shopFavourites = lumpickTable(
   "shop-favourites",
   {
     shopId: integer("shop_id")

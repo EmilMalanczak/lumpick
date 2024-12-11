@@ -1,6 +1,6 @@
 {
-  "name": "@lumpik/ui-docs",
-  "description": "Lumpik UI documentation. Based on https://github.com/chromaui/intro-storybook-react-native-template",
+  "name": "@lumpick/ui-docs",
+  "description": "Lumpick UI documentation. Based on https://github.com/chromaui/intro-storybook-react-native-template",
   "private": true,
   "version": "0.1.0",
   "main": "App.tsx",
@@ -15,10 +15,10 @@
     "@expo/metro-runtime": "^4.0.0",
     "@expo/vector-icons": "^14.0.3",
     "@gorhom/bottom-sheet": "^5.0.5",
-    "@lumpik/eslint-config": "workspace:*",
-    "@lumpik/prettier-config": "workspace:*",
-    "@lumpik/ts-config": "workspace:*",
-    "@lumpik/ui": "workspace:*",
+    "@lumpick/eslint-config": "workspace:*",
+    "@lumpick/prettier-config": "workspace:*",
+    "@lumpick/ts-config": "workspace:*",
+    "@lumpick/ui": "workspace:*",
     "@react-native-async-storage/async-storage": "^2.1.0",
     "@react-native-community/datetimepicker": "^8.2.0",
     "@react-native-community/slider": "^4.5.5",
@@ -45,10 +45,10 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@lumpik/eslint-config/base",
-      "@lumpik/eslint-config/react",
-      "@lumpik/eslint-config/react-native"
+      "@lumpick/eslint-config/base",
+      "@lumpick/eslint-config/react",
+      "@lumpick/eslint-config/react-native"
     ]
   },
-  "prettier": "@lumpik/prettier-config"
+  "prettier": "@lumpick/prettier-config"
 }

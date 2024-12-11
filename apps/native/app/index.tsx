@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 
-import { MyButton } from "@lumpik/ui";
+import { MyButton } from "@lumpick/ui";
 
 export default function HomeScreen() {
   return (

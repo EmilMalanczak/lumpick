@@ -1,5 +1,5 @@
 {
-  "name": "@lumpik/native",
+  "name": "@lumpick/native",
   "version": "1.0.0",
   "private": true,
   "main": "expo-router/entry",
@@ -17,8 +17,8 @@
     "storybook:android": "cross-env STORYBOOK_ENABLED=1 expo start --android"
   },
   "dependencies": {
-    "@lumpik/api": "workspace:*",
-    "@lumpik/ui": "workspace:*",
+    "@lumpick/api": "workspace:*",
+    "@lumpick/ui": "workspace:*",
     "@tanstack/react-query": "^5.60.4",
     "@trpc/client": "^10.45.2",
     "@trpc/react-query": "^10.45.2",
@@ -40,9 +40,9 @@
     "@babel/core": "^7.23.7",
     "@expo/webpack-config": "^19.0.1",
     "@gorhom/bottom-sheet": "^5.0.5",
-    "@lumpik/eslint-config": "workspace:*",
-    "@lumpik/prettier-config": "workspace:*",
-    "@lumpik/ts-config": "workspace:*",
+    "@lumpick/eslint-config": "workspace:*",
+    "@lumpick/prettier-config": "workspace:*",
+    "@lumpick/ts-config": "workspace:*",
     "@react-native-async-storage/async-storage": "^2.1.0",
     "@react-native-community/datetimepicker": "^8.2.0",
     "@react-native-community/slider": "^4.5.5",
@@ -65,12 +65,12 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@lumpik/eslint-config/base",
-      "@lumpik/eslint-config/react"
+      "@lumpick/eslint-config/base",
+      "@lumpick/eslint-config/react"
     ],
     "ignorePatterns": [
       "expo-plugins/**"
     ]
   },
-  "prettier": "@lumpik/prettier-config"
+  "prettier": "@lumpick/prettier-config"
 }

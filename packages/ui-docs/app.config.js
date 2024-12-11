@@ -1,6 +1,6 @@
 export default ({ config }) => ({
   ...config,
-  name: "Lumpik UI docs",
-  slug: "lumpik-ui-docs",
+  name: "Lumpick UI docs",
+  slug: "lumpick-ui-docs",
   newArchEnabled: true,
 });

@@ -1,9 +1,9 @@
 import { integer, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
-import { lumpikTable } from "../../utils/lumpik-table";
+import { lumpickTable } from "../../utils/lumpick-table";
 import { users } from "../users/users.table";
 
-export const verifyTokens = lumpikTable("verify_tokens", {
+export const verifyTokens = lumpickTable("verify_tokens", {
   id: uuid("id").primaryKey(),
   token: text("token").notNull().unique(),
   createdAt: timestamp("created_at").defaultNow().notNull(),

@@ -1,4 +1,4 @@
-import { MyButton } from "@lumpik/ui";
+import { MyButton } from "@lumpick/ui";
 
 const meta = {
   title: "MyButton",

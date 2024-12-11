@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": ["@lumpik/ts-config/base.json", "expo/tsconfig.base"],
+  "extends": ["@lumpick/ts-config/base.json", "expo/tsconfig.base"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

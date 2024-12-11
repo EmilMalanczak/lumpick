@@ -9,7 +9,7 @@ const commonConfig = {
   format: "esm",
   platform: "node",
   target: "node16",
-  external: ["puppeteer", "@inquirer/prompts", "xml2js", "@lumpik/api", "pino"],
+  external: ["puppeteer", "@inquirer/prompts", "xml2js", "@lumpick/api", "pino"],
   sourcemap: true,
 } satisfies esbuild.BuildOptions;
 

@@ -1,6 +1,6 @@
 import { pgEnum, serial, varchar } from "drizzle-orm/pg-core";
 
-import { lumpikTable } from "../../utils/lumpik-table";
+import { lumpickTable } from "../../utils/lumpick-table";
 
 export const featuresTypeEnum = pgEnum("shop_features_type", [
   "assortment",
@@ -8,10 +8,8 @@ export const featuresTypeEnum = pgEnum("shop_features_type", [
   "other",
 ]);
 
-export const features = lumpikTable("features", {
+export const features = lumpickTable("features", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
   type: featuresTypeEnum("type").notNull(),
 });
-
-

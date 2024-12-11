@@ -1,5 +1,5 @@
 {
-  "extends": "@lumpik/ts-config/base.json",
+  "extends": "@lumpick/ts-config/base.json",
   "compilerOptions": {
     "plugins": [
       {

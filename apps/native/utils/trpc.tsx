@@ -6,11 +6,11 @@ import { createTRPCReact } from "@trpc/react-query";
 import { settings } from "~constants/settings";
 import superjson from "superjson";
 
-import type { AppRouter } from "@lumpik/api";
+import type { AppRouter } from "@lumpick/api";
 
 export const api = createTRPCReact<AppRouter>();
 
-export { type RouterInputs, type RouterOutputs } from "@lumpik/api";
+export { type RouterInputs, type RouterOutputs } from "@lumpick/api";
 
 type TRPCProviderProps = {
   children: ReactNode;

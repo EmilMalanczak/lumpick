@@ -1,5 +1,5 @@
 {
-  "name": "@lumpik/db-migrate",
+  "name": "@lumpick/db-migrate",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -22,9 +22,9 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "devDependencies": {
-    "@lumpik/eslint-config": "workspace:*",
-    "@lumpik/prettier-config": "workspace:*",
-    "@lumpik/ts-config": "workspace:*",
+    "@lumpick/eslint-config": "workspace:*",
+    "@lumpick/prettier-config": "workspace:*",
+    "@lumpick/ts-config": "workspace:*",
     "@types/pg": "^8.11.10",
     "dotenv-cli": "^7.3.0",
     "eslint": "^8.56.0",
@@ -36,12 +36,12 @@
   },
   "eslintConfig": {
     "extends": [
-      "@lumpik/eslint-config/base"
+      "@lumpick/eslint-config/base"
     ]
   },
-  "prettier": "@lumpik/prettier-config",
+  "prettier": "@lumpick/prettier-config",
   "dependencies": {
-    "@lumpik/db": "workspace:*",
+    "@lumpick/db": "workspace:*",
     "drizzle-kit": "^0.28.1",
     "drizzle-orm": "^0.36.4",
     "postgres": "^3.4.5"

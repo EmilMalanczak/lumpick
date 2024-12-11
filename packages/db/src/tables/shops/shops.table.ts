@@ -8,7 +8,7 @@ import {
 } from "drizzle-orm/pg-core";
 
 import { createDataColumns } from "../../utils/create-data-columns";
-import { lumpikTable } from "../../utils/lumpik-table";
+import { lumpickTable } from "../../utils/lumpick-table";
 import { shopOwners } from "../shop-owners/shop-owners.table";
 
 // TODO: refactor later on
@@ -26,7 +26,7 @@ type WeekHours = {
   closed: boolean;
 };
 
-export const shops = lumpikTable(
+export const shops = lumpickTable(
   "shops",
   {
     id: serial("id").primaryKey(),

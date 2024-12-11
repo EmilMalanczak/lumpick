@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": ["@lumpik/ts-config/base.json"],
+  "extends": ["@lumpick/ts-config/base.json"],
   "compilerOptions": {
     "jsx": "react-native"
   },

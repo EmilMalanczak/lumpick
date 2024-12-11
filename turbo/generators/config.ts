@@ -10,13 +10,13 @@ interface PackageJson {
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   plop.setGenerator("init", {
-    description: "Generate a new package for the Lumpik Monorepo",
+    description: "Generate a new package for the Lumpick Monorepo",
     prompts: [
       {
         type: "input",
         name: "name",
         message:
-          "What is the name of the package? (You can skip the `@lumpik/` prefix)",
+          "What is the name of the package? (You can skip the `@lumpick/` prefix)",
       },
       {
         type: "input",
@@ -28,8 +28,8 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
     actions: [
       (answers) => {
         if ("name" in answers && typeof answers.name === "string") {
-          if (answers.name.startsWith("@lumpik/")) {
-            answers.name = answers.name.replace("@lumpik/", "");
+          if (answers.name.startsWith("@lumpick/")) {
+            answers.name = answers.name.replace("@lumpick/", "");
           }
         }
         return "Config sanitized";

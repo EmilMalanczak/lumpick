@@ -12,7 +12,7 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
 
   return next({
     ctx: {
-      // infers the `session` as non-nullable
+      // infers the `user` as non-nullable
       ...ctx,
       user: ctx.user,
     },
@@ -22,7 +22,7 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
 /**
  *
  * If you want a query or mutation to ONLY be accessible to logged in users, use
- * this. It verifies the session is valid and guarantees ctx.session.user is not
+ * this. It verifies the session is valid and guarantees ctx.user is not
  * null
  *
  * @see https://trpc.io/docs/procedures

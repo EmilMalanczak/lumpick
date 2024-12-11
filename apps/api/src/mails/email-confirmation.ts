@@ -3,7 +3,7 @@ type EmailConfirmationEmailParams = {
   confirmUrl: string;
 };
 
-export const emailConfirmationEmailHtml = ({
+export const generateEmailConfirmationMail = ({
   name,
   confirmUrl,
 }: EmailConfirmationEmailParams) => `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -23,7 +23,7 @@ export const emailConfirmationEmailHtml = ({
  <meta name="x-apple-disable-message-reformatting" /> 
  <link href="https://fonts.googleapis.com/css?family=Inter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900" rel="stylesheet" />
  <link href="https://fonts.googleapis.com/css?family=Sora:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800" rel="stylesheet" />
- <title>Lumpik confirm email</title>
+ <title>Lumpick confirm email</title>
  <style>
  html,
          body {
@@ -195,7 +195,7 @@ export const emailConfirmationEmailHtml = ({
                <!--[if !gte mso 9]><! -->
                <td valign="top" class="pc-w620-padding-32-16-0-16" style="background-size: cover; background-position: top left; background-repeat: no-repeat;padding: 64px 24px 24px 24px;border-radius: 20px 20px 0px 0px;background-color: #111747;" bgcolor="#111747" background="https://cloudfilesdm.com/postcards/image-1711995320504.png">
                 <!--<![endif]-->
-                <!--[if gte mso 9]>
+                <!--[if gte mso 9]> 
                 <td valign="top"  align="center" style="background-size: cover; background-position: top left; background-repeat: no-repeat;background-color: #111747;border-radius: 20px 20px 0px 0px;" bgcolor="#111747" background="https://cloudfilesdm.com/postcards/image-1711995320504.png">
             <![endif]-->
                 <!--[if gte mso 9]>
@@ -509,7 +509,7 @@ export const emailConfirmationEmailHtml = ({
                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" align="center">
                     <tr>
                      <td valign="top" class="pc-font-alt pc-w620-lineHeight-140pc" align="center" style="mso-line-height: exactly;line-height: 143%;letter-spacing: -0.2px;font-family: Inter, Arial, Helvetica, sans-serif;font-size: 14px;font-weight: normal;color: #ffffff;text-align: center;text-align-last: center;font-variant-ligatures: normal;">
-                      <div><span style="font-weight: 400;font-style: normal;color: rgb(255, 255, 255);">Copyright © 2024 Lumpik. All rights reserved.</span>
+                      <div><span style="font-weight: 400;font-style: normal;color: rgb(255, 255, 255);">Copyright © 2024 Lumpick. All rights reserved.</span>
                       </div>
                      </td>
                     </tr>

@@ -7,7 +7,7 @@ import { generateOpenApiDocument } from "trpc-openapi";
 import { appRouter } from "~/root";
 
 const openApiDocument = generateOpenApiDocument(appRouter, {
-  title: "Lumpik OpenAPI",
+  title: "Lumpick OpenAPI",
   version: "1.0.0",
   description: "OpenAPI compliant REST API built using tRPC with Fastify",
   baseUrl: "http://localhost:3009/api",

@@ -1,1 +1,1 @@
-ALTER TABLE "lumpik_users" ADD COLUMN "verified" boolean DEFAULT false NOT NULL;
+ALTER TABLE "lumpick_users" ADD COLUMN "verified" boolean DEFAULT false NOT NULL;

@@ -2,7 +2,8 @@
   "private": true,
   "scripts": {
     "dev": "turbo dev --parallel",
-    "dev:ui": "turbo watch dev --filter=@lumpik/ui-docs",
+    "dev:ui": "turbo watch dev --filter=@lumpick/ui-docs",
+    "dev:api": "turbo dev --filter=@lumpick/api",
     "build": "turbo build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
@@ -18,10 +19,10 @@
     "db:studio": "pnpm -F db studio",
     "db:generate": "pnpm -F db generate",
     "db:migrate": "pnpm -F db-migrate migrate",
-    "scrap": "turbo build --filter=@lumpik/scrapper && node ./apps/scrapper/dist/index.js"
+    "scrap": "turbo build --filter=@lumpick/scrapper && node ./apps/scrapper/dist/index.js"
   },
   "devDependencies": {
-    "@lumpik/prettier-config": "workspace:*",
+    "@lumpick/prettier-config": "workspace:*",
     "prettier": "^3.2.5",
     "turbo": "2.3.0",
     "typescript": "^5.6.3"
@@ -34,5 +35,5 @@
     "node": "20.17.0",
     "pnpm": "9.12.3"
   },
-  "prettier": "@lumpik/prettier-config"
+  "prettier": "@lumpick/prettier-config"
 }

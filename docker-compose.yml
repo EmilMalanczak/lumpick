@@ -3,15 +3,15 @@ services:
   db:
     image: postgres:latest
     restart: always
-    container_name: lumpik-db
+    container_name: lumpick-db
     environment:
-      - POSTGRES_USER=lumpik-org
+      - POSTGRES_USER=lumpick-org
       - POSTGRES_PASSWORD=fJWof4L+WyZkd68z
-      - POSTGRES_DB=lumpik
+      - POSTGRES_DB=lumpick
     volumes:
-      - lumpik:/var/lib/postgresql/data
+      - lumpick:/var/lib/postgresql/data
     ports:
       - 5432:5432
 
 volumes:
-  lumpik:
+  lumpick:
