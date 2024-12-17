@@ -7,10 +7,8 @@ type ShopsRepositoryDependencies = {
 };
 
 type IShopsRepositoryImpl = {
-  findByEmail(email: string): Promise<Shop | null>;
   create(user: Shop<"insert">): Promise<Shop>;
   findById(id: number): Promise<Shop | null>;
-  verifyShop(id: number): Promise<void>;
 };
 
 export class ShopsRepository implements IShopsRepositoryImpl {
@@ -21,18 +19,7 @@ export class ShopsRepository implements IShopsRepositoryImpl {
   }
 
   async create(input: Shop<"insert">): Promise<Shop> {
-    const [shop] = await this.db
-      .insert(tables.shops)
-      .values({
-        ...input,
-        hours: [],
-      })
-      .returning({
-        id: tables.users.id,
-        email: tables.users.email,
-        name: tables.users.name,
-        provider: tables.users.provider,
-      });
+    const [shop] = await this.db.insert(tables.shops).values(input).returning();
 
     if (!shop) {
       throw new Error("Failed to create user");
@@ -42,25 +29,10 @@ export class ShopsRepository implements IShopsRepositoryImpl {
   }
 
   async findById(id: number): Promise<Shop | null> {
-    const user = await this.db.query.users.findFirst({
-      where: eq(tables.users.id, id),
+    const shop = await this.db.query.shops.findFirst({
+      where: eq(tables.shops.id, id),
     });
 
-    return user ?? null;
-  }
-
-  async findByEmail(email: string): Promise<Shop | null> {
-    const user = await this.db.query.users.findFirst({
-      where: eq(tables.users.email, email),
-    });
-
-    return user ?? null;
-  }
-
-  async verifyShop(id: number) {
-    await this.db
-      .update(tables.users)
-      .set({ verified: true })
-      .where(eq(tables.users.id, id));
+    return shop ?? null;
   }
 }
