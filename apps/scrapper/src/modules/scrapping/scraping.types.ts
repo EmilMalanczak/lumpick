@@ -1,4 +1,4 @@
-export type ScrapWorkerResult = ScrapedShop;
+export type ScrapWorkerResult = ScrappedShop;
 export type ScrapWorkerData = {
   url: string;
 };
@@ -64,7 +64,7 @@ export type ShopPrice = {
   price: string;
 };
 
-export type ScrapedShop = {
+export type ScrappedShop = {
   metadata: ShopMetadata;
   relations: string[];
   url: string;

@@ -36,6 +36,7 @@
   "dependencies": {
     "@inquirer/prompts": "^5.0.2",
     "@lumpick/api": "workspace:*",
+    "@lumpick/db": "workspace:*",
     "pino": "^8.19.0",
     "puppeteer": "22.6.0",
     "xml2js": "^0.6.2"
