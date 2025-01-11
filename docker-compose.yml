@@ -12,6 +12,23 @@ services:
       - lumpick:/var/lib/postgresql/data
     ports:
       - 5432:5432
+  api:
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+    depends_on:
+      - db
+    ports:
+      - 8000:8000
+      - 9229:9229 # debugger port
+    volumes:
+      - ./apps/api:/app/apps/api
+      - /app/apps/api/node_modules
+    command: pnpm run dev
+    environment:
+      DATABASE_URL: postgres://postgres@postgres/webapp_dev
+      PORT: 8000
+      REDIS_URL: redis://redis:6379
 
 volumes:
   lumpick:
