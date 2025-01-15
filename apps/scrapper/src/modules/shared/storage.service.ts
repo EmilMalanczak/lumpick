@@ -22,6 +22,10 @@ export class StorageService {
     return shops.filter(Boolean) as ScrappedShop[];
   }
 
+  public getShopDataBySlug(slug: string) {
+    return this.getShopData(slug);
+  }
+
   public async saveShopData(shop: ScrappedShop) {
     const filePath = `${SCRAP_SHOPS_DATA_FOLDER}/${shop.metadata.slug}`;
 

@@ -49,10 +49,30 @@ export class PromptService {
     });
   }
 
-  public async selectAction<T>(actions: Array<{ name: string; value: T }>) {
-    return await select({
-      message: "What do you want to do?",
-      choices: actions,
+  public async getText(message: string) {
+    return input({
+      message,
     });
+  }
+
+  public async selectAction<T>(
+    actions: Array<{
+      name: string;
+      type: T;
+      handler?: () => Promise<void>;
+    }>,
+  ) {
+    const selectedAction = await await select({
+      message: "What do you want to do?",
+      choices: actions.map(({ name, type }) => ({ name, value: type })),
+    });
+
+    const action = actions.find(({ type }) => type === selectedAction);
+
+    if (!action) {
+      throw new Error("Action not found");
+    }
+
+    return action;
   }
 }
