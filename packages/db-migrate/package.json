@@ -42,8 +42,8 @@
   "prettier": "@lumpick/prettier-config",
   "dependencies": {
     "@lumpick/db": "workspace:*",
-    "drizzle-kit": "^0.28.1",
-    "drizzle-orm": "^0.36.4",
+    "drizzle-kit": "^0.30.1",
+    "drizzle-orm": "^0.38.3",
     "postgres": "^3.4.5"
   }
 }
