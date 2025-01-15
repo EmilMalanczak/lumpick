@@ -9,13 +9,13 @@
   "types": "./src/index.ts",
   "license": "MIT",
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --packages=external --platform=node --format=cjs --outdir=dist --sourcemap",
+    "build": "node esbuild.config.mjs",
     "dev": "dotenv -e .env.development -- tsx watch --clear-screen=false src/index.ts",
     "dev:studio": "pnpm dlx prisma studio --browser none",
-    "serve": "esbuild src/index.ts --bundle --packages=external --platform=node --format=cjs --outdir=dist --sourcemap && node dist/index.js",
+    "serve": "node esbuild.config.mjs && node dist/index.js",
     "clean": "rm -rf .turbo node_modules dist",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint .",
+    "lint": "eslint .", 
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
@@ -49,6 +49,9 @@
     "@fastify/swagger": "^9.3.0",
     "@fastify/swagger-ui": "^5.1.0",
     "@lumpick/db": "workspace:*",
+    "@sentry/esbuild-plugin": "^3.0.0",
+    "@sentry/node": "^8.50.0",
+    "@sentry/profiling-node": "^8.50.0",
     "@trpc/server": "11.0.0-rc.660",
     "@types/nodemailer": "^6.4.16",
     "@types/uuid": "^10.0.0",

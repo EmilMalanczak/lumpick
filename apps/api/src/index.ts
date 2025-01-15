@@ -1,11 +1,14 @@
+import "../sentry.config.js";
+
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 import cors from "@fastify/cors";
 import sensible from "@fastify/sensible";
+import * as Sentry from "@sentry/node";
 import {
   CreateFastifyContextOptions,
   fastifyTRPCPlugin,
 } from "@trpc/server/adapters/fastify";
-import fastify, { FastifyReply, FastifyRequest } from "fastify";
+import fastify from "fastify";
 import { renderTrpcPanel } from "trpc-ui";
 
 import { setupDb } from "@lumpick/db";
@@ -56,6 +59,8 @@ const start = async () => {
     const { authService, usersService } = setupAuthModule({ mailer, db });
 
     const server = fastify();
+
+    Sentry.setupFastifyErrorHandler(server);
 
     await server.register(cors, { origin: "*" });
     await server.register(sensible);
