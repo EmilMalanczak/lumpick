@@ -140,16 +140,14 @@ export const authRouter = createTRPCRouter({
       }
 
       try {
-        const userDto = {
-          email: input.email,
-          name: input.name,
-          password: input.password,
-        };
+        const hashedPassword = await ctx.services.auth.hashPassword(
+          input.password,
+        );
 
         const user = await ctx.services.users.createUser({
-          email: userDto.email,
-          password: userDto.password,
-          name: userDto.name,
+          email: input.email,
+          name: input.name,
+          password: hashedPassword,
           provider: "local",
           verified: false,
         });
@@ -195,7 +193,7 @@ export const authRouter = createTRPCRouter({
           throw invalidError;
         }
 
-        const isValidPassword = await ctx.services.users.verifyUserPassword(
+        const isValidPassword = await ctx.services.auth.verifyUserPassword(
           input.password,
           user,
         );

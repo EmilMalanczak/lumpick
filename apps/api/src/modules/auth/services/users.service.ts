@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs";
 
 import type { User } from "@lumpick/db/types";
 
+import { CrashReporterService } from "~modules/shared/crash-reporter.service";
+import { InstrumentationService } from "~modules/shared/instrumentation.service";
 import { LumpickError } from "~utils/error";
 import { isDbError } from "~utils/is-db-error";
 
@@ -10,36 +12,63 @@ import type { UsersRepository } from "../repositories/users.repository";
 
 type UsersServiceDependencies = {
   usersRepository: UsersRepository;
+  instrumentator: InstrumentationService;
+  crashReporter: CrashReporterService;
 };
 
 export class UsersService {
   private readonly usersRepository: UsersRepository;
+  private readonly instrumentator: InstrumentationService;
+  private readonly crashReporter: CrashReporterService;
 
-  constructor({ usersRepository }: UsersServiceDependencies) {
+  constructor({
+    usersRepository,
+    instrumentator,
+    crashReporter,
+  }: UsersServiceDependencies) {
     this.usersRepository = usersRepository;
+    this.instrumentator = instrumentator;
+    this.crashReporter = crashReporter;
   }
 
-  async createUser(user: User<"insert">) {
-    try {
-      const hashedPassword = await bcrypt.hash(user.password, 12);
+  createUser(user: Omit<User<"insert">, "id">) {
+    return this.instrumentator.startSpan(
+      {
+        name: "create user",
+      },
+      async () => {
+        try {
+          const createdUser = await this.usersRepository.create(user);
 
-      const createdUser = await this.usersRepository.create({
-        ...user,
-        password: hashedPassword,
-      });
+          return createdUser;
+        } catch (error) {
+          this.crashReporter.report(error);
 
-      return createdUser;
-    } catch (error) {
-      if (isDbError(error) && error.code === "23505") {
-        throw new LumpickError("CONFLICT", error.message);
-      }
+          if (isDbError(error) && error.code === "23505") {
+            throw new LumpickError("CONFLICT", error.message);
+          }
 
-      throw new Error("Unknown error");
-    }
+          throw new Error("Unknown error");
+        }
+      },
+    );
   }
 
-  async findUserById(id: User["id"]) {
-    return this.usersRepository.findById(id);
+  findUserById(id: User["id"]) {
+    return this.instrumentator.startSpan(
+      {
+        name: "find user by id",
+      },
+      async () => {
+        try {
+          return this.usersRepository.findById(id);
+        } catch (err) {
+          this.crashReporter.report(err);
+
+          throw err;
+        }
+      },
+    );
   }
 
   async findUserByEmail(email: User["email"]) {
@@ -48,6 +77,7 @@ export class UsersService {
 
   // eslint-disable-next-line @typescript-eslint/require-await
   async updateUser() {
+    // TODO: Implement
     return null;
   }
 
@@ -67,11 +97,5 @@ export class UsersService {
         message: "Something went wrong",
       });
     }
-  }
-
-  public async verifyUserPassword(password: string, user: User) {
-    const isValidPassword = await bcrypt.compare(password, user.password);
-
-    return isValidPassword;
   }
 }
