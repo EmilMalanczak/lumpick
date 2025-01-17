@@ -3,6 +3,8 @@ import type { DbClient } from "@lumpick/db";
 import type { MailService } from "~modules/shared/mail.service";
 import { env } from "~config/env";
 import { tokenConfig } from "~config/token";
+import { CrashReporterService } from "~modules/shared/crash-reporter.service";
+import { InstrumentationService } from "~modules/shared/instrumentation.service";
 
 import { UsersRepository } from "./repositories/users.repository";
 import { VerifyTokensRepository } from "./repositories/verify-tokens.repository";
@@ -13,16 +15,31 @@ import { UsersService } from "./services/users.service";
 type AuthModuleDependencies = {
   mailer: MailService;
   db: DbClient;
+  crashReporter: CrashReporterService;
+  instrumentator: InstrumentationService;
 };
 
 type AuthTokenPayload = {
   userId: number;
 };
 
-export const setupAuthModule = ({ mailer, db }: AuthModuleDependencies) => {
+export const setupAuthModule = ({
+  mailer,
+  db,
+  instrumentator,
+  crashReporter,
+}: AuthModuleDependencies) => {
   /* Repositories */
-  const usersRepository = new UsersRepository({ db });
-  const verifyTokensRepository = new VerifyTokensRepository({ db });
+  const usersRepository = new UsersRepository({
+    db,
+    instrumentator,
+    crashReporter,
+  });
+  const verifyTokensRepository = new VerifyTokensRepository({
+    db,
+    instrumentator,
+    crashReporter,
+  });
 
   /* Services */
   const accessTokenService = new JWTTokenService<AuthTokenPayload>(
@@ -47,15 +64,19 @@ export const setupAuthModule = ({ mailer, db }: AuthModuleDependencies) => {
 
   const usersService = new UsersService({
     usersRepository,
+    instrumentator,
+    crashReporter,
   });
 
   const authService = new AuthService({
-    usersService,
     verifyTokensRepository,
+    usersService,
     accessTokenService,
     refreshTokenService,
     mailerService: mailer,
     baseUrl: process.env.BASE_URL ?? "http://localhost:3003",
+    instrumentator,
+    crashReporter,
   });
 
   return {

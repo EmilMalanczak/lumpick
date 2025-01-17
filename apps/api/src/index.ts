@@ -1,25 +1,41 @@
+
+
+
+import "../sentry.config.js";
+
+
+
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 import cors from "@fastify/cors";
 import sensible from "@fastify/sensible";
-import {
-  CreateFastifyContextOptions,
-  fastifyTRPCPlugin,
-} from "@trpc/server/adapters/fastify";
-import fastify, { FastifyReply, FastifyRequest } from "fastify";
+import * as Sentry from "@sentry/node";
+import { CreateFastifyContextOptions, fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
+import fastify from "fastify";
 import { renderTrpcPanel } from "trpc-ui";
+
+
 
 import { setupDb } from "@lumpick/db";
 
+
+
 import { setupAuthModule } from "~modules/auth/setup-auth-module";
+import { CrashReporterService } from "~modules/shared/crash-reporter.service.js";
+import { InstrumentationService } from "~modules/shared/instrumentation.service.js";
 import { LoggerService } from "~modules/shared/logger.service";
 import { MailService } from "~modules/shared/mail.service";
 
+
+
 import type { AppRouter } from "./root";
+
+
 
 import { env } from "./config/env";
 import { createTRPCContext } from "./context";
 import { appRouter } from "./root";
 import { createCallerFactory } from "./trpc";
+
 
 export { appRouter, type AppRouter } from "./root";
 
@@ -42,6 +58,8 @@ const start = async () => {
     const db = setupDb();
 
     const logger = new LoggerService(env.ENV);
+    const crashReporter = new CrashReporterService();
+    const instrumentator = new InstrumentationService();
 
     logger.log(env, "ENV");
 
@@ -53,9 +71,16 @@ const start = async () => {
       port: 465,
     });
 
-    const { authService, usersService } = setupAuthModule({ mailer, db });
+    const { authService, usersService } = setupAuthModule({
+      mailer,
+      db,
+      crashReporter,
+      instrumentator,
+    });
 
     const server = fastify();
+
+    Sentry.setupFastifyErrorHandler(server);
 
     await server.register(cors, { origin: "*" });
     await server.register(sensible);
