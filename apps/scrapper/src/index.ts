@@ -2,74 +2,67 @@
 import { isMainThread } from "node:worker_threads";
 import { select } from "@inquirer/prompts";
 
-import { createScrapingController } from "./modules/scraping/scraping.controller";
-import { createPromptService } from "./modules/scraping/services/prompt.service";
-import { createScrapingService } from "./modules/scraping/services/scraping.service";
-import { createSitemapService } from "./modules/scraping/services/sitemap.service";
-import { createStorageService } from "./modules/scraping/services/storage.service";
+import { ScrappingController } from "./modules/scrapping/scraping.controller";
+import { ScrappingService } from "./modules/scrapping/services/scraping.service";
+import { SitemapService } from "./modules/scrapping/services/sitemap.service";
+import { PromptService } from "./modules/shared/prompt.service";
+import { StorageService } from "./modules/shared/storage.service";
+import { ShopTransformationController } from "./modules/transformation/shop-transformation.controller";
 import { logger } from "./utils/logger";
 
 void (async () => {
   if (!isMainThread) return;
 
   try {
-    const storageService = createStorageService();
-
-    const scrapingService = createScrapingService({
+    const storageService = new StorageService();
+    const scrappingService = new ScrappingService({
       storageService,
     });
-    const promptService = createPromptService();
-    const sitemapService = createSitemapService();
 
-    // Initialize scraping controller
-    const scrapingController = createScrapingController({
-      scrapingService,
+    const promptService = new PromptService();
+    const sitemapService = new SitemapService();
+
+    const scrapingController = new ScrappingController({
+      scrappingService,
       promptService,
       sitemapService,
     });
 
-    // Define available actions
-    const actions = [
+    const shopTransformationController = new ShopTransformationController({
+      storageService,
+    });
+
+    const routes = [
       {
-        name: "Scrap single store",
-        type: "SINGLE_SCRAP",
+        name: "Scrap shops",
+        value: "SCRAPPER",
         handler: async () => {
-          const shop = await scrapingController.scrapSingleShop();
+          const handler =
+            await scrapingController.selectScrapingActionHandler();
 
-          if (!shop) {
-            logger.error("No shop data returned");
-            return;
-          }
-
-          logger.info("Single shop scraping completed", {
-            shopName: shop.metadata.name,
-          });
+          await handler();
         },
       },
       {
-        name: "Full scrap",
-        type: "FULL_SCRAP",
+        name: "Transform shops data",
+        value: "TRANSFORM_SHOPS",
         handler: async () => {
-          await scrapingController.scrapMultipleShops();
-
-          logger.info("Full scraping completed");
+          const handler =
+            shopTransformationController.selectTransformHandler();
+          throw new Error("Not implemented");
         },
       },
     ];
 
-    // Get user selection
-    const selectedAction = await select({
-      message: "What do you want to do?",
-      choices: actions.map(({ name, type }) => ({ name, value: type })),
-    });
+    const selectedAction = await promptService.selectAction(routes);
 
-    // Execute selected action
-    const action = actions.find((a) => a.type === selectedAction);
-    if (!action) {
-      throw new Error("Invalid action selected");
+    const action = routes.find((a) => a.value === selectedAction);
+
+    if (action) {
+      await action.handler();
+    } else {
+      throw new Error("Action not found");
     }
-
-    await action.handler();
 
     process.exit(0);
   } catch (error) {

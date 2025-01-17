@@ -16,12 +16,7 @@ import {
 export const authRouter = createTRPCRouter({
   refreshToken: protectedProcedure
     .meta({
-      openapi: {
-        method: "POST",
-        summary: "Refresh token",
-        path: "/auth/refresh-token",
-        tags: ["auth"],
-      },
+      description: "Refresh token",
     })
     .input(refreshTokenSchema.input)
     .output(refreshTokenSchema.output)
@@ -53,14 +48,9 @@ export const authRouter = createTRPCRouter({
     }),
 
   verifyEmail: publicProcedure
-    // .meta({
-    //   openapi: {
-    //     method: "GET",
-    //     summary: "Verify user email",
-    //     path: "/auth/verify-email",
-    //     tags: ["auth"],
-    //   },
-    // })
+    .meta({
+      description: "Verify user email",
+    })
     .input(verifyEmailSchema.input)
     .output(verifyEmailSchema.output)
     .query(async ({ input, ctx }) => {
@@ -111,12 +101,7 @@ export const authRouter = createTRPCRouter({
 
   resendVerifyEmail: publicProcedure
     .meta({
-      openapi: {
-        method: "GET",
-        summary: "Resend verify user email",
-        path: "/auth/verify-email/resend",
-        tags: ["auth"],
-      },
+      description: "Resend verify user email",
     })
     .input(resendVerifyEmailSchema.input)
     .output(resendVerifyEmailSchema.output)
@@ -140,20 +125,7 @@ export const authRouter = createTRPCRouter({
 
   register: publicProcedure
     .meta({
-      openapi: {
-        method: "POST",
-        summary: "Register a new user",
-        path: "/auth/register",
-        tags: ["auth"],
-        example: {
-          request: {
-            email: "emil.malanczak@gmail.com",
-            name: "test user",
-            password: "password123",
-            passwordConfirm: "password123",
-          },
-        },
-      },
+      description: "Register a new user",
     })
     .input(createUserSchema.input)
     .output(createUserSchema.output)
@@ -168,16 +140,14 @@ export const authRouter = createTRPCRouter({
       }
 
       try {
-        const userDto = {
-          email: input.email,
-          name: input.name,
-          password: input.password,
-        };
+        const hashedPassword = await ctx.services.auth.hashPassword(
+          input.password,
+        );
 
         const user = await ctx.services.users.createUser({
-          email: userDto.email,
-          password: userDto.password,
-          name: userDto.name,
+          email: input.email,
+          name: input.name,
+          password: hashedPassword,
           provider: "local",
           verified: false,
         });
@@ -206,18 +176,7 @@ export const authRouter = createTRPCRouter({
     }),
   login: publicProcedure
     .meta({
-      openapi: {
-        method: "POST",
-        summary: "Login",
-        path: "/user/login",
-        tags: ["user"],
-        example: {
-          request: {
-            email: "emil.malanczak@gmail.com",
-            password: "password123",
-          },
-        },
-      },
+      description: "Login user to the app",
     })
     .input(loginUserSchema.input)
     .output(loginUserSchema.output)
@@ -225,16 +184,16 @@ export const authRouter = createTRPCRouter({
       try {
         const user = await ctx.services.users.findUserByEmail(input.email);
 
-        const invalidError = new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "Invalid email or password",
-        });
+        const invalidError = new LumpickError(
+          "UNAUTHORIZED",
+          "Invalid email or password",
+        );
 
         if (!user) {
           throw invalidError;
         }
 
-        const isValidPassword = await ctx.services.users.verifyUserPassword(
+        const isValidPassword = await ctx.services.auth.verifyUserPassword(
           input.password,
           user,
         );
@@ -244,10 +203,7 @@ export const authRouter = createTRPCRouter({
         }
 
         if (!user.verified) {
-          throw new TRPCError({
-            code: "FORBIDDEN",
-            message: "Email not verified",
-          });
+          throw new LumpickError("FORBIDDEN", "Email not verified");
         }
 
         const { accessToken, refreshToken } = ctx.services.auth.signTokens(

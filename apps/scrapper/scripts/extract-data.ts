@@ -2,7 +2,7 @@
 import { promises as fs } from "fs";
 import { join, parse, resolve } from "path";
 
-import type { ScrapedShop } from "~/modules/scraping/scraping.types";
+import type { ScrappedShop } from "~/modules/scrapping/scraping.types";
 import { logger } from "~/utils/logger";
 import { getRoot } from "~/utils/storage";
 
@@ -21,7 +21,7 @@ const extractContactPoints = async () => {
                 file,
               );
               const fileContent = await fs.readFile(filePath, "utf8");
-              const data = JSON.parse(fileContent) as ScrapedShop;
+              const data = JSON.parse(fileContent) as ScrappedShop;
               const fileName = parse(file).name;
 
               if (data.prices.length === 0 || data?.deliveries.length === 0) {

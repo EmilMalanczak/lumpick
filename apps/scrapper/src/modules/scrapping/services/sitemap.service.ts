@@ -30,21 +30,21 @@ type SubpageSitemap = {
   };
 };
 
-export function createSitemapService() {
-  const saveSitemapShopUrls = async (urls: SitemapItem[]) => {
+export class SitemapService {
+  private async saveSitemapShopUrls(urls: SitemapItem[]) {
     const file = `${SCRAP_DATA_FOLDER}/${SHOP_URLS_FILENAME}`;
 
     await storeJson(file, JSON.stringify(urls));
-  };
+  }
 
-  function parseSitemapItem(item: SitemapItemRaw): SitemapItem {
+  private parseSitemapItem(item: SitemapItemRaw): SitemapItem {
     return {
       url: item.loc[0],
       lastModified: new Date(item.lastmod[0]),
     };
   }
 
-  async function getSubpagesFromSitemap(
+  private async getSubpagesFromSitemap(
     sitemap: string,
   ): Promise<SitemapItem[]> {
     const parsedXml = (await parseStringPromise(sitemap)) as RootSitemap;
@@ -54,10 +54,10 @@ export function createSitemapService() {
     // eg. job_listing-sitemap.xml
     return parsedXml.sitemapindex.sitemap
       .filter((item) => item.loc[0].includes("job_listing-sitemap"))
-      .map(parseSitemapItem);
+      .map(this.parseSitemapItem);
   }
 
-  async function getShopUrlsFromSitemaps(sitemaps: SitemapItem[]) {
+  private async getShopUrlsFromSitemaps(sitemaps: SitemapItem[]) {
     const allShopUrls: SitemapItem[] = [];
 
     for (const sitemap of sitemaps) {
@@ -72,13 +72,13 @@ export function createSitemapService() {
         item.loc[0].includes("/sklep/"),
       );
 
-      allShopUrls.push(...shopUrls.map(parseSitemapItem));
+      allShopUrls.push(...shopUrls.map(this.parseSitemapItem));
     }
 
     return allShopUrls;
   }
 
-  async function updateUrls() {
+  public async updateUrls() {
     await fs.mkdir(`${getRoot()}/${SCRAP_DATA_FOLDER}`, { recursive: true });
 
     const response = await fetch(API_ALL_SHOPS_ENDPOINT);
@@ -94,16 +94,16 @@ export function createSitemapService() {
       );
     }
 
-    const subpages = await getSubpagesFromSitemap(responseBody);
+    const subpages = await this.getSubpagesFromSitemap(responseBody);
 
-    const urls = await getShopUrlsFromSitemaps(subpages);
+    const urls = await this.getShopUrlsFromSitemaps(subpages);
 
-    await saveSitemapShopUrls(urls);
+    await this.saveSitemapShopUrls(urls);
 
     return urls;
   }
 
-  async function getSavedUrls() {
+  public async getSavedUrls() {
     const urls = await readJson<SitemapItem[]>(
       `${SCRAP_DATA_FOLDER}/${SHOP_URLS_FILENAME}`,
     );
@@ -114,11 +114,4 @@ export function createSitemapService() {
 
     return urls;
   }
-
-  return {
-    updateUrls,
-    getSavedUrls,
-  };
 }
-
-export type SitemapService = ReturnType<typeof createSitemapService>;

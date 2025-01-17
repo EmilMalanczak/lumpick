@@ -1,84 +1,33 @@
-import puppeteer from "puppeteer";
-
 import { WorkerPool } from "~/utils/worker-pool";
 import { logger } from "~utils/logger";
 import { getRoot } from "~utils/storage";
 import { createTerminalLoader } from "~utils/with-terminal-loading";
 
+import type { StorageService } from "../../shared/storage.service";
 import type {
-  ScrapedShop,
+  ScrappedShop,
   ScrapWorkerData,
   ScrapWorkerResult,
 } from "../scraping.types";
-import type { StorageService } from "./storage.service";
-
-import {
-  scrapShopAdditionalTreats,
-  scrapShopDeliveries,
-  scrapShopMetadata,
-  scrapShopPrices,
-  scrapShopRelations,
-  scrapShopStock,
-  scrapShopWebsite,
-  scrapShopWorkHours,
-} from "../utils/scrapping.utils";
 
 type ScrapingServiceDependencies = {
   storageService: StorageService;
 };
 
-export const createScrapingService = (deps: ScrapingServiceDependencies) => {
-  const { storageService } = deps;
+export class ScrappingService {
+  private storageService: StorageService;
 
-  async function scrapeShop(url: string): Promise<ScrapedShop | null> {
-    const { page, browser } = await openBrowser();
-
-    try {
-      const data = await Promise.all([
-        scrapShopMetadata(page),
-        scrapShopRelations(page),
-        scrapShopWebsite(page),
-        scrapShopPrices(page),
-        scrapShopDeliveries(page),
-        scrapShopWorkHours(page),
-        scrapShopStock(page),
-        scrapShopAdditionalTreats(page),
-      ]);
-
-      const [
-        metadata,
-        relations,
-        url,
-        prices,
-        deliveries,
-        hours,
-        stock,
-        additionalTreats,
-      ] = data;
-
-      const shopData = {
-        metadata,
-        relations,
-        url,
-        prices,
-        deliveries,
-        hours,
-        stock,
-        additionalTreats,
-      };
-
-      await storageService.saveShopData(shopData);
-
-      return shopData;
-    } catch (error) {
-      logger.error("Failed to scrape shop", { url, error });
-      return null;
-    } finally {
-      await browser.close();
-    }
+  constructor({ storageService }: ScrapingServiceDependencies) {
+    this.storageService = storageService;
   }
 
-  function createScrapeLoader(total: number) {
+  public async scrapeShop(url: string): Promise<ScrappedShop | null> {
+    const [shop] = await this.scrapeShops([url], 1);
+
+    return shop ?? null;
+  }
+
+  private createScrapeLoader(total: number) {
     return createTerminalLoader(
       {
         text: "",
@@ -112,11 +61,11 @@ export const createScrapingService = (deps: ScrapingServiceDependencies) => {
     );
   }
 
-  async function scrapeShops(
+  public async scrapeShops(
     urls: string[],
     numberOfThreads: number,
-  ): Promise<ScrapedShop[]> {
-    const loader = createScrapeLoader(urls.length);
+  ): Promise<ScrappedShop[]> {
+    const loader = this.createScrapeLoader(urls.length);
 
     const scrapWorkersPool = new WorkerPool<ScrapWorkerData, ScrapWorkerResult>(
       `${getRoot()}/dist/scrap-worker.js`,
@@ -147,7 +96,7 @@ export const createScrapingService = (deps: ScrapingServiceDependencies) => {
     );
 
     scrapWorkersPool.on("success", ({ data }) => {
-      void storageService
+      void this.storageService
         .saveShopData(data)
         .then(() => {
           loader.log(`Scrapped shop: ${data.metadata.slug}`);
@@ -159,7 +108,7 @@ export const createScrapingService = (deps: ScrapingServiceDependencies) => {
     });
 
     scrapWorkersPool.on("failed", ({ input, error }) => {
-      void storageService
+      void this.storageService
         .saveShopError(
           input.url,
           error instanceof Error ? error.message : "Unknown error",
@@ -178,31 +127,4 @@ export const createScrapingService = (deps: ScrapingServiceDependencies) => {
 
     return results;
   }
-
-  async function openBrowser() {
-    const browser = await puppeteer.launch({
-      defaultViewport: null,
-      headless: false,
-      // dumpio: true,
-      args: [
-        "--disable-extensions",
-        "--enable-chrome-browser-cloud-management",
-      ],
-    });
-
-    const [page] = await browser.pages();
-
-    if (!page) {
-      throw new Error("Failed to create a new page");
-    }
-
-    return { page, browser };
-  }
-
-  return {
-    scrapeShop,
-    scrapeShops,
-  };
-};
-
-export type ScrapingService = ReturnType<typeof createScrapingService>;
+}

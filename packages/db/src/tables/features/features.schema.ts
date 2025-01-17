@@ -1,15 +1,20 @@
-import type { TypeOf } from "zod";
+import {
+  createInsertSchema,
+  createSelectSchema,
+  createUpdateSchema,
+} from "drizzle-zod";
 
-import type { DataType } from "../../types/table-data-type";
-import type { featuresTypeEnum } from "./features.table";
+import type { DataType, TableSchemaData } from "../../types/table-schema";
 
-import { createTableSchema } from "../../utils/create-table-schema";
 import { features } from "./features.table";
 
-export const featuresSchema = createTableSchema(features);
+export const featuresSchema = {
+  insert: createInsertSchema(features),
+  select: createSelectSchema(features),
+  update: createUpdateSchema(features),
+};
 
-export type Feature<T extends DataType = "select"> = T extends "insert"
-  ? TypeOf<typeof featuresSchema.insert>
-  : TypeOf<typeof featuresSchema.select>;
-
-export type FeatureType = (typeof featuresTypeEnum.enumValues)[number];
+export type ShopComment<T extends DataType = "select"> = TableSchemaData<
+  T,
+  typeof featuresSchema
+>;

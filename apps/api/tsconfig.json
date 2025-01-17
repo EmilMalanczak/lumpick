@@ -12,6 +12,6 @@
       "~/*": ["src/*"]
     }
   },
-  "include": ["*.ts", "src"],
+  "include": ["*.ts", "src", "sentry.config.ts", "esbuild.config.mjs"],
   "exclude": ["node_modules"]
 }
