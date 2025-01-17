@@ -1,0 +1,1 @@
+ALTER TABLE "lumpick_shops" ADD COLUMN "location" geometry(point) NOT NULL;
