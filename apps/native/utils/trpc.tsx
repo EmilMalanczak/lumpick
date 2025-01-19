@@ -6,7 +6,7 @@ import { createTRPCReact } from "@trpc/react-query";
 import { settings } from "~constants/settings";
 import superjson from "superjson";
 
-import type { AppRouter } from "@lumpick/api";
+import type { AppRouter } from "@lumpick/api"
 
 export const api = createTRPCReact<AppRouter>();
 
@@ -21,10 +21,10 @@ export const TRPCProvider = ({ children }: TRPCProviderProps) => {
 
   const [trpcClient] = useState(() =>
     api.createClient({
-      transformer: superjson,
       links: [
         httpBatchLink({
           url: settings.apiUrl,
+          transformer: superjson,
           headers() {
             const headers = new Map<string, string>();
             headers.set("x-trpc-source", "expo-react");

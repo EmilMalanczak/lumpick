@@ -19,6 +19,7 @@
     "@lumpick/eslint-config": "workspace:*",
     "@lumpick/prettier-config": "workspace:*",
     "@lumpick/ts-config": "workspace:*",
+    "@trpc/server": "11.0.0-rc.700",
     "@types/xml2js": "^0.4.14",
     "esbuild": "^0.20.1",
     "esbuild-plugin-pino": "^2.1.1",
@@ -37,8 +38,10 @@
     "@inquirer/prompts": "^5.0.2",
     "@lumpick/api": "workspace:*",
     "@lumpick/db": "workspace:*",
+    "@trpc/client": "11.0.0-rc.700",
     "pino": "^8.19.0",
     "puppeteer": "22.6.0",
+    "superjson": "^2.2.1",
     "xml2js": "^0.6.2"
   }
 }
