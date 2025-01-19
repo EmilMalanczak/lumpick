@@ -1,4 +1,5 @@
 import {
+  geometry,
   index,
   integer,
   jsonb,
@@ -41,6 +42,11 @@ export const shops = lumpickTable(
     hours: jsonb("hours").$type<WeekHours[]>().notNull(),
     facebookUrl: text("facebook_url"),
     instagramUrl: text("instagram_url"),
+    location: geometry("location", {
+      type: "point",
+      mode: "xy",
+      srid: 4326,
+    }).notNull(),
     ownerId: integer("owner_id")
       .notNull()
       .references(() => shopOwners.id),
@@ -51,6 +57,7 @@ export const shops = lumpickTable(
       nameIdx: index("name_idx")
         .on(table.name, table.slug)
         .with({ fillfactor: "70" }),
+      spatialIndex: index("spatial_index").using("gist", table.location),
     },
   ],
 );
