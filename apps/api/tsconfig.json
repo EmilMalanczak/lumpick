@@ -10,7 +10,10 @@
       "~modules/*": ["src/modules/*"],
       "~plugins/*": ["src/plugins/*"],
       "~/*": ["src/*"]
-    }
+    },
+    "declaration": true,
+    "composite": true,
+    "noEmit": false
   },
   "include": ["*.ts", "src", "sentry.config.ts", "esbuild.config.mjs"],
   "exclude": ["node_modules"]
